@@ -1,9 +1,9 @@
-import styles from "./App.module.css";
+import { RouterProvider } from "react-router-dom";
+import "./App.css";
+import router from "./routes/routes";
 
-export default function App() {
-  return (
-    <div className={styles.app}>
-      <h1>This is the App Component</h1>
-    </div>
-  );
+function App() {
+  return <RouterProvider router={router} />;
 }
+
+export default App;

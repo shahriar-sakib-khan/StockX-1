@@ -1,3 +1,21 @@
+:root {
+  --ff-base: system-ui, Arial, sans-serif;
+  --ff-base-line-height: 1.6;
+
+  --ff-heading: var(--ff-base);
+  --ff-heading-line-height: 1.1;
+  
+  --ff-code: monospace;
+
+  --body-max-width: 65ch; /* rule of thumb: 75ch max */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
 @layer reset {
   
   *, *::before, *::after {
