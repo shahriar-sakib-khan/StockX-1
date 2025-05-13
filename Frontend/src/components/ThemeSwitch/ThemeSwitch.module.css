@@ -1,0 +1,7 @@
+.theme {
+  color: var(--primary-text-clr);
+  font-weight: 500;
+  background-color: var(--bg-clr);
+  border: 2px solid var(--primary-text-clr);
+  padding: 0.125em 1em;
+}

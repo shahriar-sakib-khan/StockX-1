@@ -1,0 +1,4 @@
+#_assets_____
+
+This folder is for static resources only
+Media contents (images, icons, videos, sounds etc.) will be here

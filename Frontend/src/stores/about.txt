@@ -1,0 +1,3 @@
+#_stores_____
+
+Zustand stores will be in this folder

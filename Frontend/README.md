@@ -1,12 +1,21 @@
-# React + Vite
+# README:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Run the project using:
+- npm run dev
 
-Currently, two official plugins are available:
+# Dependencies (installed):
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- npm install react-router-dom
+- npm install zustand
 
-## Expanding the ESLint configuration
+# For future implementation:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- npm install jasonwebtoken (jwt)
+
+# Styling:
+
+- For styling, use the variables declared in the index.css file
+- The global css file is preferably not to be touched, only the variables part will be updated
+- Proper styling and color scheme is yet to be determined, only some basic colors are added so far
+- The updates will be done after team disscussion or agreement
+- Knowledge of css variables is mandatory for frontend developers

@@ -1,6 +1,6 @@
-.dashboard {
-  color: white;
-  background-color: #282c34;
+.errorpage {
+  color: var(--primary-text-clr);
+  background-color: var(--bg-clr);
   height: 100svh;
 
   display: flex;

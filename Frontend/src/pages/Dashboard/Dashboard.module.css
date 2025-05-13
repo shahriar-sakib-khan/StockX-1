@@ -1,0 +1,14 @@
+.dashboard {
+  color: var(--primary-text-clr);
+  background-color: var(--bg-clr);
+  height: 100svh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.main {
+  margin-block-end: 1em;
+}

@@ -1,4 +1,20 @@
 :root {
+  /* Custom variables (light mode)*/
+  --bg-clr: hsl(0, 0%, 100%); /* background color*/
+
+  --primary-text-clr: hsl(220, 13%, 18%);
+}
+
+
+.dark {
+  /* Custom variables (dark mode) */
+  --bg-clr: hsl(220, 13%, 18%);
+
+  --primary-text-clr: hsl(0, 0%, 100%);
+}
+
+
+:root {
   --ff-base: system-ui, Arial, sans-serif;
   --ff-base-line-height: 1.6;
 
