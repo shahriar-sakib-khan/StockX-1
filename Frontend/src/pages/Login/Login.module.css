@@ -1,0 +1,13 @@
+.login {
+  height: 100svh;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+
+  & > * {
+    color: var(--primary-text-clr);
+  } 
+}

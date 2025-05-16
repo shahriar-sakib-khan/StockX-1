@@ -1,0 +1,18 @@
+.navItem {
+  color: var(--primary-font-clr-dark);
+  font-weight: 700;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  padding: 1em;
+  text-decoration: none;
+  background-color: var(--bg-clr-2);
+  border-radius: 0.25em;
+
+  img {
+    max-width: 4em;
+  }
+}
