@@ -15,11 +15,6 @@ export default function DashboardNavigation() {
         imgSrc={images.img_inventory}
         title="Inventory"
       />
-      <NavComponent
-        path="./shop-selection"
-        imgSrc={images.img_selection}
-        title="Cylinder Exchange"
-      />
       <NavComponent path="./shop" imgSrc={images.img_shop} title="Shop" />
       <NavComponent
         path="./vehicles"

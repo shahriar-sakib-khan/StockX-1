@@ -1,4 +1,5 @@
 import Logo from "../Logo/Logo";
+import ProfileButton from "../ProfileButton/ProfileButton";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import styles from "./Header.module.css";
 
@@ -8,7 +9,8 @@ const Header = () => {
       <div className="wrapper">
         <header className={styles.header}>
           <Logo />
-          <ThemeSwitch />
+          <ThemeSwitch className={styles.theme} />
+          <ProfileButton className={styles.profile} />
         </header>
       </div>
     </div>
