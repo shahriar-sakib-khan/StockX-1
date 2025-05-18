@@ -1,25 +1,7 @@
-/* 
-.dashboardSalesDetails {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-
-  border: var(--border);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  padding: 1em;
-
-  width: 100%;
-
-  margin-block-end: 1em;
-} */
 
 .dashboardSalesDetails {
   color: var(--primary-text-clr);
 
-  display: grid;
-  grid-template-columns: 1fr;
-  
   border: 1px solid hsl(0, 0%, 83%);
   border-radius: 0.25em;
   padding: 0.5em;
@@ -29,7 +11,7 @@
 .dashboardSalesDetailsTop {
   display: flex;
   padding-inline: 0.5em;
-  padding-block: 0.5em 1em;
+  padding-block: 0.2em 0.5em;
 }
 
 .dashboardSalesDetailsBottom {
@@ -37,7 +19,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   position: relative;
   padding-inline: 0.5em;
-  padding-block: 1em 0.5em;
+  padding-block: 0.5em 0.2em;
   border-top: 1px solid hsl(0, 0%, 83%);
 
   .middle {
