@@ -1,5 +1,6 @@
 // Low level components (small)_______________________________
 export { default as ThemeSwitch } from "./ThemeSwitch/ThemeSwitch";
+export { default as ProfileButton } from "./ProfileButton/ProfileButton";
 export { default as Logo } from "./Logo/Logo";
 
 // Dashboard related
