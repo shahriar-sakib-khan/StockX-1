@@ -201,3 +201,7 @@
   width: 100%;
   max-inline-size: 1200px;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}

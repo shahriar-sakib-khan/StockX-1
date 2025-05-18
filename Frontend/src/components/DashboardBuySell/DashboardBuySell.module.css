@@ -1,0 +1,15 @@
+
+.dashboardBuySell {
+  color: var(--primary-text-clr);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.6em;
+
+  border: 1px solid hsl(0, 0%, 83%);
+  border-radius: 0.25em;
+  padding: 0.6em;
+  width: 100%;
+
+  font-size: 0.8rem;
+}

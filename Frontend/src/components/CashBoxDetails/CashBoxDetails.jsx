@@ -11,7 +11,7 @@ export default function CashBoxDetails({ center = false, className = "" }) {
         center ? styles.center : "",
       ].join(" ")}
     >
-      <span className={styles.title}>Takar baksho</span>
+      <span className={styles.title}>Cash box</span>
       {/* <h1 className={styles.title}>Cash Box</h1> */}
       <span className={styles.cashAmount}>{cash} Taka</span>
     </div>
