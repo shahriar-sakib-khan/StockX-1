@@ -18,9 +18,9 @@ export default function DashboardSalesDetails({
         />
       </div>
       <div className={styles.dashboardSalesDetailsBottom}>
-        <CashBoxDetails center />
-        <CashBoxDetails className={styles.middle} center />
-        <CashBoxDetails center />
+        <CashBoxDetails type="cashbox" center />
+        <CashBoxDetails type="income" className={styles.middle} center />
+        <CashBoxDetails type="expenses" center />
       </div>
     </div>
   );
