@@ -3,24 +3,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  /* border: var(--border); */
-  /* border-radius: var(--border-radius); */
-  /* box-shadow: var(--box-shadow); */
-  padding: 0.5em;
-
-  /* width: 12em; */
 }
 
-.title {
-  font-size: 1rem;
-  font-weight: 500;
-}
+.title { font-weight: 600; }
 
-.cashAmount {
-  font-size: 0.8rem;
-}
+.cashAmount { font-weight: 600; }
+.amount { font-weight: 700; }
+    
+.amount_blue { color: steelblue; }  /* hsl(220, 78%, 46%) */
+.amount_red { color: lightcoral; }  /* hsl(3, 63%, 60%) */
+.amount_green { color:mediumseagreen; }  /* hsl(124, 34%, 50%) */
 
-.center {
-  align-items: center;
-}
+
+.center { align-items: center; }

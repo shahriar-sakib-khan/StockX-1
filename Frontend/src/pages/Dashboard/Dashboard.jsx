@@ -1,10 +1,10 @@
 // import { ThemeSwitch } from "../../components";
 import styles from "./Dashboard.module.css";
 import {
-  ThemeSwitch,
   DashboardSalesDetails,
   DashboardNavigation,
   DashboardStatistics,
+  DashboardBuySell,
 } from "../../components";
 
 export default function Dashboard() {
@@ -12,6 +12,7 @@ export default function Dashboard() {
     <div className="wrapper">
       <div className={styles.dashboard}>
         <DashboardSalesDetails name owner address />
+        <DashboardBuySell />
         <DashboardNavigation />
         <DashboardStatistics />
       </div>

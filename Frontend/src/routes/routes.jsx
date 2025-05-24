@@ -27,6 +27,7 @@ import {
   Community,
   EmptyCylinders,
   Initialization,
+  Buy,
 } from "../pages/";
 
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Dashboard />,
+          },
+          {
+            path: "buy",
+            element: <Buy />,
           },
           {
             path: "selection",
