@@ -1,0 +1,29 @@
+
+.dashboardSalesDetails {
+  color: var(--primary-text-clr);
+
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: 0.5em;
+  width: 100%;
+}
+
+.dashboardSalesDetailsTop {
+  display: flex;
+  padding-inline: 0.5em;
+  padding-block: 0.2em 0.5em;
+}
+
+.dashboardSalesDetailsBottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  position: relative;
+  padding-inline: 0.5em;
+  padding-block: 0.5em 0.2em;
+  border-top: var(--border);
+
+  .middle {
+    border-left: var(--border);
+    border-right: var(--border);
+  }
+}

@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import {
   Layout,
   DashboardLayout,
@@ -7,6 +8,7 @@ import {
   SelectionLayout,
   ShopSelectionLayout,
 } from "./Layouts";
+
 import {
   Landing,
   Register,

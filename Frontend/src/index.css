@@ -4,6 +4,8 @@
   --bg-clr-1: hsl(0, 0%, 100%); /* background color dark */
   --bg-clr-2: hsl(0, 0%, 95%);  /* background color light gray */
 
+  /* from our previous iteration of the project  */
+  /* --primary-text-clr: hsl(214, 20%, 40%); */
   --primary-text-clr: hsl(216, 13%, 30%);
 
   --border: 1px solid hsl(0, 0%, 83%);
@@ -203,6 +205,6 @@
   max-inline-size: 1200px;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */

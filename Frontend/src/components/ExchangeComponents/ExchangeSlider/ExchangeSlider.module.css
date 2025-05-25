@@ -1,0 +1,16 @@
+
+.exchangeSlider {
+  display: flex;
+  gap: 0.5em;
+
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: 0.25em;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* &::-webkit-scrollbar {
+    display: none;
+  } */
+}

@@ -1,0 +1,38 @@
+.exchangeListContainer {
+  background: var(--bg-clr-2);
+  border-radius: var(--border-radius, 12px);
+}
+
+.heading {
+  color: var(--primary-text-clr);
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  text-align: center;
+  padding-block: 0.125em;
+  cursor: pointer;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+.list {
+  color: var(--primary-text-clr);
+  font-size: 1rem;
+
+  padding-inline: 0.25em;
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.active {
+  border-color: #2a9d8f;
+  
+  .heading {
+    color: white;
+    background-color: #2a9d8f;
+  }
+
+  .list {
+    box-shadow: inset 0 0 0px 2px #2a9d8f;
+  }
+}

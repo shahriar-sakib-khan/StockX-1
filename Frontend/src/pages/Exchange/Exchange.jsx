@@ -1,11 +1,18 @@
-import { NavLink } from "react-router-dom";
+import {
+  ExchangeTopSection,
+  ExchangeBottomSection,
+  ExchangeMainSection,
+} from "../../components";
 import styles from "./Exchange.module.css";
 
 export default function Exchange() {
   return (
-    <div className={styles.exchange}>
-      <h1>Exchange page</h1>
-      <NavLink to="./receipt">Receipt</NavLink>
+    <div className="wrapper">
+      <div className={styles.exchange}>
+        <ExchangeTopSection />
+        <ExchangeMainSection />
+        <ExchangeBottomSection />
+      </div>
     </div>
   );
 }

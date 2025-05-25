@@ -1,0 +1,23 @@
+
+.card {
+  background-color: var(--bg-clr-2);
+  padding: 0.25em 0.5em;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-radius: var(--border-radius);
+  border: var(--border);
+}
+
+img {
+  max-width: 5em;
+  aspect-ratio: 3 / 3.5;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  text-wrap: nowrap;
+}

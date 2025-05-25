@@ -1,5 +1,5 @@
 import NavComponent from "../NavComponent/NavComponent";
-import images from "../../assets/nav_icons/Images";
+import images from "../../../assets/nav_icons/Images";
 import styles from "./DashboardNavigation.module.css";
 
 export default function DashboardNavigation() {

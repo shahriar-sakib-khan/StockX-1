@@ -1,0 +1,26 @@
+
+.exchangeBottomSection {
+  color: var(--primary-text-clr);
+  display: flex;
+}
+
+.regulatorStove {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.5em;
+  
+  padding-inline: 0.5em;
+  text-align: center;
+
+  > * {
+    background-color: var(--bg-clr-2);
+    border-radius: var(--border-radius);
+    border: var(--border);
+    padding: 0.5em;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
