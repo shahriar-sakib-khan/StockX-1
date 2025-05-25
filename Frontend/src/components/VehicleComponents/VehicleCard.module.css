@@ -6,11 +6,12 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     position: relative;
     transition: transform 0.3s;
+    border: 2px solid #94a0ac;
 }
 
-.vehicleCard:hover {
+/* .vehicleCard:hover {
     transform: translateY(-5px);
-}
+} */
 
 .removeButton {
     position: absolute;
@@ -40,7 +41,7 @@
 .cardButtons {
     display: flex;
     justify-content: space-between;
-    gap: 0.5rem;
+    gap: 3.5rem;
     margin-top: 1rem;
 }
 

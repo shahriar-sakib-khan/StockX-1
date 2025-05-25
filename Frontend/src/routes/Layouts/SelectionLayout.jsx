@@ -1,9 +1,15 @@
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 
-export default function SelectionLayout() {
+const SelectionLayout = () => {
+  const [selectedBrands, setSelectedBrands] = useState([]);
+
   return (
     <div>
-      <Outlet />
+      {/* Provide context to nested routes */}
+      <Outlet context={{ selectedBrands, setSelectedBrands }} />
     </div>
   );
-}
+};
+
+export default SelectionLayout;
