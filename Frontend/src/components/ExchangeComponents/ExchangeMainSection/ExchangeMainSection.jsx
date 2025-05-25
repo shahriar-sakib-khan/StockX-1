@@ -10,17 +10,45 @@ export default function ExchangeMainSection() {
   };
 
   return (
-    <div className={styles.exchangeSection}>
-      <ExchangeList
-        type="delivered"
-        active={activeSection === "delivered"}
-        onClick={() => onClick("delivered")}
-      />
-      <ExchangeList
-        type="received"
-        active={activeSection === "received"}
-        onClick={() => onClick("received")}
-      />
+    <div className={styles.exchangeMainSection}>
+      <div className={styles.exchangeSection}>
+        <ExchangeList
+          type="delivered"
+          active={activeSection === "delivered"}
+          onClick={() => onClick("delivered")}
+          className={[
+            styles.delivered,
+            activeSection === "delivered" ? "" : styles.hidden,
+          ].join(" ")}
+        />
+        <ExchangeList
+          type="received"
+          active={activeSection === "received"}
+          onClick={() => onClick("received")}
+          className={[
+            styles.received,
+            activeSection === "received" ? "" : styles.hidden,
+          ].join(" ")}
+        />
+      </div>
+      <div className={styles.btnSection}>
+        <button
+          onClick={() =>
+            onClick(activeSection === "delivered" ? "received" : "delivered")
+          }
+          className={[styles[activeSection], styles.hidden].join(" ")}
+        >
+          {activeSection === "delivered"
+            ? "Go to Received ->"
+            : "<- Go to Delivered"}
+        </button>
+        {/* <button
+          onClick={() => onClick("received")}
+          className={styles[activeSection]}
+        >
+          Go to Received -{">"}
+        </button> */}
+      </div>
     </div>
   );
 }

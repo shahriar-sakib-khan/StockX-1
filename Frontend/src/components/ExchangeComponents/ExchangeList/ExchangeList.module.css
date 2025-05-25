@@ -1,5 +1,6 @@
 .exchangeListContainer {
   background: var(--bg-clr-2);
+  border: var(--border);
   border-radius: var(--border-radius, 12px);
 }
 

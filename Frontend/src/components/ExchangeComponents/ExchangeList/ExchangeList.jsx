@@ -5,6 +5,7 @@ export default function ExchangeList({
   type = "delivered" | "received",
   active = false,
   onClick,
+  className = "",
 }) {
   const title =
     type === "delivered"
@@ -22,6 +23,7 @@ export default function ExchangeList({
       className={[
         styles.exchangeListContainer,
         active ? styles.active : "",
+        className,
       ].join(" ")}
       onClick={onClick}
     >

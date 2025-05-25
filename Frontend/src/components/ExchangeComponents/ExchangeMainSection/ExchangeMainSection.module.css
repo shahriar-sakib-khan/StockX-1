@@ -1,6 +1,63 @@
+.exchangeMainSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  overflow: hidden;
+}
 
 .exchangeSection {
+  container: exchangeSection / inline-size;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5em;
+}
+
+.btnSection {
+  container: btnSection / inline-size;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    background-color: skyblue;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.075em 0.5em;
+
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: hsl(197, 71%, 65%);
+    }
+  }
+}
+
+@container btnSection (width > 700px) {
+  .btnSection > button {
+    display: none;
+  }
+}
+
+@media (width <= 732px) {
+  .exchangeSection { width: 200%; }
+
+  .exchangeSection:has(.delivered.hidden) {
+    transform: translateX(-50%);
+    transition: transform 0.2s ease;
+  }
+  
+  .exchangeSection:has(.received.hidden) {
+    transform: translateX(0%);
+    transition: transform 0.2s ease;
+  }
+
+  .btnSection {
+    display: flex;  
+
+    &:has(:not(.received)) { justify-content: flex-end; }
+    &.received { justify-content: flex-start; }
+  }
 }
