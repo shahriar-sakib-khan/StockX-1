@@ -43,6 +43,6 @@ Rule of thumb:
 - use var(--primary-text-clr) for most normal text
 - use var(--bg-clr-1) for page background (applied by default)
 - use var(--bg-clr-2) for gray card backgrounds
-- use var(--border) for consistent border (more variations may be added later)
+- use var(--border-300) for consistent border (more variations may be added later)
 - use var(--border-radius) for consistent border radius
 - use var(--box-shadow) for consistent box shadow (yet to be settled)

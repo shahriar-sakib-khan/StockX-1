@@ -8,8 +8,13 @@
   /* --primary-text-clr: hsl(214, 20%, 40%); */
   --primary-text-clr: hsl(216, 13%, 30%);
 
-  --border: 1px solid hsl(0, 0%, 83%);
-  --box-shadow: 0 0.2rem 0.5rem hsl(220, 13%, 70%);
+  --accent-clr-300: hsl(173, 58%, 45%);
+  --accent-clr-400: hsl(173, 58%, 40%);
+
+  --border-300: 1px solid hsl(0, 0%, 83%);
+  --border-400: 2px solid hsl(0, 0%, 83%);
+
+  --box-shadow: 5px 5px 10px hsl(0, 0%, 90%);
   
   --border-radius: 0.25rem;
   
@@ -24,8 +29,10 @@
   
   --primary-text-clr: hsl(0, 0%, 85%);
   
-  --border: 1px solid hsl(219, 15%, 45%);
-  --box-shadow: 0 0.2rem 0.5rem hsl(220, 13%, 0%);
+  --border-300: 1px solid hsl(219, 15%, 45%);
+  --border-400: 2px solid hsl(219, 15%, 45%);
+
+  --box-shadow: 0 0.2rem 0.5rem hsl(216, 13%, 5%);
 
 }
 
