@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Shop.module.css";
 import ShopCard from "../../components/ShopComponents/ShopCard";
 import ShopPopup from "../../components/ShopComponents/ShopPopup";
 
 const Shop = () => {
+  const navigate = useNavigate();
+
   const loadInitialShopData = () => {
     const savedShopData = localStorage.getItem("shopData");
     return savedShopData ? JSON.parse(savedShopData) : [];
@@ -113,6 +116,10 @@ const Shop = () => {
     }
   };
 
+  const handleCardClick = (shop) => {
+    navigate("/dashboard/shop-history", { state: { shop } });
+  };
+
   return (
     <div className={styles.shopContainer}>
       {isRemovePopupOpen && (
@@ -156,6 +163,7 @@ const Shop = () => {
             shop={shop}
             onEdit={handleEditClick}
             onRemove={handleRemoveShop}
+            onClick={handleCardClick}
           />
         ))}
 

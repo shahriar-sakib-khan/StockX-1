@@ -1,6 +1,6 @@
 .shopCard {
   background: #ffffff;
-  border: 2px solid q#878ca0; /* Green outline */
+  border: 2px solid #abb0c5; /* Green outline */
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
@@ -11,6 +11,7 @@
   align-items: flex-start;
   gap: 5px;
   position: relative;
+
 }
 
 /* Uncomment for hover effect */

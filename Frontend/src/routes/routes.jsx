@@ -16,6 +16,7 @@ import {
   Profile,
   Statistics,
   Shop,
+  ShopHistory,
   ShopSelection,
   Inventory,
   Vehicles,
@@ -71,6 +72,8 @@ const router = createBrowserRouter([
           { path: "profile", element: <Profile /> },
           { path: "statistics", element: <Statistics /> },
           { path: "shop", element: <Shop /> },
+          { path: "shop-history", element: <ShopHistory /> },
+
           {
             path: "shop-selection",
             element: <ShopSelectionLayout />,

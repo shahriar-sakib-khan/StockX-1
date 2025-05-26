@@ -20,5 +20,7 @@ export { default as Vehicles } from "./Vehicles/Vehicles";
 export { default as DailySales } from "./DailySales/DailySales";
 export { default as Receipt } from "./Receipt/Receipt";
 export { default as Shop } from "./Shop/Shop";
+export { default as ShopHistory } from "./ShopHistory/ShopHistory";
+
 export { default as ShopSelection } from "./ShopSelection/ShopSelection";
 export { default as Statistics } from "./Statistics/Statistics";
