@@ -1,4 +1,4 @@
-const mongoose = require('mongooose')
+import {model, Schema} from 'mongoose'
 
 const shopSchema = new mongoose.Schema({
     shopOwner: {
@@ -24,4 +24,4 @@ const shopSchema = new mongoose.Schema({
     }
 }, {timestamps: true})
 
-module.exports = mongoose.model("Shop", shopSchema)
+export default model("Shop", shopSchema)
