@@ -25,7 +25,7 @@ function Selection() {
 
   const handleSubmit = () => {
     if (selectedBrands.length > 0) {
-      navigate("/initialization");
+      navigate("/dashboard/selection/selected-inventory");
     }
   };
 

@@ -57,7 +57,7 @@ const router = createBrowserRouter([
             element: <SelectionLayout />,
             children: [
               { index: true, element: <Selection /> },
-              { path: "initialization", element: <Initialization /> },
+              { path: "selected-inventory", element: <Inventory /> },
             ],
           },
           {
