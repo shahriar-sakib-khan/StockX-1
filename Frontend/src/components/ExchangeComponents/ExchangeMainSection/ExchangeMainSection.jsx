@@ -1,9 +1,8 @@
-import { useState } from "react";
 import ExchangeList from "../ExchangeList/ExchangeList";
 import styles from "./ExchangeMainSection.module.css";
 
-export default function ExchangeMainSection() {
-  const [activeSection, setActiveSection] = useState("delivered"); // delivered | received
+export default function ExchangeMainSection(props) {
+  const { activeSection, setActiveSection } = props.context;
 
   const onClick = (active) => {
     setActiveSection(active);
@@ -42,12 +41,6 @@ export default function ExchangeMainSection() {
             ? "Go to Received ->"
             : "<- Go to Delivered"}
         </button>
-        {/* <button
-          onClick={() => onClick("received")}
-          className={styles[activeSection]}
-        >
-          Go to Received -{">"}
-        </button> */}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@
   flex-direction: column;
   gap: 1em;
 
+  margin-inline: 1em;
   overflow: hidden;
 }
 
@@ -12,6 +13,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5em;
+
+  padding: 1em;
 }
 
 .btnSection {
@@ -43,7 +46,10 @@
 }
 
 @container (width <= 700px) {
-  .exchangeSection { width: 200%; }
+  .exchangeSection { 
+    width: 200%;
+    gap: 1em;
+  }
 
   .exchangeSection:has(.delivered.hidden) {
     transform: translateX(-50%);

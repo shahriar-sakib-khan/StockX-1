@@ -5,19 +5,19 @@
   --bg-clr-2: hsl(0, 0%, 95%);  /* background color light gray */
 
   /* from our previous iteration of the project  */
-  /* --primary-text-clr: hsl(214, 20%, 40%); */
-  --primary-text-clr: hsl(216, 13%, 30%);
+  --primary-text-clr: hsl(214, 20%, 40%);
+  /* --primary-text-clr: hsl(216, 13%, 30%); */
 
   --accent-clr-300: hsl(173, 58%, 45%);
   --accent-clr-400: hsl(173, 58%, 40%);
 
-  --border-300: 1px solid hsl(0, 0%, 83%);
-  --border-400: 2px solid hsl(0, 0%, 83%);
+  --border-300: 1px solid hsl(0, 0%, 85%);
+  --border-400: 2px solid hsl(0, 0%, 85%);
 
   --box-shadow: 5px 5px 10px hsl(0, 0%, 90%);
   
-  --border-radius: 0.25rem;
-  
+  --border-radius: 0.25em;
+  --border-radius-500: 0.5em;
 }
 
 
@@ -205,11 +205,11 @@
 } */
 
 .wrapper {
-  margin: 0 auto;
-  padding: 0 1rem;
-
-  width: 100%;
+  width: 90%;
   max-inline-size: 1200px;
+  
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 /* ::-webkit-scrollbar {

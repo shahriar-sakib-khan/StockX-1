@@ -1,5 +1,11 @@
 
 .exchangeTopSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.navButtons {
   border: var(--border-300);
   border-radius: var(--border-radius);
 
@@ -15,4 +21,15 @@
     font-weight: 600;
     text-decoration: none;
   }
+}
+
+.shopInfo {
+  padding-inline: 1em;
+
+  .shopName {
+    color: var(--primary-text-clr);
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-decoration: underline;
+  }  
 }
