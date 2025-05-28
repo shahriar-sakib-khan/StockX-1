@@ -1,3 +1,5 @@
+
 .receipt {
-  
+  display: flex;  
+  flex-direction: column;
 }

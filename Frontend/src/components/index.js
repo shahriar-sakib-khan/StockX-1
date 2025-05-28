@@ -14,6 +14,8 @@ export { default as ExchangeListItem } from "./ExchangeComponents/ExchangeListIt
 export { default as ExchangeSlider } from "./ExchangeComponents/ExchangeSlider/ExchangeSlider";
 export { default as ExchangeSliderCard } from "./ExchangeComponents/ExchangeSliderCard/ExchangeSliderCard";
 
+//Receipt related
+export { default as ReceiptTable } from "./ReceiptComponents/ReceiptTable/ReceiptTable";
 
 //__Mid level components (large)_______________________________
 export { default as Header } from "./Header/Header";
@@ -28,3 +30,8 @@ export { default as DashboardStatistics} from "./DashboardComponents/DashboardSt
 export { default as ExchangeTopSection } from "./ExchangeComponents/ExchangeTopSection/ExchangeTopSection";
 export { default as ExchangeMainSection } from "./ExchangeComponents/ExchangeMainSection/ExchangeMainSection";
 export { default as ExchangeBottomSection } from "./ExchangeComponents/ExchangeBottomSection/ExchangeBottomSection";
+
+//Receipt related
+export { default as ReceiptTopSection } from "./ReceiptComponents/ReceiptTopSection/ReceiptTopSection";
+export { default as ReceiptHeader } from "./ReceiptComponents/ReceiptHeader/ReceiptHeader";
+export { default as ReceiptMainSection } from "./ReceiptComponents/ReceiptMainSection/ReceiptMainSection";

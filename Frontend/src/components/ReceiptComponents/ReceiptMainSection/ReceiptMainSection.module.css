@@ -1,0 +1,10 @@
+
+.receiptMainSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em 0.25em;
+
+  & > * {
+    flex-grow: 1;
+  }
+}
