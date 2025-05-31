@@ -2,7 +2,7 @@
 .tableContainer {
   --_background : hsl(214, 30%, 30%);
 
-  color: var(--primary-font-clr-dark);
+  color: var(--primary-text-clr);
   width: 100%;
   border-collapse: collapse;
 
@@ -50,13 +50,13 @@
       text-align: center;
     }
     .tableBodyRowItemInput {
-      color: var(--primary-font-clr-dark);
+      color: var(--primary-text-clr);
       width: 4em;
       margin: 0;
       padding: 0;
       border: 1px solid lightcoral;
       border-radius: 0;
-      caret-color: var(--primary-font-clr-dark);
+      caret-color: var(--primary-text-clr);
 
       &::placeholder {
         color: lightcoral;
