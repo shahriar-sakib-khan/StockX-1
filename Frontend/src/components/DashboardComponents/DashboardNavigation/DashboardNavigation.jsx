@@ -5,11 +5,11 @@ import styles from "./DashboardNavigation.module.css";
 export default function DashboardNavigation() {
   return (
     <div className={styles.dashboardNavigation}>
-      <NavComponent
+      {/* <NavComponent
         path="./selection"
         imgSrc={images.img_selection}
         title="Selection"
-      />
+      /> */}
       <NavComponent
         path="./inventory"
         imgSrc={images.img_inventory}

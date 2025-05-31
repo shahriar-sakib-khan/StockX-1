@@ -54,19 +54,19 @@ const router = createBrowserRouter([
             element: <Buy />,
           },
           {
-            path: "selection",
-            element: <SelectionLayout />,
-            children: [
-              { index: true, element: <Selection /> },
-              { path: "initialization", element: <Initialization /> },
-            ],
-          },
-          {
             path: "inventory",
             element: <InventoryLayout />,
             children: [
               { index: true, element: <Inventory /> },
               { path: "empty-cylinders", element: <EmptyCylinders /> },
+              {
+                path: "selection",
+                element: <SelectionLayout />,
+                children: [
+                  { index: true, element: <Selection /> },
+                  { path: "initialization", element: <Initialization /> },
+                ],
+              },
             ],
           },
 

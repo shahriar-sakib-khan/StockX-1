@@ -6,6 +6,7 @@ export default function Inventory() {
     <div className={styles.inventory}>
       <h1>Inventory page</h1>
       <NavLink to="./empty-cylinders">Empty Cylinders</NavLink>
+      <NavLink to="./selection">Select Brands</NavLink>
     </div>
   );
 }

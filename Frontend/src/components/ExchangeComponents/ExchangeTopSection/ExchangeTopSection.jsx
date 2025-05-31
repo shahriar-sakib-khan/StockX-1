@@ -9,7 +9,7 @@ export default function ExchangeTopSection() {
           Select Shop
         </NavLink>
         <NavLink to="./receipt" className={styles.btn}>
-          Next
+          Receipt
         </NavLink>
       </div>
       <div className={styles.shopInfo}>
