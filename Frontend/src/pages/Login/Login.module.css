@@ -1,13 +1,272 @@
-.login {
-  height: 100svh;
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+html, body {
+    margin: 0;
+    padding: 0;
+    width: auto;
+    height: 100vh;
+    font-family: Roboto , sans-serif;
+    letter-spacing: 1px;
+    overflow: auto;
+    background-color: ghostwhite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#root{
+    min-height: 100vh;
+}
+.main_container{
+    position: relative;
+    min-height: 550px;
+    min-width: 610px;
+    overflow: hidden;
+    border: none;
+    border-radius: 15px;
+    background-color: ghostwhite;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.form_container{
+    min-height: 480px;
+    min-width: 480px;
+    overflow: hidden;
+    border: none;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 10px 10px 10px 10px  rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.header{
+    width: 100%;
+    height: 55px;
+    font-size: 21px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.google_login{
+    height: 35px;
+    width: 70%;
+    border: 1px solid #9999;
+    border-radius: 5px;
 
+    transition: background-color 0.5s ease, transform 0.5s ease;
+}
+.orLine {
+    height: 16px;
+    width: 85%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #878787;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.Line{
+    width: 40%;
+    height: 1px;
+    background-color: #878787;
+    margin: 0 5px;
+}
+.form{
+    height: 100%;
+    width: 100%;
+    min-height: 160px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: -12px;
+    font-size: 12px;
+}
+.form p{
+    margin-left: 30%;
+}
+.form input{
+    width: 115%;
+    height: 35px;
+    display: block;
+    border-radius: 10px;
+    margin-left: 70px;
+    background-color: white;
+    padding-left: 35px;
+}
+.form input:focus{
+    border: 1px solid grey;
+}
+.email_icon {
+    position: absolute;
+    left: 29%;
+    top: 10%;
+    color: #999;
+    font-size: 16px;
+}
+.password_container{
+    position: relative;
+}
+.forget_pass{
+    position: absolute;
+    top: 56%;
+    right: -140px;
+}
+.forget_pass a{
+    text-decoration: none;
+}
+form{
+    position: relative;
+}
+.pass_icon{
+    position: absolute;
+    top: 60%;
+    right: 185px;
+    color: #999;
+}
+.buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 70px;
+    top: 140px;
+}
+.buttons button{
+    width: 350px;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    background-color: #6049E7;
+    color: white;
+    font-size: 14px;
+    transition: background-color 0.5s ease, transform 0.5s ease;
+    font-weight: bold;
+}
+.help_box{
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    right: 1%;
+    bottom:40px;
+    border-radius: 8px;
+    background-color: #CDD9CD;
+    border: 1px solid darkgrey;
+    transition: background-color 0.5s ease, transform 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+.buttons button:hover{
+    background-color: #4938B0;
+    box-shadow: none;
+    cursor: pointer;
+}
+.google_login:hover{
+    background-color: #E1E1FF;
+    cursor: pointer;
+}
+.help_icon{
+    position: absolute;
+    top: 20%;
+    font-size: 20px;
+}
+.help_box p{
+    position: absolute;
+    top: 38%;
+}
+.help_box:hover{
+    cursor: pointer;
+    background-color: #BCBDB8;
+}
+.email{
+    position: absolute;
+    top: -30%;
+}
 
-  & > * {
-    color: var(--primary-text-clr);
-  } 
+.nav{
+    text-decoration: none;
+    color: white;
+}
+@media (max-width: 765px){
+    .form_container{
+        min-height: 480px;
+        min-width: 350px;
+    }
+    .main_container{
+        min-height: 452px;
+        min-width: 350px;
+        overflow: hidden;
+    }
+    .google_login{
+        width: 87%;
+    }
+    .orLine{
+        width: 100%;
+    }
+    .form p{
+        margin-left: 10%;
+    }
+    .form input{
+        width: 122%;
+        margin-left: 20px;
+    }
+    .email_icon {
+        left: 30px;
+    }
+    .main_container{
+        box-shadow: 10px 10px 10px 10px  rgba(0,0,0,0.04);
+    }
+    .forget_pass{
+        left: 210px;
+        top: 56.5%
+    }
+    .buttons {
+        left: 20px;
+    }
+    .buttons button{
+        width: 310px;
+    }
+    .help_box{
+        display: none;
+    }
+
+}
+
+@media (max-width: 500px){
+    .form input{
+        width: 275px;
+    }
+
+    .pass_icon{
+        left: 10%;
+        top: 60%;
+    }
+}
+
+@media (max-height: 400px){
+    .form input{
+        width: 300px;
+    }
+    .pass_icon{
+        left: 20%;
+    }
+    .email_icon{
+        left: 20%;
+    }
+    .forget_pass{
+        left: 285px;
+        top: 56.5%
+    }
 }
