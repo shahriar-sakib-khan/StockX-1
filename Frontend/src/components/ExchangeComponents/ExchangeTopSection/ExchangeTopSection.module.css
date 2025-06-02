@@ -20,6 +20,9 @@
     color: var(--primary-text-clr);
     font-weight: 600;
     text-decoration: none;
+
+    border: none;
+    background-color: transparent;
   }
 }
 

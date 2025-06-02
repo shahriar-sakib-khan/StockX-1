@@ -1,9 +1,19 @@
 import styles from "./ExchangeModal.module.css";
 import { useRef, useState, useEffect } from "react";
+import { useCylindersStore } from "../../../stores";
+import { useOutletContext } from "react-router-dom";
 
-export default function ExchangeModal({ open, onClose, card }) {
+export default function ExchangeModal({ open, onClose, card, activeSection }) {
   const dialogRef = useRef(null);
   const priceInputRef = useRef(null);
+
+  // Import lists and setters from zustand stores
+  const setCylinders = useCylindersStore((state) => state.setCylinders);
+  const cylinders = useCylindersStore((state) => state.cylinders);
+
+  // Get delivered/received items and setters from outlet context
+  const { deliveredItems, setDeliveredItems, receivedItems, setReceivedItems } =
+    useOutletContext();
 
   const [type, setType] = useState("20mm");
   const [size, setSize] = useState("5kg");
@@ -19,6 +29,15 @@ export default function ExchangeModal({ open, onClose, card }) {
     }
   }, [open]);
 
+  // Reset form when card changes or modal opens
+  useEffect(() => {
+    setType("20mm");
+    setSize("5kg");
+    setCount("1");
+    setPrice(card?.price || 1000);
+    setIsPriceEditable(false);
+  }, [card, open]);
+
   const handleBackdropClick = (e) => {
     if (e.target === dialogRef.current) {
       onClose();
@@ -27,11 +46,70 @@ export default function ExchangeModal({ open, onClose, card }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ type, size, count, price });
+    const item = {
+      id: card?.brandId,
+      name: card?.brandName,
+      type,
+      size,
+      count: Number(count),
+      price: Number(price),
+    };
+
+    if (activeSection === "delivered") {
+      const currentList = Array.isArray(deliveredItems) ? deliveredItems : [];
+      const existingIndex = currentList.findIndex(
+        (i) => i.id === item.id && i.type === item.type && i.size === item.size
+      );
+
+      let newList;
+      if (existingIndex !== -1) {
+        // Update count for existing item
+        newList = currentList.map((i, idx) =>
+          idx === existingIndex
+            ? { ...i, count: i.count + item.count, price: item.price }
+            : i
+        );
+      } else {
+        // Add new item
+        newList = [...currentList, item];
+      }
+      setDeliveredItems(newList);
+      const updatedCylinders = cylinders.map((brand) =>
+        brand.id !== card.brandId
+          ? brand
+          : {
+              ...brand,
+              cylinders: brand.cylinders.map((cyl) =>
+                cyl.type === type && cyl.size === size
+                  ? { ...cyl, stock: cyl.stock - Number(count) }
+                  : cyl
+              ),
+              totalCylinderCount: brand.totalCylinderCount - Number(count),
+            }
+      );
+      setCylinders(updatedCylinders);
+    } else if (activeSection === "received") {
+      const currentList = Array.isArray(receivedItems) ? receivedItems : [];
+      const existingIndex = currentList.findIndex(
+        (i) => i.id === item.id && i.type === item.type && i.size === item.size
+      );
+
+      let newList;
+      if (existingIndex !== -1) {
+        newList = currentList.map((i, idx) =>
+          idx === existingIndex
+            ? { ...i, count: i.count + item.count, price: item.price }
+            : i
+        );
+      } else {
+        newList = [...currentList, item];
+      }
+      setReceivedItems(newList);
+    }
     onClose();
   };
 
-  const name = card?.name || "Brand Name";
+  const name = card?.brandName || "Brand Name";
   const model = [size, type].join("-"); // 5kg-20mm
 
   return (
@@ -50,31 +128,7 @@ export default function ExchangeModal({ open, onClose, card }) {
       <div className={styles.subTopSection}>
         <h3 className={styles.modelName}>Model: {model}</h3>
       </div>
-      <form className={styles.form} method="dialog" onSubmit={handleSubmit}>
-        {/* <div className={styles.formGroup}>
-          <input type="radio" id="20mm" name="type" value="22mm" />
-          <label htmlFor="20mm">20 mm</label>
-        </div>
-
-        <div className={styles.formGroup}>
-          <input type="radio" id="22mm" name="type" value="22mm" />
-          <label htmlFor="22mm">22 mm</label>
-        </div>
-
-        <div className={styles.formGroup}>
-          <input type="radio" id="5kg" name="size" value="5kg" />
-          <label htmlFor="5kg">5 Kg</label>
-        </div>
-        <div className={styles.formGroup}>
-          <input type="radio" id="10kg" name="size" value="10kg" />
-          <label htmlFor="10kg">10 Kg</label>
-        </div>
-
-        <div className={styles.formGroup}>
-          <input type="radio" id="15kg" name="size" value="15kg" />
-          <label htmlFor="15kg">15 Kg</label>
-        </div> */}
-
+      <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
           <label htmlFor="type">Select type</label>
           <select
@@ -94,9 +148,7 @@ export default function ExchangeModal({ open, onClose, card }) {
             name="size"
             id="size"
             value={size}
-            onChange={(e) => {
-              setSize(e.target.value);
-            }}
+            onChange={(e) => setSize(e.target.value)}
           >
             <option value="5kg">5 kg</option>
             <option value="10kg">10 kg</option>
@@ -109,11 +161,9 @@ export default function ExchangeModal({ open, onClose, card }) {
           <input
             type="number"
             id="count"
-            min="0"
+            min="1"
             value={count}
-            onChange={(e) => {
-              setCount(e.target.value);
-            }}
+            onChange={(e) => setCount(e.target.value)}
           />
         </div>
 

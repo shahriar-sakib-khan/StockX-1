@@ -1,11 +1,16 @@
+// import { useOutletContext } from "react-router-dom";
 import styles from "./ReceiptTable.module.css";
 
 export default function ReceiptTable({ type = "" }) {
+  // const { deliveredItems, receivedItems } = useOutletContext();
+
+  // const list = type === "delivered" ? deliveredItems : receivedItems;
+
   return (
     <div className={styles.receiptTable}>
       <table className={styles.tableContainer} role="table">
         <caption className={styles.caption} role="caption">
-          Delivered Items
+          {type === "delivered" ? "Delivered" : "Received"} Items
         </caption>
         <thead role="rowgroup">{type}</thead>
         {/* <thead role="rowgroup">{renderTableHeader(false)}</thead> */}

@@ -1,5 +1,25 @@
 import styles from "./ExchangeListItem.module.css";
 
-export default function ExchangeListItem() {
-  return <div className={styles.listItem}>List Item</div>;
+export default function ExchangeListItem({ item, type }) {
+  if (!item) return null;
+
+  return (
+    <div className={styles.listItem}>
+      <div>
+        <strong>{item.name}</strong>
+        <span>
+          {" "}
+          &mdash; {item.size}, {item.type}
+        </span>
+      </div>
+      <div>
+        Count: <strong>{item.count}</strong>
+        {type === "delivered" && (
+          <>
+            {" | "}Price: <strong>{item.price}৳</strong>
+          </>
+        )}
+      </div>
+    </div>
+  );
 }

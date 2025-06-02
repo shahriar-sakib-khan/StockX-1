@@ -1,7 +1,14 @@
 
 .exchangeBottomSection {
   color: var(--primary-text-clr);
-  display: flex;
+  display: grid;
+  grid-template-columns: 7rem auto;
+  gap: 1em;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  margin-block-start: 1rem;
 }
 
 .regulatorStove {
@@ -9,6 +16,7 @@
   grid-template-rows: 1fr 1fr;
   margin-block: 1em;
   gap: 0.5em;
+
   
   padding-inline: 0.5em;
   text-align: center;

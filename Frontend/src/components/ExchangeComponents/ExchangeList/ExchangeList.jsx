@@ -1,5 +1,6 @@
 import ExchangeListItem from "../ExchangeListItem/ExchangeListItem";
 import styles from "./ExchangeList.module.css";
+import { useOutletContext } from "react-router-dom";
 
 export default function ExchangeList({
   type = "delivered" | "received",
@@ -7,6 +8,8 @@ export default function ExchangeList({
   onClick,
   className = "",
 }) {
+  const { deliveredItems, receivedItems } = useOutletContext();
+
   const title =
     type === "delivered"
       ? "Delivered"
@@ -14,8 +17,19 @@ export default function ExchangeList({
       ? "Received"
       : "Title";
 
-  const items = Array.from({ length: 10 }, (_, i) => (
-    <ExchangeListItem key={i} />
+  const itemsList =
+    type === "delivered"
+      ? Array.isArray(deliveredItems)
+        ? deliveredItems
+        : []
+      : type === "received"
+      ? Array.isArray(receivedItems)
+        ? receivedItems
+        : []
+      : [];
+
+  const items = itemsList.map((item, i) => (
+    <ExchangeListItem key={i} item={item} />
   ));
 
   return (
