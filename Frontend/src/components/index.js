@@ -14,6 +14,7 @@ export { default as ExchangeListItem } from "./ExchangeComponents/ExchangeListIt
 export { default as ExchangeSlider } from "./ExchangeComponents/ExchangeSlider/ExchangeSlider";
 export { default as ExchangeSliderCard } from "./ExchangeComponents/ExchangeSliderCard/ExchangeSliderCard";
 export { default as ExchangeModal } from "./ExchangeComponents/ExchangeModal/ExchangeModal";
+export { default as AddAccessoryModal } from "./ExchangeComponents/AddAccessoryModal/AddAccessoryModal";
 
 //Receipt related
 export { default as ReceiptTable } from "./ReceiptComponents/ReceiptTable/ReceiptTable";

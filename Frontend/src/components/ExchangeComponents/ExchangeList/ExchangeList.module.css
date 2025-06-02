@@ -31,6 +31,7 @@
 
   .list {
     flex-grow: 1;
+    flex-basis: auto;
 
     color: var(--primary-text-clr);
     font-size: 1rem;
@@ -82,4 +83,37 @@
 .list::-webkit-scrollbar-thumb:hover,
 .itemList::-webkit-scrollbar-thumb:hover {
   background-color: hsl(215, 20%, 50%);
+}
+
+.exchangeTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+.exchangeTable th,
+.exchangeTable td {
+  padding: 0.5em;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+.groupHeading {
+  font-weight: bold;
+  background: #f7f7f7;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.editBtn,
+.removeBtn {
+  margin-right: 0.5em;
+  padding: 0.2em 0.6em;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.editBtn {
+  background: #e0eaff;
+  color: #235;
+}
+.removeBtn {
+  background: #ffe0e0;
+  color: #a33;
 }

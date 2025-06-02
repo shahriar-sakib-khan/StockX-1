@@ -8,15 +8,14 @@ export default function ExchangeListItem({ item, type }) {
       <div>
         <strong>{item.name}</strong>
         <span>
-          {" "}
-          &mdash; {item.size}, {item.type}
+          {"  "}[ {item.size}-{item.type} ]
         </span>
       </div>
       <div>
         Count: <strong>{item.count}</strong>
         {type === "delivered" && (
           <>
-            {" | "}Price: <strong>{item.price}৳</strong>
+            Price: <strong>{item.price} ৳ </strong>
           </>
         )}
       </div>

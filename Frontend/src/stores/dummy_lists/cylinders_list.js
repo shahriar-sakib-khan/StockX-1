@@ -2,6 +2,7 @@
     {
       id: 1,
       name: "Brand A",
+      productType: "cylinder",
       totalCylinderCount: 156,
       price: 1500,
       cylinders: [
@@ -16,6 +17,7 @@
     {
       id: 2,
       name: "Brand B",
+      productType: "cylinder",
       totalCylinderCount: 178,
       price: 1500,
       cylinders: [
@@ -30,6 +32,7 @@
     {
       id: 3,
       name: "Brand C",
+      productType: "cylinder",
       totalCylinderCount: 142,
       price: 1500,
       cylinders: [
@@ -44,6 +47,7 @@
     {
       id: 4,
       name: "Brand D",
+      productType: "cylinder",
       totalCylinderCount: 165,
       price: 1500,
       cylinders: [
@@ -58,6 +62,7 @@
     {
       id: 5,
       name: "Brand E",
+      productType: "cylinder",
       totalCylinderCount: 153,
       price: 1500,
       cylinders: [

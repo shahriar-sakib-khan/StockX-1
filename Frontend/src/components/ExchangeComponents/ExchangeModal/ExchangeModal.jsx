@@ -3,7 +3,13 @@ import { useRef, useState, useEffect } from "react";
 import { useCylindersStore } from "../../../stores";
 import { useOutletContext } from "react-router-dom";
 
-export default function ExchangeModal({ open, onClose, card, activeSection }) {
+export default function ExchangeModal({
+  open,
+  onClose,
+  card,
+  activeSection,
+  initialValues = null,
+}) {
   const dialogRef = useRef(null);
   const priceInputRef = useRef(null);
 
@@ -15,12 +21,14 @@ export default function ExchangeModal({ open, onClose, card, activeSection }) {
   const { deliveredItems, setDeliveredItems, receivedItems, setReceivedItems } =
     useOutletContext();
 
+  // State for form fields
   const [type, setType] = useState("20mm");
   const [size, setSize] = useState("5kg");
   const [count, setCount] = useState("1");
   const [price, setPrice] = useState(card?.price || 1000);
   const [isPriceEditable, setIsPriceEditable] = useState(false);
 
+  // Show/hide dialog
   useEffect(() => {
     if (open) {
       dialogRef.current?.showModal();
@@ -29,14 +37,24 @@ export default function ExchangeModal({ open, onClose, card, activeSection }) {
     }
   }, [open]);
 
-  // Reset form when card changes or modal opens
+  // Set form fields from initialValues (edit) or defaults (add)
   useEffect(() => {
-    setType("20mm");
-    setSize("5kg");
-    setCount("1");
-    setPrice(card?.price || 1000);
-    setIsPriceEditable(false);
-  }, [card, open]);
+    if (open && initialValues) {
+      setType(initialValues.type || "20mm");
+      setSize(initialValues.size || "5kg");
+      setCount(initialValues.count?.toString() || "1");
+      setPrice(
+        initialValues.price?.toString() || card?.price?.toString() || "1000"
+      );
+      setIsPriceEditable(false);
+    } else if (open) {
+      setType("20mm");
+      setSize("5kg");
+      setCount("1");
+      setPrice(card?.price?.toString() || "1000");
+      setIsPriceEditable(false);
+    }
+  }, [open, initialValues, card]);
 
   const handleBackdropClick = (e) => {
     if (e.target === dialogRef.current) {
@@ -53,12 +71,28 @@ export default function ExchangeModal({ open, onClose, card, activeSection }) {
       size,
       count: Number(count),
       price: Number(price),
+      productType: card?.productType || "cylinder",
     };
+
+    // Edit mode: update the existing item in the list
+    if (typeof initialValues === "object") {
+      const currentList = Array.isArray(deliveredItems) ? deliveredItems : [];
+      const newList = currentList.map((i, idx) =>
+        idx === initialValues.idx ? { ...i, ...item } : i
+      );
+      setDeliveredItems(newList);
+      onClose();
+      return;
+    }
 
     if (activeSection === "delivered") {
       const currentList = Array.isArray(deliveredItems) ? deliveredItems : [];
       const existingIndex = currentList.findIndex(
-        (i) => i.id === item.id && i.type === item.type && i.size === item.size
+        (i) =>
+          i.id === item.id &&
+          i.type === item.type &&
+          i.size === item.size &&
+          i.productType === item.productType
       );
 
       let newList;
@@ -91,7 +125,11 @@ export default function ExchangeModal({ open, onClose, card, activeSection }) {
     } else if (activeSection === "received") {
       const currentList = Array.isArray(receivedItems) ? receivedItems : [];
       const existingIndex = currentList.findIndex(
-        (i) => i.id === item.id && i.type === item.type && i.size === item.size
+        (i) =>
+          i.id === item.id &&
+          i.type === item.type &&
+          i.size === item.size &&
+          i.productType === item.productType
       );
 
       let newList;
@@ -167,42 +205,44 @@ export default function ExchangeModal({ open, onClose, card, activeSection }) {
           />
         </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="price">Enter price</label>
-          <input
-            type="number"
-            id="price"
-            className={styles.priceInput}
-            min="0"
-            value={price}
-            ref={priceInputRef}
-            readOnly={!isPriceEditable}
-            onBlur={() => setIsPriceEditable(false)}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          {!isPriceEditable && (
-            <span className={styles.priceInputTaka}>tk</span>
-          )}
-          <svg
-            className="feather feather-edit"
-            fill="none"
-            height="24"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-            onClick={() => {
-              setIsPriceEditable(true);
-              setTimeout(() => priceInputRef.current?.focus(), 0);
-            }}
-          >
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-          </svg>
-        </div>
+        {activeSection == "delivered" && (
+          <div className={styles.formGroup}>
+            <label htmlFor="price">Enter price</label>
+            <input
+              type="number"
+              id="price"
+              className={styles.priceInput}
+              min="0"
+              value={price}
+              ref={priceInputRef}
+              readOnly={!isPriceEditable}
+              onBlur={() => setIsPriceEditable(false)}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+            {!isPriceEditable && (
+              <span className={styles.priceInputTaka}>tk</span>
+            )}
+            <svg
+              className="feather feather-edit"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+              onClick={() => {
+                setIsPriceEditable(true);
+                setTimeout(() => priceInputRef.current?.focus(), 0);
+              }}
+            >
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+            </svg>
+          </div>
+        )}
 
         <button type="submit" className={styles.submitBtn}>
           Submit
