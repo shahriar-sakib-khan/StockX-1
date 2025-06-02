@@ -65,84 +65,75 @@ export default function ExchangeModal({
   const handleSubmit = (e) => {
     e.preventDefault();
     const item = {
-      id: card?.brandId,
-      name: card?.brandName,
+      id: card?.brandId ?? initialValues?.id,
+      name: card?.brandName ?? initialValues?.name,
       type,
       size,
       count: Number(count),
       price: Number(price),
-      productType: card?.productType || "cylinder",
+      productType:
+        card?.productType || initialValues?.productType || "cylinder",
     };
 
-    // Edit mode: update the existing item in the list
-    if (typeof initialValues === "object") {
-      const currentList = Array.isArray(deliveredItems) ? deliveredItems : [];
-      const newList = currentList.map((i, idx) =>
-        idx === initialValues.idx ? { ...i, ...item } : i
-      );
-      setDeliveredItems(newList);
+    // Edit mode
+    if (initialValues && typeof initialValues.idx === "number") {
+      const prevCount = Number(initialValues.count);
+      const diff = prevCount - item.count; // If positive, we need to add back to stock; if negative, subtract more
+
+      if (activeSection === "delivered") {
+        const currentList = Array.isArray(deliveredItems) ? deliveredItems : [];
+        const newList = currentList.map((i, idx) =>
+          idx === initialValues.idx ? { ...i, ...item } : i
+        );
+        setDeliveredItems(newList);
+        setCylinders(
+          updateCylinderStock(
+            cylinders,
+            item.id,
+            item.type,
+            item.size,
+            diff // add back the old, subtract the new
+          )
+        );
+      } else if (activeSection === "received") {
+        const currentList = Array.isArray(receivedItems) ? receivedItems : [];
+        const newList = currentList.map((i, idx) =>
+          idx === initialValues.idx ? { ...i, ...item } : i
+        );
+        setReceivedItems(newList);
+        setCylinders(
+          updateCylinderStock(cylinders, item.id, item.type, item.size, diff)
+        );
+      }
       onClose();
       return;
     }
 
+    // Add mode
     if (activeSection === "delivered") {
       const currentList = Array.isArray(deliveredItems) ? deliveredItems : [];
-      const existingIndex = currentList.findIndex(
-        (i) =>
-          i.id === item.id &&
-          i.type === item.type &&
-          i.size === item.size &&
-          i.productType === item.productType
+      setDeliveredItems([...currentList, item]);
+      setCylinders(
+        updateCylinderStock(
+          cylinders,
+          item.id,
+          item.type,
+          item.size,
+          -item.count // decrease stock
+        )
       );
-
-      let newList;
-      if (existingIndex !== -1) {
-        // Update count for existing item
-        newList = currentList.map((i, idx) =>
-          idx === existingIndex
-            ? { ...i, count: i.count + item.count, price: item.price }
-            : i
-        );
-      } else {
-        // Add new item
-        newList = [...currentList, item];
-      }
-      setDeliveredItems(newList);
-      const updatedCylinders = cylinders.map((brand) =>
-        brand.id !== card.brandId
-          ? brand
-          : {
-              ...brand,
-              cylinders: brand.cylinders.map((cyl) =>
-                cyl.type === type && cyl.size === size
-                  ? { ...cyl, stock: cyl.stock - Number(count) }
-                  : cyl
-              ),
-              totalCylinderCount: brand.totalCylinderCount - Number(count),
-            }
-      );
-      setCylinders(updatedCylinders);
     } else if (activeSection === "received") {
       const currentList = Array.isArray(receivedItems) ? receivedItems : [];
-      const existingIndex = currentList.findIndex(
-        (i) =>
-          i.id === item.id &&
-          i.type === item.type &&
-          i.size === item.size &&
-          i.productType === item.productType
+      setReceivedItems([...currentList, item]);
+      setCylinders(
+        updateCylinderStock(
+          cylinders,
+          item.id,
+          item.type,
+          item.size,
+          -item.count // decrease stock
+        )
       );
-
-      let newList;
-      if (existingIndex !== -1) {
-        newList = currentList.map((i, idx) =>
-          idx === existingIndex
-            ? { ...i, count: i.count + item.count, price: item.price }
-            : i
-        );
-      } else {
-        newList = [...currentList, item];
-      }
-      setReceivedItems(newList);
     }
     onClose();
   };
@@ -249,5 +240,21 @@ export default function ExchangeModal({
         </button>
       </form>
     </dialog>
+  );
+}
+
+function updateCylinderStock(cylinders, brandId, type, size, diff) {
+  return cylinders.map((brand) =>
+    brand.id !== brandId
+      ? brand
+      : {
+          ...brand,
+          cylinders: brand.cylinders.map((cyl) =>
+            cyl.type === type && cyl.size === size
+              ? { ...cyl, stock: cyl.stock + diff }
+              : cyl
+          ),
+          totalCylinderCount: brand.totalCylinderCount + diff,
+        }
   );
 }

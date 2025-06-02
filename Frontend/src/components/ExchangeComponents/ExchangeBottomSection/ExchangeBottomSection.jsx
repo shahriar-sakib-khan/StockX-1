@@ -19,6 +19,8 @@ export default function ExchangeBottomSection(props) {
     setModalType(null);
   };
 
+  const isDisabled = activeSection === "received";
+
   return (
     <div className={styles.exchangeBottomSection}>
       <div className={styles.regulatorStove}>
@@ -26,7 +28,8 @@ export default function ExchangeBottomSection(props) {
           className={styles.regulator}
           role="button"
           tabIndex={0}
-          onClick={() => openModal("regulator")}
+          onClick={() => !isDisabled && openModal("regulator")}
+          aria-disabled={isDisabled}
         >
           Add regulator
         </div>
@@ -34,7 +37,8 @@ export default function ExchangeBottomSection(props) {
           className={styles.stove}
           role="button"
           tabIndex={0}
-          onClick={() => openModal("stove")}
+          onClick={() => !isDisabled && openModal("stove")}
+          aria-disabled={isDisabled}
         >
           Add stove
         </div>

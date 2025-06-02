@@ -10,7 +10,8 @@ export default function ExchangeList({
   onClick,
   className = "",
 }) {
-  const { deliveredItems, setDeliveredItems } = useOutletContext();
+  const { deliveredItems, setDeliveredItems, receivedItems, setReceivedItems } =
+    useOutletContext();
   const [editIndex, setEditIndex] = useState(null);
   const [editModalType, setEditModalType] = useState(null); // "stove" or "regulator"
   const [editInitialValues, setEditInitialValues] = useState(null);
@@ -22,6 +23,8 @@ export default function ExchangeList({
       ? Array.isArray(deliveredItems)
         ? deliveredItems
         : []
+      : Array.isArray(receivedItems)
+      ? receivedItems
       : [];
 
   const groups = [
@@ -32,8 +35,26 @@ export default function ExchangeList({
 
   // Remove item handler
   const handleRemove = (idx) => {
+    const item = itemsList[idx];
+    // Remove from the correct list
     const newList = itemsList.filter((_, i) => i !== idx);
-    setDeliveredItems(newList);
+    if (type === "delivered") {
+      setDeliveredItems(newList);
+    } else {
+      setReceivedItems(newList);
+    }
+    // Update cylinder stock if it's a cylinder
+    if (item.productType === "cylinder") {
+      setCylinders(
+        updateCylinderStock(
+          cylinders,
+          item.id,
+          item.type,
+          item.size,
+          item.count // add back to stock
+        )
+      );
+    }
   };
 
   // Edit item handler
@@ -52,7 +73,11 @@ export default function ExchangeList({
     const newList = itemsList.map((item, idx) =>
       idx === editIndex ? { ...item, ...updatedItem } : item
     );
-    setDeliveredItems(newList);
+    if (type === "delivered") {
+      setDeliveredItems(newList);
+    } else {
+      setReceivedItems(newList);
+    }
     setEditIndex(null);
     setEditModalType(null);
     setEditInitialValues(null);
