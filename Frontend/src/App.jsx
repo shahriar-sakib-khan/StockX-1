@@ -1,17 +1,12 @@
 import { RouterProvider } from "react-router-dom";
-import router from "./routes/routes";
-import useThemeStore from "./stores/ThemeStore";
-import { useEffect } from "react";
-import applyThemeClass from "./utils/applyThemeClass";
+import ExchangeHistory from "../src/pages/ExchangeHistory/ExchangeHistory.jsx";
 
 function App() {
-  const theme = useThemeStore((s) => s.theme);
-
-  useEffect(() => {
-    applyThemeClass(theme);
-  }, [theme]);
-
-  return <RouterProvider router={router} />;
+  return(
+      <>
+        < ExchangeHistory/>
+      </>
+  );
 }
 
 export default App;
