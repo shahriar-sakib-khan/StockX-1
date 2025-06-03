@@ -101,3 +101,56 @@
     grid-template-columns: repeat(4, 1fr); /* 4 cards per row on small screens */
   }
 }
+.submitBtn {
+  background-color: #5ca95e; /* green */
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  position: relative;
+   margin-top: 25px
+}
+
+.submitBtn:hover:not(:disabled) {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.submitBtn:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* Optional Tooltip on Hover */
+
+.selectCount button {
+  background-color: #297abc; /* blue */
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-right: 10px;
+}
+
+
+
+.selectCount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.counter {
+  font-size: 14px;
+  color: #555;
+}

@@ -21,20 +21,28 @@ function InventoryCard({ brand }) {
     '25kg': '#FFD699',
   };
 
+  const prices = {
+    '5kg': 550,
+    '12kg': 950,
+    '20kg': 1450,
+    '25kg': 1650,
+  };
+
   const selectedColor = selectedSize ? sizeColors[selectedSize] : 'transparent';
+  const selectedPrice = prices[selectedSize];
 
   return (
     <div
       className={styles.card}
       style={{
-        border: '0px solid transparent', // keep border for consistent size
+        border: '0px solid transparent',
         borderRadius: '12px',
         boxShadow: selectedSize ? `0 0 7px 4px ${selectedColor}` : 'none',
         opacity: selectedSize ? 1 : 0.7,
         transition: 'box-shadow 0.3s ease, opacity 0.3s ease',
       }}
     >
-      {/* Top section: Stock + type buttons side by side */}
+      {/* Top section: Stock + type buttons */}
       <div className={styles.topSection}>
         <div className={styles.stockHeader}>
           <span className={styles.stockLabel}>Stock: {stock}</span>
@@ -60,14 +68,12 @@ function InventoryCard({ brand }) {
         </div>
       </div>
 
-      {/* Cylinder Image without border */}
+      {/* Cylinder Image */}
       <img
         src={cylinderImage}
         alt={`${name} cylinder`}
         className={styles.logo}
-        style={{
-          borderRadius: '12px',
-        }}
+        style={{ borderRadius: '12px' }}
       />
 
       {/* Info */}
@@ -76,7 +82,7 @@ function InventoryCard({ brand }) {
         <p className={styles.description}>{description}</p>
       </div>
 
-      {/* Plus and Minus Buttons for Stock */}
+      {/* Stock Controls */}
       <div className={styles.controls}>
         <button className={styles.minusBtn} onClick={decrementStock}>
           −
@@ -86,7 +92,21 @@ function InventoryCard({ brand }) {
         </button>
       </div>
 
-      {/* Bottom Buttons for Sizes */}
+      {/* Price Display */}
+      <div
+        className={styles.price}
+        style={{
+          marginTop: '8px',
+          fontWeight: 'bold',
+          fontSize: '16px',
+          textAlign: 'center',
+          color: '#333',
+        }}
+      >
+        Price: {selectedPrice} Tk
+      </div>
+
+      {/* Size Buttons */}
       <div className={styles.bottomButtons}>
         {['5kg', '12kg', '20kg', '25kg'].map(size => (
           <button
