@@ -1,27 +1,35 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv").config();
-const cors = require("cors");
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import path from "path";
+
+import authController from './controllers/authController.js';
+import uploadController from './controllers/uploadController.js';
+import userController from './controllers/userController.js';
+
+dotenv.config();
+
 const app = express();
 
-const authController = require('./controllers/authController')
-const uploadController = require('./controllers/uploadController');
-const userController = require("./controllers/userController");
-const commentController = require("./controllers/commentController");
+// MongoDB connection
+mongoose.set('strictQuery', false);
+mongoose.connect(process.env.MONGO_URL)
+    .then(() => console.log("Connected to MongoDB"))
+    .catch(err => console.error("MongoDB connection error:", err));
 
-// db connecting
-mongoose.set('strictQuery', false)
-mongoose.connect(process.env.MONGO_URL);
-
-// middlewares
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-app.use("/auth", authController);
-app.use('/upload', uploadController)
-app.use('/user', userController)
-app.use('/comment', commentController)
+// Serve static files (uploads)
+app.use('/images', express.static(path.join('public/images')));
 
-// starting server
+// Routes
+app.use("/api/v1/auth", authController);
+app.use('/api/v1/upload', uploadController);
+app.use('/api/v1/user', userController);
+
+// Server
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log("Server has been started"));
+app.listen(port, () => console.log(`Server running on port ${port}`));

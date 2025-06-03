@@ -1,27 +1,29 @@
-const mongoose = require('mongooose')
+import { Schema, model } from 'mongoose';
 
-const shopSchema = new mongoose.Schema({
-    shopOwner: {
+const shopSchema = new Schema(
+    {
+    name: {
         type: String,
-        required: true
+        required: [true, 'Shop name is required'],
+        trim: true,
     },
-    shopName: {
-        type: String, 
-        required: true,
-        unique: true
-    },
-    shopLocation: {
+    description: {
         type: String,
+        trim: true,
+    },
+    location: {
+        type: String,
+        trim: true,
+    },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User', 
         required: true,
     },
-    shopCity: {
-        type: String,
-        required: true,
+    createdAt: {
+        type: Date,
+        default: Date.now,
     },
-    shopDivision: {
-        type: String,
-        required: true,
-    }
-}, {timestamps: true})
+}, { timestamps: true });
 
-module.exports = mongoose.model("Shop", shopSchema)
+export default model('Shop', shopSchema);

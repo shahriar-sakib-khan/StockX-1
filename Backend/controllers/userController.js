@@ -1,55 +1,63 @@
-const userController = require('express').Router()
-const User = require('../models/User')
-const bcrypt = require('bcrypt')
-const verifyToken = require('../middlewares/verifyToken')
+import { Router } from 'express';
+import User from '../models/User.js';
+import verifyToken from '../middlewares/verifyToken.js';
 
-userController.get('/find/:id', async (req, res) => {
+const router = Router();
+
+// Get current user
+router.get('/me', verifyToken, async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).select('-password')
-        if (!user) throw new Error("No such user")
-        return res.status(200).json(user)
-    } catch (error) {
-        return res.status(500).json(error.message)
+        const user = await User.findById(req.user.id).select('-password');
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
-})
+});
 
-userController.put('/:id', verifyToken, async (req, res) => {
-    console.log(req.body)
-    if (req.params.id === req.user.id.toString()) {
-        try {
-            if (req.body.password) {
-                const newPassword = await bcrypt.hash(req.body.password, 10)
-                req.body.password = newPassword
-            }
-            const updatedUser = await User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+// Get user by ID
+router.get('/find/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password');
+        if (!user) return res.status(404).json({ error: 'No such user' });
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
-            return res.status(200).json(updatedUser)
-        } catch (error) {
-            return res.status(500).json(error.message)
+// Update user
+router.put('/:id', verifyToken, async (req, res) => {
+    if (req.params.id !== req.user.id) {
+        return res.status(403).json({ error: 'You can update only your profile' });
+    }
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        ).select('-password');
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Delete user
+router.delete('/:id', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).json({ error: 'No such user' });
+
+        if (req.user.id !== user._id.toString()) {
+            return res.status(403).json({ error: 'You can delete only your profile' });
         }
-    } else {
-        return res.status(403).json({ msg: 'You can update only your profile' })
-    }
-})
 
-userController.delete('/:id', verifyToken, async(req, res) => {
-    const user = await User.findById(req.params.id)
-    if(!user) {
-        return res.status(500).json({ msg: 'No such user' })
-    }
-
-
-    if(req.user.id.toString() === user._id.toString()) {
-    try {
-        await User.findByIdAndDelete(req.params.id)
-
-        return res.status(200).json({ msg: 'Successfully deleted' })
+        await User.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: 'Successfully deleted' });
     } catch (error) {
-        return res.status(500).json(error.message)
+        res.status(500).json({ error: error.message });
     }
-} else {
-    return res.status(403).json({ msg: 'You can delete only your profile' })
-}
-}
-)
-module.exports = userController
+});
+
+export default router;
