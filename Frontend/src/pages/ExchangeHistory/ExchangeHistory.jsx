@@ -12,7 +12,7 @@ const transactions = [
 
 const formatDateTime = (isoString) => {
     const date = new Date(isoString);
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     return {
         date: date.toLocaleDateString(undefined, options),
@@ -31,17 +31,22 @@ function ExchangeHistory() {
     const [day, setDay] = useState('');
 
     const years = [...new Set(transactions.map(t => new Date(t.date).getFullYear()))];
-    const months = Array.from({ length: 12 }, (_, i) => i + 1);
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
+    // Step 1: filter logic
     let filteredTransactions = transactions.filter((t) => {
         const lowerSearch = search.toLowerCase();
-        const matchesSearch = t.shop.toLowerCase().includes(lowerSearch) || t.date.includes(lowerSearch);
-        const { year: tYear, month: tMonth, day: tDay } = formatDateTime(t.date);
+        const { year: tYear, month: tMonth, day: tDay, date: readableDate } = formatDateTime(t.date);
+        const searchMatchesDate = readableDate.toLowerCase().includes(lowerSearch);
+        const searchMatchesShop = t.shop.toLowerCase().includes(lowerSearch);
 
         switch (filter) {
             case 'By Shop':
-                return matchesSearch;
+                return searchMatchesShop;
             case 'By Date':
                 return (
                     (!year || +year === tYear) &&
@@ -49,17 +54,33 @@ function ExchangeHistory() {
                     (!day || +day === tDay)
                 );
             case 'By Buy':
-                return t.type === 'Buy';
+                return t.type === 'Buy' && (searchMatchesShop || searchMatchesDate);
             case 'By Sell':
-                return t.type === 'Sell';
+                return t.type === 'Sell' && (searchMatchesShop || searchMatchesDate);
             default:
-                return true;
+                return searchMatchesShop || searchMatchesDate;
         }
     });
 
+// ✅ Always sort by date ascending when filtering by date
+    if (filter === 'By Date') {
+        filteredTransactions.sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+
+// ✅ Also sort by date if search input is valid date
+    const parsedDate = Date.parse(search);
+    if (!isNaN(parsedDate)) {
+        const searchDateOnly = new Date(parsedDate).toDateString();
+        filteredTransactions = filteredTransactions
+            .filter(t => new Date(t.date).toDateString() === searchDateOnly)
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+
+// ✅ Sort by shop name for shop filter
     if (filter === 'By Shop') {
         filteredTransactions.sort((a, b) => a.shop.localeCompare(b.shop));
     }
+
 
     return (
         <div className={styles.container}>
@@ -82,8 +103,11 @@ function ExchangeHistory() {
                         </select>
                         <select value={month} onChange={(e) => setMonth(e.target.value)}>
                             <option value="">Month</option>
-                            {months.map(m => <option key={m} value={m}>{m}</option>)}
+                            {monthNames.map((name, idx) => (
+                                <option key={idx + 1} value={idx + 1}>{name}</option>
+                            ))}
                         </select>
+
                         <select value={day} onChange={(e) => setDay(e.target.value)}>
                             <option value="">Day</option>
                             {days.map(d => <option key={d} value={d}>{d}</option>)}
@@ -113,9 +137,7 @@ function ExchangeHistory() {
                                 <span>{date}</span>
                                 <span>{time}</span>
                             </div>
-                            {/* Centered bold heading for Buy/Sell */}
                             <h2 className={styles.centeredType}>{transaction.type}</h2>
-
                             <div className={styles.body}>
                                 <p><strong>Cylinders:</strong> {transaction.cylinderCount}</p>
                                 <p><strong>Amount:</strong> ৳{transaction.amount}</p>
