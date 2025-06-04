@@ -1,3 +1,296 @@
-.profile {
-  
+/*basic styling*/
+
+/*Main profile edit*/
+
+.main_container{
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
 }
+
+.userpic_container{
+    height: 100vh;
+    width: 30%;
+    flex-shrink: 0;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.profile_pic{
+    width: 60%; /* Or 200px, depending on layout */
+    aspect-ratio: 1 / 1;  /* Maintain square shape */
+    object-fit: cover;    /* Crop to fit nicely */
+    border-radius: 50%;   /* Make it a perfect circle */
+    display: block;
+    bottom: 500px;
+    margin-top: 12%;
+
+}
+
+.info_container{
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    text-align: center;
+
+    overflow-x: hidden;
+}
+
+.user_info{
+    width: 100%;
+    height: auto;
+}
+
+.global_box{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+}
+
+.info_holder{
+    height: 45px;
+    width: auto;
+    min-width: 42%;
+    background-color: #D6D9DE;
+
+    border: none;
+    border-left: 8px solid black;
+    border-radius: 7px;
+    margin-right: 20px;
+
+    text-align: left;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+}
+
+.info_holder p{
+    margin-left: 10%;
+}
+
+
+.button_container{
+    width: 100%;
+    height: 60px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button_container button{
+    margin: 1% 0 0 0;
+    height: 60%;
+    width: 40%;
+
+    background-color: #79B524;
+    border: none;
+    color: white;
+    border-radius: 6px;
+
+
+    transition: background-color 0.5s ease, transform 0.5s ease;
+}
+
+.button_container button:hover{
+    background-color: #456b10;
+    cursor: pointer;
+
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.employee_info{
+    width: 100%;
+    text-align: center;
+
+}
+
+.addemp_btn{
+    height: auto;
+    min-height: 250px;
+    width: 20%;
+    min-width: 200px;
+    outline: 3px dashed grey;
+    outline-offset: -2px;
+    border-radius: 8px;
+    background-color: #eef2f7;
+
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.addemp_btn:hover{
+    background-color: lightgrey;
+    cursor: pointer;
+}
+.addemp_btn:active{
+    background-color: grey;
+}
+
+.addemp_btn img{
+    width: 80%;
+    height: 80%;
+}
+
+
+
+/*Edit User Css*/
+
+.editUserPopup_container{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+}
+
+.editUserPopup_container input{
+    border-radius: 7px;
+    height: 35px;
+    width: 300px;
+    background-color: white;
+    padding-left: 12px;
+
+    box-shadow: 1px 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+    border: none;
+}
+
+.editUserBtn_container{
+    color: white;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.editUserBtn_container button{
+    width: 98%;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #79B524;
+
+    height: 30px;
+
+    transition: background-color 0.5s ease, transform 0.5s ease;
+}
+
+.editUserBtn_container button:hover{
+    background-color: #456b10;
+    cursor: pointer;
+
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.editUserBtn_container button:active{
+    background-color: #456b10;
+    cursor: pointer;
+
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+/*Finish Edit User Css*/
+
+@media(max-width: 615px){
+    .main_container{
+        flex-direction: column;
+        overflow: auto;
+        height: auto;
+    }
+
+    .userpic_container{
+        width: 100%;
+        height: auto;
+    }
+
+    .profile_pic{
+        width: 30%;
+        margin-top: 5%;
+    }
+
+    .info_container{
+        width: 100%;
+        height: auto;
+    }
+
+    .info_holder{
+        width: 100%;
+    }
+
+    .addemp_btn{
+        min-width: 155px;
+    }
+
+    .addemp_btn:hover{
+        background-color: ghostwhite;
+    }
+
+    .addemp_btn:active{
+        background-color: grey;
+    }
+}
+
+
+/*.main_container {*/
+/*    display: flex;*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*}*/
+
+/*.box1 {*/
+/*    width: 35%;*/
+/*    height: 100vh;*/
+/*    background-color: red;*/
+/*}*/
+
+/*.right_section {*/
+/*    width: 65%;*/
+/*    height: 100vh;*/
+/*    overflow-y: auto;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+
+/*.box2 {*/
+/*    background-color: green;*/
+/*    padding: 20px;*/
+/*    min-height: 500px;*/
+/*}*/
+
+/*.box3 {*/
+/*    background-color: blue;*/
+/*    padding: 20px;*/
+/*    min-height: 1000px;*/
+/*}*/
