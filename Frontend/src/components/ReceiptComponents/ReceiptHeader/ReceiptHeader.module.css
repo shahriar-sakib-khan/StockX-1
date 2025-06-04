@@ -1,0 +1,56 @@
+
+.receiptHeader {
+  --_background : hsl(214, 30%, 30%);
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+
+  .currentShopDetails {
+    color: var(--primary-text-clr);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .currentShopName {
+      letter-spacing: 0.05em;
+      font-size: 2rem;  
+      font-weight: 600;
+      margin-bottom: 0.125em;
+    }
+    .currentShopOwner {
+      color: white;
+      letter-spacing: 0.05em;
+      background-color: var(--_background);
+      font-size: 1.125rem;
+      font-weight: 500;
+      padding: 0.125em 0.75em 0.25em;
+      border-radius: 1em;
+    }
+    .currentShopMoto { text-align: center; }
+    .currentShopContact { font-weight: 500; }
+    .currentShopAddress {
+      color: white;
+      width: 90%;
+      text-align: center;
+      background-color: var(--_background);
+      padding-block: 0.25em;
+    }
+  }
+
+  .targetShopDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125em;
+    color: var(--primary-text-clr);
+    /* font-weight: 500; */
+
+    .targetShopTop,
+    .targetShopMiddle,
+    .targetShopBottom {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

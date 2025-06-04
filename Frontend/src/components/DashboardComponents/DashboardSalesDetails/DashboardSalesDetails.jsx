@@ -1,5 +1,5 @@
 import styles from "./DashboardSalesDetails.module.css";
-import { ShopDetails, CashBoxDetails } from "../";
+import { ShopDetails, CashBoxDetails } from "../..";
 
 export default function DashboardSalesDetails({
   name = false,

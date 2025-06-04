@@ -1,0 +1,124 @@
+.card {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 0;
+  margin-block: 0.3125em;
+  border: var(--border-300);
+  border-radius: 0.5em;
+  box-shadow: 0 2px 8px hsla(0, 0%, 0%, 0.1);
+
+  width: 8.75em;
+
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.stockCount {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--primary-font-clr-dark);
+  background-color: hsl(0, 0%, 95%);
+  border-top-left-radius: 0.4375em ;
+  padding: 0.3em;
+  align-self: flex-start;
+}
+
+.image {
+  aspect-ratio: 3 / 3.5;
+  object-fit: contain;
+  align-self: center;
+  max-width: 5em;
+  padding-inline: 0;
+}
+
+.name {
+  color: var(--primary-text-clr);
+  font-size: 0.95em;
+  font-weight: 600;
+  padding-inline-start: 1em;
+  margin: 0;
+  align-self: flex-start;
+}
+
+.price {
+  font-size: 0.95rem;
+  color: #888;
+  align-self: flex-start;
+  padding-inline-start: 1em;
+  margin-block: 0 0.5em;
+}
+
+
+.plusBtn {
+  color: #333;
+  background-color: #f0f0f0;
+  font-size: 1.25rem;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 50%;
+  width: 1.65em;
+  height: 1.75em;
+
+  position: absolute;
+  top: 5%;
+  right: 5%;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.plusBtn:not(:disabled):hover {
+  background-color: #ddd;
+}
+
+.plusBtn:focus {
+  outline: none;
+  background-color: #ccc;
+}
+
+.plusBtn:disabled {
+  cursor: not-allowed;
+  background-color: #ddd;
+  
+  &:hover {
+    /* background-color: #f0f0f0; */
+  }
+}
+
+/* === Tooltip for Disabled Button === */
+.plusBtn:disabled::after {
+  content: attr(data-tool-tip);
+  font-weight: 500;
+  display: block;
+  position: absolute;
+  top: 10%;
+  right: 0%;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.375em 0.625em 0.5em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  transform: scale(0);
+  transition: transform ease-out 150ms,
+              top ease-out 150ms,
+              right ease-out 150ms ;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.plusBtn:disabled:hover::after {
+  top: 45%;
+  right: 10%;
+  transform: scale(1);
+}
+
+

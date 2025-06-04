@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import {
   Layout,
   DashboardLayout,
@@ -7,6 +8,7 @@ import {
   SelectionLayout,
   ShopSelectionLayout,
 } from "./Layouts";
+
 import {
   Landing,
   Register,
@@ -53,19 +55,19 @@ const router = createBrowserRouter([
             element: <Buy />,
           },
           {
-            path: "selection",
-            element: <SelectionLayout />,
-            children: [
-              { index: true, element: <Selection /> },
-              { path: "selected-inventory", element: <Inventory /> },
-            ],
-          },
-          {
             path: "inventory",
             element: <InventoryLayout />,
             children: [
               { index: true, element: <Inventory /> },
               { path: "empty-cylinders", element: <EmptyCylinders /> },
+              {
+                path: "selection",
+                element: <SelectionLayout />,
+                children: [
+                  { index: true, element: <Selection /> },
+                  { path: "initialization", element: <Initialization /> },
+                ],
+              },
             ],
           },
 

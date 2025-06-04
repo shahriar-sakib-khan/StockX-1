@@ -9,7 +9,7 @@ const Header = () => {
       <div className="wrapper">
         <header className={styles.header}>
           <Logo />
-          <ThemeSwitch className={styles.theme} />
+          {/* <ThemeSwitch className={styles.theme} /> */}
           <ProfileButton className={styles.profile} />
         </header>
       </div>
