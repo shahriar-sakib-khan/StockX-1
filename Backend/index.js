@@ -7,6 +7,8 @@ import path from "path";
 import authController from './controllers/authController.js';
 import uploadController from './controllers/uploadController.js';
 import userController from './controllers/userController.js';
+import transactionController from './controllers/transactionController.js';
+
 
 dotenv.config();
 
@@ -17,8 +19,8 @@ mongoose.set('strictQuery', false);
 mongoose.connect(process.env.MONGO_URL)
     .then(() => console.log("Connected to MongoDB"))
     .catch(err => console.error("MongoDB connection error:", err));
-
-// Middleware
+    
+    // Middleware
 app.use(cors());
 app.use(express.json());
 
@@ -29,6 +31,7 @@ app.use('/images', express.static(path.join('public/images')));
 app.use("/api/v1/auth", authController);
 app.use('/api/v1/upload', uploadController);
 app.use('/api/v1/user', userController);
+app.use('/api/v1/transaction', transactionController);
 
 // Server
 const port = process.env.PORT || 5000;

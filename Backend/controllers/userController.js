@@ -1,3 +1,4 @@
+
 import { Router } from 'express';
 import User from '../models/User.js';
 import verifyToken from '../middlewares/verifyToken.js';
@@ -61,3 +62,4 @@ router.delete('/:id', verifyToken, async (req, res) => {
 });
 
 export default router;
+
