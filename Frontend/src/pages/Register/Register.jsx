@@ -2,7 +2,8 @@ import React  from 'react';
 import { NavLink } from "react-router-dom";
 import styles from './Register.module.css'
 import { FcGoogle } from 'react-icons/fc';
-import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock , FaShopify } from 'react-icons/fa';
+import {FaShop} from "react-icons/fa6";
 
 const Register = () =>{
 
@@ -15,7 +16,7 @@ const Register = () =>{
                     </div>
                     <button className={styles.googleBtn}>
                         <FcGoogle size={20} />
-                        <span>Continue as SH</span>
+                        <span></span>
                     </button>
 
                     <div className={styles.orline}>
@@ -45,7 +46,7 @@ const Register = () =>{
 
                         <div className={styles.inputBox}>
                             <p>Shop name</p>
-                            <FaLock className={styles.icon} />
+                            <FaShop className={styles.icon} />
                             <input type="text" placeholder="Minimum 8 characters" />
                         </div>
 
@@ -55,13 +56,10 @@ const Register = () =>{
 
                     </form>
                     <div className={styles.footer}>
-                        <p>Already have an account? <a href="">login</a></p>
+                        <p>Already have an account?<NavLink to="/login"> <a href="">login</a> </NavLink></p>
                     </div>
                 </div>
-                <div className={styles.help_box}>
-                    <i className={`fas fa-question-circle ${styles.help_icon}`}></i>
-                    <p>Help</p>
-                </div>
+
             </div>
         </>
     );

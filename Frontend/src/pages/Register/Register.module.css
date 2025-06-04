@@ -1,18 +1,8 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100svh;
-    font-family: Reboto, sans-serif;
-    overflow: auto;
 
-    background-color: ghostwhite;
-
-}
 
 .main_container{
-    height: 600px;
-    width: 600px;
+    height: 100vh;
+    width: 100vw;
 
 
     position: relative;
@@ -21,6 +11,7 @@ html, body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 
 
 }
@@ -75,6 +66,8 @@ html, body {
 
 .orline{
     width: 100%;
+    height: 32px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -84,7 +77,9 @@ html, body {
 
     font-size: 12px;
 }
-
+.orline p{
+    margin-bottom: 10px;
+}
 .line{
     width: 38%;
     height: 1px;
@@ -117,7 +112,7 @@ html, body {
 .inputBox .icon{
     position: absolute;
     left: 10px;
-    top: 44px;
+    top: 40px;
     color: #878787
 }
 
@@ -231,10 +226,6 @@ html, body {
 }
 
 @media (max-width: 765px){
-
-    .main_container{
-        width: 350px;
-    }
     .help_box{
         display: none;
     }

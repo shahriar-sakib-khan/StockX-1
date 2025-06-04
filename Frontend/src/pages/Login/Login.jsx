@@ -1,44 +1,11 @@
-import React , {useState} from 'react';
+import React  from 'react';
 import { NavLink } from "react-router-dom";
-import styles from './Login.module.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import {toast} from "react-toastify";
+import styles from './Login.module.css'
+import { FcGoogle } from 'react-icons/fc';
+import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
 
 const Login = () =>{
-    const [email , setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPassword , setShowPassword] = useState(false);
 
-
-    const handleLogin = (e) => {
-        e.preventDefault();
-
-        if(!email.trim()){
-            toast.error("Email is required", {
-                toastId: 0,
-            });
-            return;
-        }
-
-        if(!password.trim()){
-            toast.error("Password is required",{
-                toastId: 1,
-            });
-            return;
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if(!emailRegex.test(email)){
-            toast.error("Enter A Valid Email Address" ,{
-                toastId: 2,
-            });
-            return;
-        }
-
-        toast.success("Form Submitted Successfully" , {
-            toastId: 3,
-        });
-    }
     return(
         <>
             <div className={styles.main_container}>
@@ -46,60 +13,40 @@ const Login = () =>{
                     <div className={styles.header}>
                         <h2>Welcome back!</h2>
                     </div>
-                    <div className={styles.google_login}>
+                    <button className={styles.googleBtn}>
+                        <FcGoogle size={20} />
+                        <span></span>
+                    </button>
 
+                    <div className={styles.orline}>
+                        <div className={styles.line}></div>
+                        <p>OR</p>
+                        <div className={styles.line}></div>
                     </div>
-                    <div className={styles.orLine}>
-                        <div className={styles.Line}></div>
-                        <span>OR</span>
-                        <div className={styles.Line}></div>
-                    </div>
+                    <form className={styles.form}>
 
-                    <div className={styles.form}>
-                        <form >
-                            <div>
-                            <p className={styles.email}>Email</p>
-                            <i className={`fas fa-envelope ${styles.email_icon}`}></i>
-                            <input type = "email"
-                                   className = {styles.input_box}
-                                   value = {email}
-                                   placeholder = "Enter Your Email"
-                                   onChange = {e => setEmail(e.target.value)}
-                                   required
-                            >
-                            </input>
-                            </div>
+                        <div className={styles.inputBox}>
+                            <p>Email</p>
+                            <FaEnvelope className={styles.icon} />
+                            <input type="email" placeholder="example@site.com" />
+                        </div>
 
+                        <div className={styles.inputBox}>
+                            <p>Password</p>
+                            <FaLock className={styles.icon} />
+                            <input type="password" placeholder="Minimum 8 characters" />
+                        </div>
 
-                            <div className = {styles.password_container}>
-                                <p>Password</p>
+                        <div className={styles.button_container}>
+                            <NavLink to="/dashboard"><button type="submit"> Login</button></NavLink>
+                        </div>
 
-                                <i className={`fas fa-lock ${styles.pass_icon}`}></i>
-                                <input type = {showPassword ? "text" : "password"}
-                                       value = {password}
-                                       placeholder = "Enter Your Password"
-                                       onChange = {e => setPassword(e.target.value)}
-                                       required
-                                />
-
-                                {/*<button type = "button" onClick={()=> setShowPassword(!showPassword)}>*/}
-                                {/*    {showPassword ? <FaEyeSlash /> : <FaEye />}*/}
-                                {/*</button>*/}
-                                <div className={styles.forget_pass}>
-                                    <a href="#forget_password">Forget Password?</a>
-                                </div>
-                            </div>
-                            <div className={styles.buttons}>
-                                <NavLink to="/dashboard" className={styles.nav}><button>Login</button></NavLink>
-                                <NavLink to="/register" className={styles.nav}><button>Register</button></NavLink>
-                            </div>
-                        </form>
+                    </form>
+                    <div className={styles.footer}>
+                        <p>Don't have an account? <NavLink to="/register"> <a href="">Signup</a> </NavLink></p>
                     </div>
                 </div>
-                <div className={styles.help_box}>
-                    <i className={`fas fa-question-circle ${styles.help_icon}`}></i>
-                    <p>Help</p>
-                </div>
+
             </div>
         </>
     );
