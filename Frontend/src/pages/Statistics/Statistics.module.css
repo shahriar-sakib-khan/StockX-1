@@ -13,6 +13,9 @@
     line-height: 8px;
 
 }
+.main_container::-webkit-scrollbar {
+    display: none;                /* Chrome, Safari, Edge */
+}
 
 strong{
     margin-bottom: 10px;
