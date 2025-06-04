@@ -1,6 +1,6 @@
 import React , {useState , useEffect} from 'react';
 import styles from "./Employee.module.css";
-import pro_logo from './profile_logo_2.png'
+import pro_logo from './employee_logo.png'
 
 const Edit_Employee = ({onSubmit , defaultData , requestClose}) => {
 

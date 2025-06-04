@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Employees.module.css';
-import employees_pic from '../../assets/images/employee_pic.png';
+import employees_pic from './employee_logo.png';
 
 const Employees = ({data , onEdit , onDelete}) =>{
     return (

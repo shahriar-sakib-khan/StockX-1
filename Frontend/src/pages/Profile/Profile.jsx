@@ -1,11 +1,10 @@
 /* eslint-disable */
 import React , {useState} from 'react';
 import styles from './Profile.module.css';
-import pro_pic from '../../assets/images/pro_pic.png'
+import pro_pic from './profile_logo.png'
 import Employees from './Employees.jsx'
 import Edit_Employee from './Edit_Employee.jsx'
-import SH from '../../assets/images/SH.png'
-import addemp_ico from '../../assets/images/add_emp.png'
+import addemp_ico from './add_emp.png'
 import Popup_modal from "./Popup_modal.jsx";
 import Edit_user from './Edit_user.jsx';
 
@@ -63,7 +62,7 @@ const Profile = () => {
         <>
             <div className = {styles.main_container}>
                 <div className={styles.userpic_container}>
-                    <img className={styles.profile_pic} src={SH} alt="Profile" />
+                    <img className={styles.profile_pic} src={pro_pic} alt="Profile" />
                     <h2>{user.firstName} {user.lastName}</h2>
                 </div>
                 <div className={styles.info_container}>
