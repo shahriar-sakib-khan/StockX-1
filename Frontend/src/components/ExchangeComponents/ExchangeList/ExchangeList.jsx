@@ -45,15 +45,15 @@ export default function ExchangeList({
     }
     // Update cylinder stock if it's a cylinder
     if (item.productType === "cylinder") {
-      setCylinders(
-        updateCylinderStock(
-          cylinders,
-          item.id,
-          item.type,
-          item.size,
-          item.count // add back to stock
-        )
-      );
+      // setCylinders(
+      //   updateCylinderStock(
+      //     cylinders,
+      //     item.id,
+      //     item.type,
+      //     item.size,
+      //     item.count // add back to stock
+      //   )
+      // );
     }
   };
 

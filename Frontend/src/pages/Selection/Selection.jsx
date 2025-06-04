@@ -1,10 +1,12 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import allBrands from "../../components/SelectionComponents/List_of_Brands.jsx";
 import Card from "../../components/SelectionComponents/SelectionCard";
+import { useBrandStore } from "../../stores/brandStore.js";
 import styles from "./Selection.module.css";
 
 function Selection() {
-  const { selectedBrands, setSelectedBrands } = useOutletContext();
+  const selectedBrands = useBrandStore((s) => s.selectedBrands);
+  const setSelectedBrands = useBrandStore((s) => s.setSelectedBrands);
   const navigate = useNavigate();
 
   const toggleBrand = (id) => {
@@ -25,7 +27,7 @@ function Selection() {
 
   const handleSubmit = () => {
     if (selectedBrands.length > 0) {
-      navigate("/dashboard/selection/selected-inventory");
+      navigate("./initialization");
     }
   };
 
