@@ -11,7 +11,6 @@ import transactionController from './controllers/transactionController.js';
 
 
 dotenv.config();
-
 const app = express();
 
 // MongoDB connection
