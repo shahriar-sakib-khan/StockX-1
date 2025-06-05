@@ -1,5 +1,6 @@
 
 .shopDetails {
+  color: var(--primary-text-clr);
   display: flex;
   flex-direction: column;
   justify-content: center;

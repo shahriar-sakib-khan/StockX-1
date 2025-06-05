@@ -1,13 +1,13 @@
 import React from "react";
 import styles from "./ShopPopup.module.css";
 
-const ShopPopup = ({ 
-  isOpen, 
-  onClose, 
-  onSubmit, 
-  shopData, 
-  onChange, 
-  isEditing 
+const ShopPopup = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  shopData,
+  onChange,
+  isEditing,
 }) => {
   if (!isOpen) return null;
 
@@ -22,7 +22,9 @@ const ShopPopup = ({
   return (
     <div className={styles.popupOverlay}>
       <div className={styles.popup}>
-        <h2>{isEditing ? "Edit Shop" : "Add New Shop"}</h2>
+        <h2 className={styles.title}>
+          {isEditing ? "Edit Shop" : "Add New Shop"}
+        </h2>
         <div className={styles.inputFields}>
           <div className={styles.inputGroup}>
             <input

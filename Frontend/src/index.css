@@ -4,13 +4,20 @@
   --bg-clr-1: hsl(0, 0%, 100%); /* background color dark */
   --bg-clr-2: hsl(0, 0%, 95%);  /* background color light gray */
 
-  --primary-text-clr: hsl(220, 13%, 18%);
+  /* from our previous iteration of the project  */
+  --primary-text-clr: hsl(214, 20%, 40%);
+  /* --primary-text-clr: hsl(216, 13%, 30%); */
 
-  --border: 1px solid hsl(220, 13%, 70%);
-  --box-shadow: 0 0.2rem 0.5rem hsl(220, 13%, 70%);
+  --accent-clr-300: hsl(173, 58%, 45%);
+  --accent-clr-400: hsl(173, 58%, 40%);
 
-  --border-radius: 0.325rem;
+  --border-300: 1px solid hsl(0, 0%, 85%);
+  --border-400: 2px solid hsl(0, 0%, 85%);
 
+  --box-shadow: 5px 5px 10px hsl(0, 0%, 90%);
+  
+  --border-radius: 0.25em;
+  --border-radius-500: 0.5em;
 }
 
 
@@ -19,10 +26,13 @@
 
   --bg-clr-1: hsl(220, 13%, 15%);
   --bg-clr-2: hsl(220, 13%, 25%);
+  
+  --primary-text-clr: hsl(0, 0%, 85%);
+  
+  --border-300: 1px solid hsl(219, 15%, 45%);
+  --border-400: 2px solid hsl(219, 15%, 45%);
 
-  --primary-text-clr: hsl(0, 0%, 100%);
-
-  --box-shadow: 0 0.2rem 0.5rem hsl(220, 13%, 0%);
+  --box-shadow: 0 0.2rem 0.5rem hsl(216, 13%, 5%);
 
 }
 
@@ -33,7 +43,7 @@
 
   --ff-heading: var(--ff-base);
   --ff-heading-line-height: 1.1;
-
+  
   --ff-code: monospace;
 
   --body-max-width: 65ch; /* rule of thumb: 75ch max */
@@ -47,7 +57,16 @@
 
 @layer reset {
   
-
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  
+  * {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+  }
   
   
   html {
@@ -78,29 +97,29 @@
     text-wrap: balance;
     font-family: var(--ff-heading);
   }
-
-
+  
+  
   p, li, figcaption {
     text-wrap: pretty;
     max-width: var(--body-max-width);
   }
-
-
+  
+  
   h1, h2, h3, h4, button, input, label {
     line-height: var(--ff-heading-line-height);
   }
-
-
+  
+  
   h1, h2, h3, h4, p, figure, blockquote, dl, dd {
     margin-block-end: 0;
   }
-
+  
 
   :first-child {
     margin-block-start: 0;
   }
-
-
+  
+  
   code {
     font-family: var(--ff-code);
   }
@@ -113,25 +132,28 @@
   
   img {
     font-style: italic;
-
+    
     /* for low res versions of images (as the image's background)*/
     background-repeat: no-repeat;
     background-size: cover;
-
+    
     shape-margin: 1rem; /* margin in case the image in floating */
-
+  
     max-width: 100%;
     height: auto;
     vertical-align: middle; /* exception: images as inline */
   }
-
-
+  
+  
   picture, svg, video {
     display: block;
     max-width: 100%;
   }
-
-
+  
+  
+  input, textarea, button, select {
+    font: inherit;
+  }
 
 
   textarea:not([rows]) {
@@ -143,7 +165,7 @@
     cursor: pointer;
   }
 
-
+  
   button::-moz-focus-inner {
     border: none;
   }
@@ -183,9 +205,17 @@
 } */
 
 .wrapper {
-  margin: 0 auto;
-  padding: 0 1rem;
-
-  width: 100%;
+  width: 90%;
   max-inline-size: 1200px;
+  
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+
+.dont-print {
+  display: none !important;
 }

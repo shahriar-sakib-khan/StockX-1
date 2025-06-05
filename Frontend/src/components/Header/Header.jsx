@@ -3,9 +3,13 @@ import ProfileButton from "../ProfileButton/ProfileButton";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import styles from "./Header.module.css";
 
-const Header = () => {
+const Header = ({ className = "" }) => {
   return (
-    <div className={styles.headerContainer}>
+    <div
+      className={[styles.headerContainer, styles.dontPrint, className].join(
+        " "
+      )}
+    >
       <div className="wrapper">
         <header className={styles.header}>
           <Logo />

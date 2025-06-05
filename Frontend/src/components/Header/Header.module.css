@@ -17,3 +17,9 @@
 .profile {
   margin-inline-start: auto;
 }
+
+@media print {
+  .dontPrint {
+    display: none;
+  }
+}
