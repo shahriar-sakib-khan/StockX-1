@@ -20,7 +20,7 @@ const Register = () =>{
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-        const res = await fetch("http://localhost:3000/api/v1/auth/register", {
+        const res = await fetch("https://stockx-1-0ef9.onrender.com/api/v1/auth/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(inputs),
