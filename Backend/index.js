@@ -35,4 +35,7 @@ app.use('/api/v1/transaction', transactionController);
 
 // Server
 const port = process.env.PORT || 5000;
+app.get("/", (req, res) => {
+    res.status(200).send("Server is up and running!");
+});
 app.listen(port, () => console.log(`Server running on port ${port}`));
