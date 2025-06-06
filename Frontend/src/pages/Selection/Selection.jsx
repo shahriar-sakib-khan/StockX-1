@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import allBrands from "../../components/SelectionComponents/List_of_Brands.jsx";
+import { allBrands } from "../../assets/Lists/new_brands_list.jsx";
 import Card from "../../components/SelectionComponents/SelectionCard";
 import { useBrandStore } from "../../stores/brandStore.js";
 import styles from "./Selection.module.css";
+import { useEffect } from "react";
 
 function Selection() {
   const selectedBrands = useBrandStore((s) => s.selectedBrands);
@@ -30,6 +31,10 @@ function Selection() {
       navigate("./initialization");
     }
   };
+
+  useEffect(() => {
+    console.log(selectedBrands);
+  }, [selectedBrands]);
 
   const allSelected = selectedBrands.length === allBrands.length;
   const isSubmitDisabled = selectedBrands.length === 0;
