@@ -42,7 +42,7 @@
   color: var(--primary-text-clr);
   font-size: 0.95em;
   font-weight: 600;
-  padding-inline-start: 1em;
+  padding-inline-start: 0.5em;
   margin: 0;
   align-self: flex-start;
 }
@@ -51,7 +51,7 @@
   font-size: 0.95rem;
   color: #888;
   align-self: flex-start;
-  padding-inline-start: 1em;
+  padding-inline-start: 0.5em;
   margin-block: 0 0.5em;
 }
 
@@ -120,5 +120,3 @@
   right: 10%;
   transform: scale(1);
 }
-
-
