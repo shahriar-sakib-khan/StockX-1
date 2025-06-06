@@ -2,20 +2,43 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { allBrands } from "../assets/Lists/new_brands_list.jsx";
 
+// 🟢 general methods
+// 🟡 brand selection methods
+// 🔵 stock manipulation methods
+// 🔴 price manipulation methods
+
 export const useBrandStore = create(
   persist(
     (set, get) => ({
-      allBrands: allBrands,                     // static brands list
+      allBrands: allBrands,         // static brands list
       selectedBrands: [],           // confirmed selection
       draftSelectedBrands: [],      // for display/editing
 
-      // Initialize or sync draft with committed on mount
+      // 🟢 Initialize or sync draft with committed on mount
       initializeDraft: () => {
         const { selectedBrands } = get();
         set({ draftSelectedBrands: [...selectedBrands] });
       },
 
-      // Used for toggling one brand in the draft selection
+      // 🟢 Commit draft to confirmed selection 
+      submitSelectedBrands: () => {
+        const { draftSelectedBrands } = get();
+        set({ selectedBrands: [...draftSelectedBrands] });
+      },
+
+      // 🟢 Undo draft (revert it back to last confirmed selection)
+      resetSelectedBrands: () => {
+        const { selectedBrands } = get();
+        set({ draftSelectedBrands: [...selectedBrands] });
+      },
+
+      // 🟢 Check if the draft has uncommitted changes
+      hasUncommittedChanges: () => {
+        const { selectedBrands, draftSelectedBrands } = get();
+        return JSON.stringify(selectedBrands) !== JSON.stringify(draftSelectedBrands);
+      },
+
+      // 🟡 Used for toggling one brand in the draft selection
       toggleSingleBrand: (id) => {
         const { draftSelectedBrands, allBrands } = get();
         const isSelected = draftSelectedBrands.some((b) => b.id === id);
@@ -25,23 +48,91 @@ export const useBrandStore = create(
         set({ draftSelectedBrands: updated });
       },
 
-      // Used for select all / deselect all in the draft
+      // 🟡 Used for select all / deselect all in the draft
       toggleAllBrandsSelection: () => {
         const { draftSelectedBrands, allBrands } = get();
         const allSelected = draftSelectedBrands.length === allBrands.length;
         set({ draftSelectedBrands: allSelected ? [] : [...allBrands] });
       },
 
-      // Commit draft to confirmed selection
-      submitSelectedBrands: () => {
-        const { draftSelectedBrands } = get();
-        set({ selectedBrands: [...draftSelectedBrands] });
+      // 🔵 change stocks of cylinders by id
+      updateDraftCylinderStock: ({ brandId, cylinderId, change }) => {
+        set((state) => {
+          const updatedDraft = state.draftSelectedBrands.map((brand) => {
+            if (brand.id !== brandId) return brand;
+
+            const updatedCylinders = brand.cylinders.map((cyl) => {
+              if (cyl.id !== cylinderId) return cyl;
+              return {
+                ...cyl,
+                stock: Math.max(0, (cyl.stock || 0) + change), // no negative stocks
+              };
+            });
+
+            return {
+              ...brand,
+              cylinders: updatedCylinders,
+            };
+          });
+
+          return { draftSelectedBrands: updatedDraft };
+        });
       },
 
-      // Undo draft (revert it back to last confirmed selection)
-      resetSelectedBrands: () => {
-        const { selectedBrands } = get();
-        set({ draftSelectedBrands: [...selectedBrands] });
+      // 🔵 increment stock by one
+      incrementDraftCylinder: ({ brandId, cylinderId }) =>
+        get().updateDraftCylinderStock({ brandId, cylinderId, change: 1 }),
+
+      // 🔵 decrement stock by one
+      decrementDraftCylinder: ({ brandId, cylinderId }) =>
+        get().updateDraftCylinderStock({ brandId, cylinderId, change: -1 }),
+      
+      // 🔵 set specific stock to a cylinder by id
+      setDraftCylinderStock: ({ brandId, cylinderId, newStock }) => {
+        set((state) => {
+          const updatedDraft = state.draftSelectedBrands.map((brand) => {
+            if (brand.id !== brandId) return brand;
+
+            const updatedCylinders = brand.cylinders.map((cyl) => {
+              if (cyl.id !== cylinderId) return cyl;
+              return {
+                ...cyl,
+                stock: Math.max(0, newStock),
+              };
+            });
+
+            return {
+              ...brand,
+              cylinders: updatedCylinders,
+            };
+          });
+
+          return { draftSelectedBrands: updatedDraft };
+        });
+      },
+
+      // 🔴 set new price for a specific cylinder
+      setDraftCylinderPrice: ({ brandId, cylinderId, newPrice }) => {
+        set((state) => {
+          const updatedDraft = state.draftSelectedBrands.map((brand) => {
+            if (brand.id !== brandId) return brand;
+
+            const updatedCylinders = brand.cylinders.map((cyl) => {
+              if (cyl.id !== cylinderId) return cyl;
+              return {
+                ...cyl,
+                price: newPrice,
+              };
+            });
+
+            return {
+              ...brand,
+              cylinders: updatedCylinders,
+            };
+          });
+
+          return { draftSelectedBrands: updatedDraft };
+        });
       },
     }),
     {
