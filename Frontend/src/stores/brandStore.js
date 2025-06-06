@@ -5,30 +5,43 @@ import { allBrands } from "../assets/Lists/new_brands_list.jsx";
 export const useBrandStore = create(
   persist(
     (set, get) => ({
-      allBrands, // Static brand list
-      selectedBrands: [],
+      allBrands: allBrands,                     // static brands list
+      selectedBrands: [],           // confirmed selection
+      draftSelectedBrands: [],      // for display/editing
 
-      setSelectedBrands: (updater) =>
-        set((state) => ({
-          selectedBrands:
-            typeof updater === "function"
-              ? updater(state.selectedBrands)
-              : updater,
-        })),
-
-      toggleSingleBrand: (id) => {
-        const { selectedBrands, allBrands } = get();
-        const isSelected = selectedBrands.some((brand) => brand.id === id);
-        const updated = isSelected
-          ? selectedBrands.filter((brand) => brand.id !== id)
-          : [...selectedBrands, allBrands.find((brand) => brand.id === id)];
-        set({ selectedBrands: updated });
+      // Initialize or sync draft with committed on mount
+      initializeDraft: () => {
+        const { selectedBrands } = get();
+        set({ draftSelectedBrands: [...selectedBrands] });
       },
 
+      // Used for toggling one brand in the draft selection
+      toggleSingleBrand: (id) => {
+        const { draftSelectedBrands, allBrands } = get();
+        const isSelected = draftSelectedBrands.some((b) => b.id === id);
+        const updated = isSelected
+          ? draftSelectedBrands.filter((b) => b.id !== id)
+          : [...draftSelectedBrands, allBrands.find((b) => b.id === id)];
+        set({ draftSelectedBrands: updated });
+      },
+
+      // Used for select all / deselect all in the draft
       toggleAllBrandsSelection: () => {
-        const { selectedBrands, allBrands } = get();
-        const allSelected = selectedBrands.length === allBrands.length;
-        set({ selectedBrands: allSelected ? [] : [...allBrands] });
+        const { draftSelectedBrands, allBrands } = get();
+        const allSelected = draftSelectedBrands.length === allBrands.length;
+        set({ draftSelectedBrands: allSelected ? [] : [...allBrands] });
+      },
+
+      // Commit draft to confirmed selection
+      submitSelectedBrands: () => {
+        const { draftSelectedBrands } = get();
+        set({ selectedBrands: [...draftSelectedBrands] });
+      },
+
+      // Undo draft (revert it back to last confirmed selection)
+      resetSelectedBrands: () => {
+        const { selectedBrands } = get();
+        set({ draftSelectedBrands: [...selectedBrands] });
       },
     }),
     {

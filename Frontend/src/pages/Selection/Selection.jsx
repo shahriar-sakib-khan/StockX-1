@@ -7,25 +7,31 @@ import { useEffect } from "react";
 function Selection() {
   const navigate = useNavigate();
 
-  const selectedBrands = useBrandStore((s) => s.selectedBrands);
+  // Use draftSelectedBrands for instant UI update (not committed yet)
+  const draftSelectedBrands = useBrandStore((s) => s.draftSelectedBrands);
   const allBrands = useBrandStore((s) => s.allBrands);
+
   const toggleSingleBrand = useBrandStore((s) => s.toggleSingleBrand);
   const toggleAllBrandsSelection = useBrandStore(
     (s) => s.toggleAllBrandsSelection
   );
+  const submitSelectedBrands = useBrandStore((s) => s.submitSelectedBrands);
+  const initializeDraft = useBrandStore((s) => s.initializeDraft);
+
+  // On mount, initialize draft selection with current confirmed selection
+  useEffect(() => {
+    initializeDraft();
+  }, [initializeDraft]);
 
   const handleSubmit = () => {
-    if (selectedBrands.length > 0) {
+    if (draftSelectedBrands.length > 0) {
+      submitSelectedBrands();
       navigate("./initialization");
     }
   };
 
-  useEffect(() => {
-    console.log(selectedBrands);
-  }, [selectedBrands]);
-
-  const allSelected = selectedBrands.length === allBrands.length;
-  const isSubmitDisabled = selectedBrands.length === 0;
+  const allSelected = draftSelectedBrands.length === allBrands.length;
+  const isSubmitDisabled = draftSelectedBrands.length === 0;
 
   return (
     <main>
@@ -47,7 +53,7 @@ function Selection() {
               {allSelected ? "Deselect All" : "Select All"}
             </button>
             <span className={styles.counter}>
-              Selected: {selectedBrands.length} / {allBrands.length}
+              Selected: {draftSelectedBrands.length} / {allBrands.length}
             </span>
           </div>
         </section>
@@ -59,7 +65,7 @@ function Selection() {
               id={brand.id}
               name={brand.name}
               logo={brand.logo}
-              isSelected={selectedBrands.some((b) => b.id === brand.id)}
+              isSelected={draftSelectedBrands.some((b) => b.id === brand.id)}
               onSelect={() => toggleSingleBrand(brand.id)}
             />
           ))}
