@@ -1,30 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { allBrands } from "../../assets/Lists/new_brands_list.jsx";
 import Card from "../../components/SelectionComponents/SelectionCard";
 import { useBrandStore } from "../../stores/brandStore.js";
 import styles from "./Selection.module.css";
 import { useEffect } from "react";
 
 function Selection() {
-  const selectedBrands = useBrandStore((s) => s.selectedBrands);
-  const setSelectedBrands = useBrandStore((s) => s.setSelectedBrands);
   const navigate = useNavigate();
 
-  const toggleBrand = (id) => {
-    setSelectedBrands((prev) =>
-      prev.some((brand) => brand.id === id)
-        ? prev.filter((brand) => brand.id !== id)
-        : [...prev, allBrands.find((brand) => brand.id === id)]
-    );
-  };
-
-  const toggleSelect = () => {
-    if (selectedBrands.length === allBrands.length) {
-      setSelectedBrands([]);
-    } else {
-      setSelectedBrands([...allBrands]);
-    }
-  };
+  const selectedBrands = useBrandStore((s) => s.selectedBrands);
+  const allBrands = useBrandStore((s) => s.allBrands);
+  const toggleSingleBrand = useBrandStore((s) => s.toggleSingleBrand);
+  const toggleAllBrandsSelection = useBrandStore(
+    (s) => s.toggleAllBrandsSelection
+  );
 
   const handleSubmit = () => {
     if (selectedBrands.length > 0) {
@@ -55,7 +43,7 @@ function Selection() {
             </button>
           </div>
           <div className={styles.selectCount}>
-            <button onClick={toggleSelect}>
+            <button onClick={toggleAllBrandsSelection}>
               {allSelected ? "Deselect All" : "Select All"}
             </button>
             <span className={styles.counter}>
@@ -72,7 +60,7 @@ function Selection() {
               name={brand.name}
               logo={brand.logo}
               isSelected={selectedBrands.some((b) => b.id === brand.id)}
-              onSelect={() => toggleBrand(brand.id)}
+              onSelect={() => toggleSingleBrand(brand.id)}
             />
           ))}
         </section>
