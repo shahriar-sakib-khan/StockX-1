@@ -8,12 +8,10 @@ export default function ExchangeSlider({ activeSection = "" }) {
   const draftBrands = useBrandStore((state) => state.draftSelectedBrands);
   const initializeDraft = useBrandStore((state) => state.initializeDraft);
 
-  const brandsToShow = draftBrands;
-
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
-  const cardsData = brandsToShow.map((brand) => ({
+  const cardsData = draftBrands.map((brand) => ({
     brandId: brand.id,
     brandName: brand.name,
     stock: brand.totalCylinderCount,

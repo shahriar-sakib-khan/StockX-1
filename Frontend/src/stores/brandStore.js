@@ -12,7 +12,7 @@ export const useBrandStore = create(
     (set, get) => ({
       allBrands: allBrands,         // static brands list
       selectedBrands: [],           // confirmed selection
-      draftSelectedBrands: [],      // for display/editing
+      draftSelectedBrands: [],      // for display/editing [temporary]
 
       // 🟢 Initialize or sync draft with committed on mount
       initializeDraft: () => {
@@ -38,6 +38,13 @@ export const useBrandStore = create(
         return JSON.stringify(selectedBrands) !== JSON.stringify(draftSelectedBrands);
       },
 
+      // 🟢 Get a brand by ID from allBrands
+      getBrandById: (id) => {
+        const { selectedBrands } = get();
+        return selectedBrands.find((b) => b.id === id);
+      },
+
+
       // 🟡 Used for toggling one brand in the draft selection
       toggleSingleBrand: (id) => {
         const { draftSelectedBrands, allBrands } = get();
@@ -58,20 +65,30 @@ export const useBrandStore = create(
       // 🔵 change stocks of cylinders by id
       updateDraftCylinderStock: ({ brandId, cylinderId, change }) => {
         set((state) => {
+          const delta = typeof change === "number" ? change : 0;
+
           const updatedDraft = state.draftSelectedBrands.map((brand) => {
             if (brand.id !== brandId) return brand;
 
             const updatedCylinders = brand.cylinders.map((cyl) => {
               if (cyl.id !== cylinderId) return cyl;
+              const currentStock = typeof cyl.stock === "number" ? cyl.stock : 0;
               return {
                 ...cyl,
-                stock: Math.max(0, (cyl.stock || 0) + change), // no negative stocks
+                stock: Math.max(0, currentStock + delta),
               };
             });
+
+            // Calculate total stock of all cylinders for this brand
+            const totalCylinderCount = updatedCylinders.reduce(
+              (sum, cyl) => sum + (typeof cyl.stock === "number" ? cyl.stock : 0),
+              0
+            );
 
             return {
               ...brand,
               cylinders: updatedCylinders,
+              totalCylinderCount,
             };
           });
 

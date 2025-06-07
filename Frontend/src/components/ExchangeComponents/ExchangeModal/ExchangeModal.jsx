@@ -1,6 +1,5 @@
 import styles from "./ExchangeModal.module.css";
 import { useRef, useState, useEffect } from "react";
-import { useCylindersStore } from "../../../stores";
 import { useOutletContext } from "react-router-dom";
 
 export default function ExchangeModal({
@@ -14,8 +13,6 @@ export default function ExchangeModal({
   const priceInputRef = useRef(null);
 
   // Import lists and setters from zustand stores
-  const setCylinders = useCylindersStore((state) => state.setCylinders);
-  const cylinders = useCylindersStore((state) => state.cylinders);
 
   // Get delivered/received items and setters from outlet context
   const { deliveredItems, setDeliveredItems, receivedItems, setReceivedItems } =
@@ -77,33 +74,18 @@ export default function ExchangeModal({
 
     // Edit mode
     if (initialValues && typeof initialValues.idx === "number") {
-      const prevCount = Number(initialValues.count);
-      const diff = prevCount - item.count; // If positive, we need to add back to stock; if negative, subtract more
-
       if (activeSection === "delivered") {
         const currentList = Array.isArray(deliveredItems) ? deliveredItems : [];
         const newList = currentList.map((i, idx) =>
           idx === initialValues.idx ? { ...i, ...item } : i
         );
         setDeliveredItems(newList);
-        setCylinders(
-          updateCylinderStock(
-            cylinders,
-            item.id,
-            item.type,
-            item.size,
-            diff // add back the old, subtract the new
-          )
-        );
       } else if (activeSection === "received") {
         const currentList = Array.isArray(receivedItems) ? receivedItems : [];
         const newList = currentList.map((i, idx) =>
           idx === initialValues.idx ? { ...i, ...item } : i
         );
         setReceivedItems(newList);
-        setCylinders(
-          updateCylinderStock(cylinders, item.id, item.type, item.size, diff)
-        );
       }
       onClose();
       return;
@@ -113,27 +95,9 @@ export default function ExchangeModal({
     if (activeSection === "delivered") {
       const currentList = Array.isArray(deliveredItems) ? deliveredItems : [];
       setDeliveredItems([...currentList, item]);
-      setCylinders(
-        updateCylinderStock(
-          cylinders,
-          item.id,
-          item.type,
-          item.size,
-          -item.count // decrease stock
-        )
-      );
     } else if (activeSection === "received") {
       const currentList = Array.isArray(receivedItems) ? receivedItems : [];
       setReceivedItems([...currentList, item]);
-      setCylinders(
-        updateCylinderStock(
-          cylinders,
-          item.id,
-          item.type,
-          item.size,
-          -item.count // decrease stock
-        )
-      );
     }
     onClose();
   };
@@ -240,21 +204,5 @@ export default function ExchangeModal({
         </button>
       </form>
     </dialog>
-  );
-}
-
-function updateCylinderStock(cylinders, brandId, type, size, diff) {
-  return cylinders.map((brand) =>
-    brand.id !== brandId
-      ? brand
-      : {
-          ...brand,
-          cylinders: brand.cylinders.map((cyl) =>
-            cyl.type === type && cyl.size === size
-              ? { ...cyl, stock: cyl.stock + diff }
-              : cyl
-          ),
-          totalCylinderCount: brand.totalCylinderCount + diff,
-        }
   );
 }

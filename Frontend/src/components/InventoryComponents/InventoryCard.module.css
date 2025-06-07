@@ -17,18 +17,22 @@
   overflow: hidden;
 }
 
-
-
-
 .stockHeader {
   font-weight: 700;
   font-size: 1.1rem;
   color: #333;
   margin-bottom: 2.8em;
   align-self: flex-start;
-   padding-left: 1em;
+  padding-left: 1em;
+
+  display: flex;
+  flex-direction: column;
 }
 
+.stockLabel {
+  font-size: 1rem;
+  text-wrap: nowrap;
+}
 
 .logo {
   width: 80px;
