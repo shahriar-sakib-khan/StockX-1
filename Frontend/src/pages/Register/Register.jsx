@@ -86,7 +86,7 @@ const Register = () =>{
 
                     </form>
                     <div className={styles.footer}>
-                        <p>Already have an account? <a href="">login</a></p>
+                        <p>Already have an account? <NavLink to ="/login">login</NavLink></p>
                     </div>
                 </div>
                 <div className={styles.help_box}>
