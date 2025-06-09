@@ -1,0 +1,25 @@
+.headerContainer {
+  background-color: var(--bg-clr-2);
+  margin-block-end: 1em;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0.5em;
+  margin: 0;
+}
+
+/* .theme {
+  margin-inline-start: auto;
+} */
+
+.profile {
+  margin-inline-start: auto;
+}
+
+@media print {
+  .dontPrint {
+    display: none;
+  }
+}

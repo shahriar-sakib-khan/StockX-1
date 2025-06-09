@@ -1,0 +1,20 @@
+
+.receipt {
+  display: flex;  
+  flex-direction: column;
+}
+
+@media print {
+  .printArea {
+    visibility: visible;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+  }
+
+  .dontPrint {
+    display: none !important;
+  }
+}

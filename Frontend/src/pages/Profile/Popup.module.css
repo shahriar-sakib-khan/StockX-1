@@ -1,0 +1,91 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.modal {
+    background: white;
+    border-radius: 12px;
+    min-width: 10%;
+    min-height: 10%;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    animation: zoomIn 0.3s ease forwards;
+    transform-origin: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.zoomOut{
+    animation: zoomOut 0.3s ease forwards;
+}
+
+.fadeOut{
+    animation: fadeOut 0.3s ease forwards;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Animations */
+@keyframes zoomIn {
+    0% {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomOut {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut{
+    from{
+        opacity: 1;
+    }
+    to{
+        opacity: 0;
+    }
+}

@@ -1,0 +1,84 @@
+.shopCard {
+  background: #ffffff;
+  border: 2px solid #abb0c5; /* Green outline */
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  position: relative;
+
+}
+
+/* Uncomment for hover effect */
+/* 
+.shopCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+} 
+*/
+
+.shopImage {
+  width: 90%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+}
+
+.balance {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+  background-color: rgb(71, 153, 78);
+  color: white;
+  padding: 5px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.removeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: #b23030;
+  color: white;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 10px;
+  z-index: 10;
+}
+
+.removeButton:hover {
+  background-color: #bd0000;
+}
+
+.shopDetails {
+  margin-top: 10px;
+}
+
+.editButton {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.editButton:hover {
+  background-color: #0f5bb5;
+}

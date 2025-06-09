@@ -1,0 +1,20 @@
+
+.listItem {
+  display: flex;
+  margin-inline: 0.25em;
+  
+  & > * {
+    flex-grow: 1;
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+.listItem:first-of-type {
+  margin-block-start: 0.5rem;
+}
+
+.listItem + .listItem {
+  border-block-start: var(--border-300);
+}

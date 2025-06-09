@@ -1,0 +1,13 @@
+.dashboard {
+  color: var(--primary-text-clr);
+  /* height: 100svh; */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75em;
+}
+
+.main {
+  margin-block-end: 1em;
+}

@@ -1,0 +1,74 @@
+.vehicleCard {
+    background-color: white;
+    border-radius: 16px;
+    padding: 1rem;
+    width: 250px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    position: relative;
+    transition: transform 0.3s;
+    border: 2px solid #94a0ac;
+}
+
+/* .vehicleCard:hover {
+    transform: translateY(-5px);
+} */
+
+.removeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.removeButton:hover {
+    background-color: #e63946;
+}
+
+.vehicleCard div {
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+
+
+.cardButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 3.5rem;
+    margin-top: 1rem;
+}
+
+.editButton,
+.costButton {
+    flex: 1;
+    padding: .5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.editButton {
+    background-color: #2196f3;
+    color: white;
+}
+
+.editButton:hover {
+    background-color: #1e88e5;
+}
+
+.costButton {
+    background-color: #e0ad00;
+    color: white;
+}
+
+.costButton:hover {
+    background-color: #c69300;
+}

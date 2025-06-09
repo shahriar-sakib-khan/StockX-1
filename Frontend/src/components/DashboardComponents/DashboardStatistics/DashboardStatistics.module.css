@@ -1,0 +1,14 @@
+
+.statistics {
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+  width: 100%;
+  text-align: center;
+  height: 5rem;
+  background-color: steelblue;
+
+  border-radius: var(--border-radius);
+
+  margin-block-end: 1em;
+}

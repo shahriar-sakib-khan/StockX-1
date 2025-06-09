@@ -1,0 +1,19 @@
+
+.dashboardNavigation {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1em;
+
+  border: none;
+  width: 100%;
+  margin-block-end: 1em;
+  overflow: hidden;
+}
+
+
+@media (width < 680px) {
+  .dashboardNavigation {
+    font-size: 0.8em;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+}

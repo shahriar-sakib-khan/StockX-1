@@ -1,0 +1,8 @@
+
+.profileButton {
+  .link {
+    color: var(--primary-text-clr);
+  }
+  transform: scale(1.5);
+  cursor: pointer;
+}

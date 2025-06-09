@@ -1,0 +1,24 @@
+
+.shopDetails {
+  color: var(--primary-text-clr);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25em;
+}
+
+.shopName {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.shopOwner {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.shopAddress {
+  font-size: 0.8rem;
+}
+
+.center {
+  align-items: center;
+}

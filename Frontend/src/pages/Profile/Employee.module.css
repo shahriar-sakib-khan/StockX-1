@@ -1,0 +1,101 @@
+.editUserPopup_container{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+}
+
+.editUserPopup_container input{
+    border-radius: 7px;
+    height: 35px;
+    width: 300px;
+    background-color: white;
+    padding-left: 12px;
+
+    box-shadow: 1px 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+    border: none;
+}
+
+.editUserBtn_container{
+    color: white;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.editUserBtn_container button{
+    width: 98%;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #79B524;
+
+    height: 30px;
+
+    transition: background-color 0.5s ease, transform 0.5s ease;
+}
+
+.editUserBtn_container button:hover{
+    background-color: #456b10;
+    cursor: pointer;
+
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.editUserBtn_container button:active{
+    background-color: #456b10;
+    cursor: pointer;
+
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+/*Finish Edit User Css*/
+
+.imageLabel {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.imageCircle {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: none;
+}
+
+.addIcon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    padding: 0.2rem 0.5rem;
+    font-size: 1rem;
+    color: #333;
+}
+
+.fileInput {
+    display: none;
+}
+
+.profileImage {
+    position: relative;
+    align-self: center;
+    margin-bottom: 1rem;
+}

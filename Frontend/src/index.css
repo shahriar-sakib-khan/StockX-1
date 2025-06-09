@@ -1,0 +1,221 @@
+:root {
+  /* Custom variables (light mode)*/
+
+  --bg-clr-1: hsl(0, 0%, 100%); /* background color dark */
+  --bg-clr-2: hsl(0, 0%, 95%);  /* background color light gray */
+
+  /* from our previous iteration of the project  */
+  --primary-text-clr: hsl(214, 20%, 40%);
+  /* --primary-text-clr: hsl(216, 13%, 30%); */
+
+  --accent-clr-300: hsl(173, 58%, 45%);
+  --accent-clr-400: hsl(173, 58%, 40%);
+
+  --border-300: 1px solid hsl(0, 0%, 85%);
+  --border-400: 2px solid hsl(0, 0%, 85%);
+
+  --box-shadow: 5px 5px 10px hsl(0, 0%, 90%);
+  
+  --border-radius: 0.25em;
+  --border-radius-500: 0.5em;
+}
+
+
+.dark {
+  /* Custom variables (dark mode) */
+
+  --bg-clr-1: hsl(220, 13%, 15%);
+  --bg-clr-2: hsl(220, 13%, 25%);
+  
+  --primary-text-clr: hsl(0, 0%, 85%);
+  
+  --border-300: 1px solid hsl(219, 15%, 45%);
+  --border-400: 2px solid hsl(219, 15%, 45%);
+
+  --box-shadow: 0 0.2rem 0.5rem hsl(216, 13%, 5%);
+
+}
+
+
+:root {
+  --ff-base: system-ui, Arial, sans-serif;
+  --ff-base-line-height: 1.6;
+
+  --ff-heading: var(--ff-base);
+  --ff-heading-line-height: 1.1;
+  
+  --ff-code: monospace;
+
+  --body-max-width: 65ch; /* rule of thumb: 75ch max */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+@layer reset {
+  
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  
+  * {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+  }
+  
+  
+  html {
+    /* color-scheme: dark light; */
+    hanging-punctuation: first last;
+    
+    font-family: var(--ff-base);
+    
+    /* Prevent font size inflation */
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    
+    interpolate-size: allow-keywords;
+  }
+  
+  
+  body {
+    margin: 0;
+    min-height: 100svh;
+    line-height: var(--ff-base-line-height);
+
+    background-color: var(--bg-clr-1);
+  }
+  
+  
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+    font-family: var(--ff-heading);
+  }
+  
+  
+  p, li, figcaption {
+    text-wrap: pretty;
+    max-width: var(--body-max-width);
+  }
+  
+  
+  h1, h2, h3, h4, button, input, label {
+    line-height: var(--ff-heading-line-height);
+  }
+  
+  
+  h1, h2, h3, h4, p, figure, blockquote, dl, dd {
+    margin-block-end: 0;
+  }
+  
+
+  :first-child {
+    margin-block-start: 0;
+  }
+  
+  
+  code {
+    font-family: var(--ff-code);
+  }
+
+
+  header, footer, main, section, article {
+    container-type: inline-size;
+  }
+  
+  
+  img {
+    font-style: italic;
+    
+    /* for low res versions of images (as the image's background)*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    shape-margin: 1rem; /* margin in case the image in floating */
+  
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle; /* exception: images as inline */
+  }
+  
+  
+  picture, svg, video {
+    display: block;
+    max-width: 100%;
+  }
+  
+  
+  input, textarea, button, select {
+    font: inherit;
+  }
+
+
+  textarea:not([rows]) {
+    min-height: 10em;
+  }
+
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  
+  button::-moz-focus-inner {
+    border: none;
+  }
+
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  
+  :is(ul, ol)[class] {
+    list-style: '';  /* none */
+    margin: 0;
+    padding: 0;
+  }
+
+  td, math, time[datetime*=":"] {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  
+  :target {
+    scroll-padding-top: 3rem; /* use value as needed */
+  }
+
+
+  @media (prefers-reduced-motion: no-preference) {
+    :has(:target) {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+
+/* * {
+  overscroll-behavior: contain;
+} */
+
+.wrapper {
+  width: 90%;
+  max-inline-size: 1200px;
+  
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+
+.dont-print {
+  display: none !important;
+}

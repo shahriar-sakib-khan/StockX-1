@@ -1,0 +1,4 @@
+#_routes_____
+
+The main routing setup of the project is in this folder
+The Layout component is the mother component where other components are rendered

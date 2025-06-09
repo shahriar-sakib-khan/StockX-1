@@ -1,0 +1,12 @@
+.exchange {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 88svh;
+
+  
+  /* display: grid;
+  height: 88svh;
+  grid-template-rows: 7rem auto 12rem; */
+}
+

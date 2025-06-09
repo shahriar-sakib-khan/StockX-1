@@ -1,0 +1,18 @@
+
+.receiptTopSection {
+  border: var(--border-300);
+  border-radius: var(--border-radius);
+
+  padding: 0.5em 1em;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+
+  .btn {
+    color: var(--primary-text-clr);
+    font-weight: 600;
+    text-decoration: none;
+  }
+}

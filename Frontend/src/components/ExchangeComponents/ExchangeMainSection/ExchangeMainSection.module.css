@@ -1,0 +1,74 @@
+.exchangeMainSection {
+  container-type: inline-size;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1em;
+
+  margin-inline: 1em;
+  overflow: hidden;
+
+  flex-grow: 1;
+}
+
+.exchangeSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5em;
+
+  flex-grow: 1;
+
+  padding: 1em;
+}
+
+.btnSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    color: hsl(197, 87%, 50%);
+    font-weight: 600;
+    background-color: transparent;
+
+    padding: 0.075em 0.5em;
+    border: 2px solid hsl(197, 87%, 50%);
+    border-radius: var(--border-radius);
+
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: hsla(197 87% 50% / .125);
+    }
+  }
+}
+
+@container (width > 700px) {
+  .btnSection > button {
+    display: none;
+  }
+}
+
+@container (width <= 700px) {
+  .exchangeSection { 
+    width: 200%;
+    gap: 1em;
+  }
+
+  .exchangeSection:has(.delivered.hidden) {
+    transform: translateX(-50%);
+    transition: transform 0.2s ease;
+  }
+  
+  .exchangeSection:has(.received.hidden) {
+    transform: translateX(0%);
+    transition: transform 0.2s ease;
+  }
+
+  .btnSection {
+    display: flex;  
+    &:has(:not(.received)) { justify-content: flex-end; }
+    &.received { justify-content: flex-start; }
+  }
+}
