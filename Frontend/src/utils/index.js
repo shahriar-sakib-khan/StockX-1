@@ -1,1 +1,0 @@
-export { default as applyThemeClass } from "./applyThemeClass";

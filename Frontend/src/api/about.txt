@@ -1,3 +1,0 @@
-#_api_____ (probably should be named services)
-
-Keep the functions for backend connection and/or fetching here

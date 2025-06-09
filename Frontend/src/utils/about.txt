@@ -1,3 +1,0 @@
-#_about_____
-
-Reusable functions will be in this folder

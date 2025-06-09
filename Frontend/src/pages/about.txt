@@ -1,4 +1,0 @@
-#_pages_____
-
-Highest level components will be here
-Use the building blocks from the components folder to assemble the pages

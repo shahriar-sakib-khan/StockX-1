@@ -1,3 +1,0 @@
-#_hooks_____
-
-Reusable custom hooks will be in this folder
