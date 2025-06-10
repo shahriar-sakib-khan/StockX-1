@@ -1,10 +1,10 @@
 import { useState } from "react";
 import ExchangeSlider from "../ExchangeSlider/ExchangeSlider";
-import AddAccessoryModal from "../AddAccessoryModal/AddAccessoryModal";
+import AccessoryModal from "../AccessoryModal/AccessoryModal";
 import styles from "./ExchangeBottomSection.module.css";
 
-export default function ExchangeBottomSection(props) {
-  const { activeSection } = props.context;
+export default function ExchangeBottomSection({ context }) {
+  const { activeSection } = context;
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null); // "stove" or "regulator"
@@ -19,7 +19,7 @@ export default function ExchangeBottomSection(props) {
     setModalType(null);
   };
 
-  const isDisabled = activeSection === "received";
+  const onlyCylinder = activeSection === "received";
 
   return (
     <div className={styles.exchangeBottomSection}>
@@ -28,8 +28,8 @@ export default function ExchangeBottomSection(props) {
           className={styles.regulator}
           role="button"
           tabIndex={0}
-          onClick={() => !isDisabled && openModal("regulator")}
-          aria-disabled={isDisabled}
+          onClick={() => !onlyCylinder && openModal("regulator")}
+          aria-disabled={onlyCylinder}
         >
           Add regulator
         </div>
@@ -37,18 +37,18 @@ export default function ExchangeBottomSection(props) {
           className={styles.stove}
           role="button"
           tabIndex={0}
-          onClick={() => !isDisabled && openModal("stove")}
-          aria-disabled={isDisabled}
+          onClick={() => !onlyCylinder && openModal("stove")}
+          aria-disabled={onlyCylinder}
         >
           Add stove
         </div>
       </div>
       <ExchangeSlider activeSection={activeSection} />
       {modalOpen && (
-        <AddAccessoryModal
+        <AccessoryModal
           open={modalOpen}
-          onClose={closeModal}
           itemType={modalType}
+          onClose={closeModal}
         />
       )}
     </div>

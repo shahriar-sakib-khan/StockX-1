@@ -1,9 +1,9 @@
-import styles from "./AddAccessoryModal.module.css";
+import styles from "./AccessoryModal.module.css";
 import { useRef, useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useStovesStore, useRegulatorsStore } from "../../../stores";
 
-export default function AddAccessoryModal({
+export default function AccessoryModal({
   open,
   onClose,
   itemType, // "stove" or "regulator"

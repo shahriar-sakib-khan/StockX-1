@@ -1,31 +1,34 @@
-import styles from "./ExchangeModal.module.css";
+import styles from "./CylinderModal.module.css";
 import { useRef, useState, useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useExchangeStore } from "../../../stores/exchangeStore";
 
-export default function ExchangeModal({
+export default function CylinderModal({
   open,
-  onClose,
   card,
-  activeSection,
-  initialValues = null,
+  activeSection, // delivered | received
+  onClose,
+  mode, // add | edit
 }) {
+  let prevItem = mode === "edit" ? card : null;
+
   const dialogRef = useRef(null);
   const priceInputRef = useRef(null);
 
-  // Import lists and setters from zustand stores
+  const addDeliveredItem = useExchangeStore((state) => state.addDeliveredItem);
+  const addReceivedItem = useExchangeStore((state) => state.addReceivedItem);
+  const updateDeliveredItem = useExchangeStore(
+    (state) => state.updateDeliveredItem
+  );
+  const updateReceivedItem = useExchangeStore(
+    (state) => state.updateReceivedItem
+  );
 
-  // Get delivered/received items and setters from outlet context
-  const { deliveredItems, setDeliveredItems, receivedItems, setReceivedItems } =
-    useOutletContext();
-
-  // State for form fields
   const [type, setType] = useState("20mm");
-  const [size, setSize] = useState("5kg");
+  const [size, setSize] = useState("12kg");
   const [count, setCount] = useState("1");
-  const [price, setPrice] = useState(card?.price || 1000);
+  const [price, setPrice] = useState(card?.price?.toString() || "1450");
   const [isPriceEditable, setIsPriceEditable] = useState(false);
 
-  // Show/hide dialog
   useEffect(() => {
     if (open) {
       dialogRef.current?.showModal();
@@ -34,24 +37,21 @@ export default function ExchangeModal({
     }
   }, [open]);
 
-  // Set form fields from initialValues (edit) or defaults (add)
   useEffect(() => {
-    if (open && initialValues) {
-      setType(initialValues.type || "20mm");
-      setSize(initialValues.size || "5kg");
-      setCount(initialValues.count?.toString() || "1");
-      setPrice(
-        initialValues.price?.toString() || card?.price?.toString() || "1000"
-      );
+    if (open && mode == "edit") {
+      setType(prevItem.type);
+      setSize(prevItem.size);
+      setCount(prevItem.count);
+      setPrice(prevItem.price?.toString());
       setIsPriceEditable(false);
     } else if (open) {
       setType("20mm");
-      setSize("5kg");
-      setCount("1");
-      setPrice(card?.price?.toString() || "1000");
+      setSize("12kg");
+      setCount(1);
+      setPrice(card?.price?.toString() || "1450");
       setIsPriceEditable(false);
     }
-  }, [open, initialValues, card]);
+  }, [open, prevItem, card, mode]);
 
   const handleBackdropClick = (e) => {
     if (e.target === dialogRef.current) {
@@ -61,49 +61,30 @@ export default function ExchangeModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const item = {
-      id: card?.brandId ?? initialValues?.id,
-      name: card?.brandName ?? initialValues?.name,
+      id: card?.id,
+      name: card?.name,
       type,
       size,
       count: Number(count),
       price: Number(price),
-      productType:
-        card?.productType || initialValues?.productType || "cylinder",
+      productType: card?.productType || "cylinder",
     };
 
-    // Edit mode
-    if (initialValues && typeof initialValues.idx === "number") {
-      if (activeSection === "delivered") {
-        const currentList = Array.isArray(deliveredItems) ? deliveredItems : [];
-        const newList = currentList.map((i, idx) =>
-          idx === initialValues.idx ? { ...i, ...item } : i
-        );
-        setDeliveredItems(newList);
-      } else if (activeSection === "received") {
-        const currentList = Array.isArray(receivedItems) ? receivedItems : [];
-        const newList = currentList.map((i, idx) =>
-          idx === initialValues.idx ? { ...i, ...item } : i
-        );
-        setReceivedItems(newList);
-      }
-      onClose();
-      return;
+    if (mode === "edit" && prevItem) {
+      if (activeSection === "delivered") updateDeliveredItem(prevItem, item);
+      else if (activeSection === "received") updateReceivedItem(prevItem, item);
+    } else {
+      if (activeSection === "delivered") addDeliveredItem(item);
+      else if (activeSection === "received") addReceivedItem(item);
     }
 
-    // Add mode
-    if (activeSection === "delivered") {
-      const currentList = Array.isArray(deliveredItems) ? deliveredItems : [];
-      setDeliveredItems([...currentList, item]);
-    } else if (activeSection === "received") {
-      const currentList = Array.isArray(receivedItems) ? receivedItems : [];
-      setReceivedItems([...currentList, item]);
-    }
     onClose();
   };
 
-  const name = card?.brandName || "Brand Name";
-  const model = [size, type].join("-"); // 5kg-20mm
+  const name = card?.name || "Brand Name";
+  const model = [size, type].join("-"); // eg: 12kg-20mm
 
   return (
     <dialog
@@ -144,8 +125,9 @@ export default function ExchangeModal({
             onChange={(e) => setSize(e.target.value)}
           >
             <option value="5kg">5 kg</option>
-            <option value="10kg">10 kg</option>
-            <option value="15kg">15 kg</option>
+            <option value="12kg">12 kg</option>
+            <option value="20kg">20 kg</option>
+            <option value="25kg">25 kg</option>
           </select>
         </div>
 
@@ -160,7 +142,7 @@ export default function ExchangeModal({
           />
         </div>
 
-        {activeSection == "delivered" && (
+        {activeSection === "delivered" && (
           <div className={styles.formGroup}>
             <label htmlFor="price">Enter price</label>
             <input

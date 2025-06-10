@@ -1,5 +1,7 @@
 import useLocalStorageState from "../../hooks/useLocalStorageState";
 import { Outlet } from "react-router-dom";
+import { useBrandStore } from "../../stores/brandStore";
+import { useEffect } from "react";
 
 export default function ExchangeLayout() {
   const [deliveredItems, setDeliveredItems] = useLocalStorageState(
@@ -10,6 +12,13 @@ export default function ExchangeLayout() {
     "receivedItems",
     []
   );
+
+  const initializeDraft = useBrandStore((state) => state.initializeDraft);
+
+  // On mount, initialize draft selection with current confirmed selection
+  useEffect(() => {
+    initializeDraft();
+  }, [initializeDraft]);
 
   return (
     <Outlet

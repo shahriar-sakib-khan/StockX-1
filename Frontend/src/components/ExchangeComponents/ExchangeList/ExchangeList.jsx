@@ -1,8 +1,8 @@
 import styles from "./ExchangeList.module.css";
-import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
-import AddAccessoryModal from "../AddAccessoryModal/AddAccessoryModal";
-import ExchangeModal from "../ExchangeModal/ExchangeModal";
+import AccessoryModal from "../AccessoryModal/AccessoryModal";
+import CylinderModal from "../CylinderModal/CylinderModal";
+import { useExchangeStore } from "../../../stores/exchangeStore";
 
 export default function ExchangeList({
   type = "delivered" | "received",
@@ -10,22 +10,19 @@ export default function ExchangeList({
   onClick,
   className = "",
 }) {
-  const { deliveredItems, setDeliveredItems, receivedItems, setReceivedItems } =
-    useOutletContext();
-  const [editIndex, setEditIndex] = useState(null);
-  const [editModalType, setEditModalType] = useState(null); // "stove" or "regulator"
-  const [editInitialValues, setEditInitialValues] = useState(null);
-  const [editCylinder, setEditCylinder] = useState(null);
+  const {
+    deliveredItems,
+    receivedItems,
+    removeDeliveredItem,
+    removeReceivedItem,
+    updateDeliveredItem,
+    updateReceivedItem,
+  } = useExchangeStore();
 
-  // Group items by productType
-  const itemsList =
-    type === "delivered"
-      ? Array.isArray(deliveredItems)
-        ? deliveredItems
-        : []
-      : Array.isArray(receivedItems)
-      ? receivedItems
-      : [];
+  const [modalType, setModalType] = useState(null); // "regulator" | "stove" | "cylinder"
+  const [prevItem, setPrevItem] = useState(null); // Item being edited
+
+  const itemsList = type === "delivered" ? deliveredItems : receivedItems;
 
   const groups = [
     { label: "Regulators", type: "regulator" },
@@ -33,57 +30,29 @@ export default function ExchangeList({
     { label: "Cylinders", type: "cylinder" },
   ];
 
-  // Remove item handler
-  const handleRemove = (idx) => {
-    const item = itemsList[idx];
-    // Remove from the correct list
-    const newList = itemsList.filter((_, i) => i !== idx);
+  const handleRemove = (item) => {
     if (type === "delivered") {
-      setDeliveredItems(newList);
+      removeDeliveredItem(item);
     } else {
-      setReceivedItems(newList);
-    }
-    // Update cylinder stock if it's a cylinder
-    if (item.productType === "cylinder") {
-      // setCylinders(
-      //   updateCylinderStock(
-      //     cylinders,
-      //     item.id,
-      //     item.type,
-      //     item.size,
-      //     item.count // add back to stock
-      //   )
-      // );
+      removeReceivedItem(item);
     }
   };
 
-  // Edit item handler
-  const handleEdit = (item, idx) => {
-    if (item.productType === "regulator" || item.productType === "stove") {
-      setEditModalType(item.productType);
-      setEditInitialValues({ ...item, idx });
-      setEditIndex(idx);
-    } else if (item.productType === "cylinder") {
-      setEditCylinder({ ...item, idx });
-    }
+  const handleEdit = (item) => {
+    setModalType(item.productType);
+    setPrevItem(item);
   };
 
-  // Handle modal save
-  const handleEditSave = (updatedItem) => {
-    const newList = itemsList.map((item, idx) =>
-      idx === editIndex ? { ...item, ...updatedItem } : item
-    );
+  const handleEditSave = (prevItem, updatedItem) => {
     if (type === "delivered") {
-      setDeliveredItems(newList);
+      updateDeliveredItem(prevItem, updatedItem);
     } else {
-      setReceivedItems(newList);
+      updateReceivedItem(prevItem, updatedItem);
     }
-    setEditIndex(null);
-    setEditModalType(null);
-    setEditInitialValues(null);
+    setModalType(null);
+    setPrevItem(null);
   };
 
-  // Table header
   const tableHeader = (
     <thead>
       <tr>
@@ -95,12 +64,11 @@ export default function ExchangeList({
     </thead>
   );
 
-  // Render grouped rows
   const groupedRows = groups
     .map((group) => {
-      const groupItems = itemsList
-        .map((item, idx) => ({ ...item, idx }))
-        .filter((item) => item.productType === group.type);
+      const groupItems = itemsList.filter(
+        (item) => item.productType === group.type
+      );
 
       if (groupItems.length === 0) return null;
 
@@ -114,8 +82,8 @@ export default function ExchangeList({
               {group.label}
             </td>
           </tr>
-          {groupItems.map((item) => (
-            <tr key={item.idx}>
+          {groupItems.map((item, i) => (
+            <tr key={i}>
               <td>
                 {item.name}
                 {item.productType === "cylinder" && (
@@ -130,14 +98,14 @@ export default function ExchangeList({
               <td>
                 <button
                   className={styles.editBtn}
-                  onClick={() => handleEdit(item, item.idx)}
+                  onClick={() => handleEdit(item)}
                   type="button"
                 >
                   Edit
                 </button>
                 <button
                   className={styles.removeBtn}
-                  onClick={() => handleRemove(item.idx)}
+                  onClick={() => handleRemove(item)}
                   type="button"
                 >
                   Remove
@@ -168,39 +136,31 @@ export default function ExchangeList({
           {groupedRows}
         </table>
       </div>
-      {editModalType && (
-        <AddAccessoryModal
-          open={!!editModalType}
+
+      {modalType === "regulator" || modalType === "stove" ? (
+        <AccessoryModal
+          open={!!modalType}
           onClose={() => {
-            setEditIndex(null);
-            setEditModalType(null);
-            setEditInitialValues(null);
+            setModalType(null);
+            setPrevItem(null);
           }}
-          itemType={editModalType}
-          initialValues={editInitialValues}
+          itemType={modalType}
+          initialValues={prevItem}
           onSave={handleEditSave}
         />
-      )}
-      {editCylinder && (
-        <ExchangeModal
-          open={!!editCylinder}
-          onClose={() => setEditCylinder(null)}
-          card={{
-            brandId: editCylinder.id,
-            brandName: editCylinder.name,
-            price: editCylinder.price,
-            productType: "cylinder",
+      ) : modalType === "cylinder" ? (
+        <CylinderModal
+          open={true}
+          card={prevItem}
+          activeSection={type}
+          onClose={() => {
+            setModalType(null);
+            setPrevItem(null);
           }}
-          activeSection="delivered"
-          initialValues={{
-            type: editCylinder.type,
-            size: editCylinder.size,
-            count: editCylinder.count,
-            price: editCylinder.price,
-            idx: editCylinder.idx,
-          }}
+          mode="edit"
+          onSave={handleEditSave}
         />
-      )}
+      ) : null}
     </div>
   );
 }

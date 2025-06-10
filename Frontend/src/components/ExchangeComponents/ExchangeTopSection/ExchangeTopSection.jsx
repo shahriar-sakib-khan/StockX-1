@@ -1,14 +1,13 @@
-import { NavLink, useOutletContext } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "./ExchangeTopSection.module.css";
+import { useExchangeStore } from "../../../stores/exchangeStore";
 
 export default function ExchangeTopSection() {
-  const { deliveredItems, setDeliveredItems, receivedItems, setReceivedItems } =
-    useOutletContext();
-
-  const onClear = () => {
-    setDeliveredItems([]);
-    setReceivedItems([]);
-  };
+  const deliveredItems = useExchangeStore((state) => state.deliveredItems);
+  const receivedItems = useExchangeStore((state) => state.receivedItems);
+  const clearAllExchangeData = useExchangeStore(
+    (state) => state.clearAllExchangeData
+  );
 
   const onPrint = () => {
     console.log(deliveredItems);
@@ -21,7 +20,7 @@ export default function ExchangeTopSection() {
         <NavLink to={-1} className={styles.btn}>
           Select Shop
         </NavLink>
-        <button onClick={onClear} className={styles.btn}>
+        <button onClick={() => clearAllExchangeData()} className={styles.btn}>
           Clear list
         </button>
         <button onClick={onPrint} className={styles.btn}>

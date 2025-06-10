@@ -49,9 +49,12 @@ export const useBrandStore = create(
       toggleSingleBrand: (id) => {
         const { draftSelectedBrands, allBrands } = get();
         const isSelected = draftSelectedBrands.some((b) => b.id === id);
-        const updated = isSelected
+        let updated = isSelected
           ? draftSelectedBrands.filter((b) => b.id !== id)
           : [...draftSelectedBrands, allBrands.find((b) => b.id === id)];
+
+        updated = updated.sort((a, b) => (a.id > b.id ? 1 : -1));
+
         set({ draftSelectedBrands: updated });
       },
 
