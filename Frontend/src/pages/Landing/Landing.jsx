@@ -1,11 +1,52 @@
+import React, { useEffect, useState } from 'react';
 import { NavLink } from "react-router-dom";
-import styles from "./Landing.module.css";
+import { motion } from 'framer-motion';
+import styles from './Landing.module.css';
+import Navbar from './Navbar';
+import Content from './Content';
+import logoImage from './Stock_x_logo_2.png';
+import Footer from './Footer.jsx'
+import { getLogoAnimation, initialLogoPosition } from './logoAnimation';
+import Brands from './Brands.jsx'
 
-export default function Landing() {
-  return (
-    <div className={styles.landing}>
-      <h1>Landing page</h1>
-      <NavLink to="/login">Get Started</NavLink>
-    </div>
-  );
-}
+const Landing = () => {
+    const [animationComplete, setAnimationComplete] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 500);
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        const timer = setTimeout(() => setAnimationComplete(true), 200);
+
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    return (
+        <>
+            <div className={styles.main_container}>
+            <div className={styles.logo_container}>
+                <motion.img
+                    src={logoImage}
+                    alt="Logo"
+                    className={styles.logo}
+                    initial={initialLogoPosition}
+                    animate={getLogoAnimation(animationComplete, isMobile)}
+                    transition={{ duration: 1.5, ease: 'easeInOut' }}
+                />
+            </div>
+            <div className={styles.content_container}>
+                {animationComplete && <Navbar />}
+                {animationComplete && <Content show={animationComplete} />}
+                {animationComplete && <Brands show={animationComplete} />}
+            </div>
+            </div>
+        </>
+    );
+};
+
+export default Landing;
