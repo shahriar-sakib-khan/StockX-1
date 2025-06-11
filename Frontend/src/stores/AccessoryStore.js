@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { baseRegulator, baseStove } from "./baseLists/baseAccessory";
+import { baseRegulator, baseStove } from "./baseLists/base_accessory";
 
 const clampValue = (value) => Math.max(0, Number(value));
 

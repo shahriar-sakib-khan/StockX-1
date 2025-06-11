@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { allBrands } from "../assets/Lists/new_brands_list.jsx";
+import { allBrands } from "./baseLists/base_brands_list.js";
 
 // 🟢 general methods
 // 🟡 brand selection methods

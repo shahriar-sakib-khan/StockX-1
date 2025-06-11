@@ -1,5 +1,5 @@
-import { brand_logo } from "../Brands";
-import { cylinder_img } from "../Cylinders";
+import { brand_logo } from "../../assets/Brands";
+import { cylinder_img } from "../../assets/Cylinders";
 
 export const allBrands = [
   {
