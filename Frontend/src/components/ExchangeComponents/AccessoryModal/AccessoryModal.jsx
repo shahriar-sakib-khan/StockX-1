@@ -1,32 +1,26 @@
 import styles from "./AccessoryModal.module.css";
 import { useRef, useState, useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
-import { useStovesStore, useRegulatorsStore } from "../../../stores";
+import { useExchangeStore } from "../../../stores/exchangeStore";
 
 export default function AccessoryModal({
   open,
   onClose,
-  itemType, // "stove" or "regulator"
+  itemType, // stove or regulator
   initialValues = null,
-  onSave, // optional, for edit mode
+  mode = "add", // add | edit
 }) {
   const dialogRef = useRef(null);
   const countInputRef = useRef(null);
 
-  // Get lists and setters from zustand stores
-  const stoves = useStovesStore((state) => state.stoves);
-  const setStoves = useStovesStore((state) => state.setStoves);
-  const regulators = useRegulatorsStore((state) => state.regulators);
-  const setRegulators = useRegulatorsStore((state) => state.setRegulators);
-
-  // Get delivered items and setter from outlet context
-  const { deliveredItems, setDeliveredItems } = useOutletContext();
-
   const [name, setName] = useState("");
   const [count, setCount] = useState("1");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState("0");
 
-  // Set initial values when modal opens for editing
+  const addDeliveredItem = useExchangeStore((state) => state.addDeliveredItem);
+  const updateDeliveredItem = useExchangeStore(
+    (state) => state.updateDeliveredItem
+  );
+
   useEffect(() => {
     if (open) {
       dialogRef.current?.showModal();
@@ -36,20 +30,23 @@ export default function AccessoryModal({
   }, [open]);
 
   useEffect(() => {
-    if (open && initialValues) {
-      setName(initialValues.name || "");
-      setCount(initialValues.count?.toString() || "1");
-      setPrice(initialValues.price?.toString() || "");
-      // Focus on count field after values are set
-      setTimeout(() => {
-        countInputRef.current?.focus();
-      }, 0);
-    } else if (open) {
-      setName(itemType === "stove" ? "Stove" : "Regulator");
-      setCount("1");
-      setPrice("");
+    if (open) {
+      if (mode === "edit" && initialValues) {
+        setName(initialValues.name || "");
+        setCount(initialValues.count?.toString() || "1");
+        setPrice(
+          initialValues.price !== undefined && initialValues.price !== null
+            ? initialValues.price.toString()
+            : "0"
+        );
+      } else {
+        setName(itemType === "stove" ? "Stove" : "Regulator");
+        setCount("1");
+        setPrice("0");
+      }
+      setTimeout(() => countInputRef.current?.focus(), 0);
     }
-  }, [open, initialValues, itemType]);
+  }, [open, mode, initialValues, itemType]);
 
   const handleBackdropClick = (e) => {
     if (e.target === dialogRef.current) {
@@ -59,45 +56,19 @@ export default function AccessoryModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const item = {
+      ...initialValues,
       name,
       count: Number(count),
       price: Number(price),
-      productType: itemType, // "stove" or "regulator"
+      productType: itemType,
     };
 
-    // If editing, call onSave and close
-    if (typeof onSave === "function" && initialValues) {
-      onSave(item);
-      onClose();
-      return;
-    }
-
-    // Add to delivered items (from outlet context)
-    const currentList = Array.isArray(deliveredItems) ? deliveredItems : [];
-    const existingIndex = currentList.findIndex(
-      (i) => i.name === item.name && i.productType === item.productType
-    );
-
-    let newList;
-    if (existingIndex !== -1) {
-      // Update count for existing item
-      newList = currentList.map((i, idx) =>
-        idx === existingIndex
-          ? { ...i, count: i.count + item.count, price: item.price }
-          : i
-      );
+    if (mode === "edit" && initialValues) {
+      updateDeliveredItem(initialValues, item);
     } else {
-      // Add new item
-      newList = [...currentList, item];
-    }
-    setDeliveredItems(newList);
-
-    // Optionally update the stoves/regulators store as well
-    if (itemType === "stove") {
-      setStoves([...(Array.isArray(stoves) ? stoves : []), item]);
-    } else if (itemType === "regulator") {
-      setRegulators([...(Array.isArray(regulators) ? regulators : []), item]);
+      addDeliveredItem(item);
     }
 
     onClose();
@@ -112,7 +83,7 @@ export default function AccessoryModal({
     >
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2 className={styles.title}>
-          {initialValues ? "Edit" : "Add"}{" "}
+          {mode === "edit" ? "Edit" : "Add"}{" "}
           {itemType === "stove" ? "Stove" : "Regulator"}
         </h2>
         <div className={styles.formGroup}>
@@ -149,7 +120,7 @@ export default function AccessoryModal({
           />
         </div>
         <button type="submit" className={styles.submitBtn}>
-          {initialValues
+          {mode === "edit"
             ? `Save ${itemType === "stove" ? "Stove" : "Regulator"}`
             : `Add ${itemType === "stove" ? "Stove" : "Regulator"}`}
         </button>

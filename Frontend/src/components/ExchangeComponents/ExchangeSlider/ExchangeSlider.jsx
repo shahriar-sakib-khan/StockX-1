@@ -44,7 +44,6 @@ export default function ExchangeSlider({ activeSection }) {
         card={selectedCard}
         activeSection={activeSection}
         onClose={() => setModalOpen(false)}
-        mode="add"
       />
     </div>
   );

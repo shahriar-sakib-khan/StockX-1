@@ -146,6 +146,7 @@ export default function ExchangeList({
           }}
           itemType={modalType}
           initialValues={prevItem}
+          mode="edit"
           onSave={handleEditSave}
         />
       ) : modalType === "cylinder" ? (

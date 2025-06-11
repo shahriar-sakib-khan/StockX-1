@@ -2,12 +2,16 @@ import { useState } from "react";
 import ExchangeSlider from "../ExchangeSlider/ExchangeSlider";
 import AccessoryModal from "../AccessoryModal/AccessoryModal";
 import styles from "./ExchangeBottomSection.module.css";
+import { useAccessoryStore } from "../../../stores/AccessoryStore";
 
 export default function ExchangeBottomSection({ context }) {
   const { activeSection } = context;
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalType, setModalType] = useState(null); // "stove" or "regulator"
+  const [modalType, setModalType] = useState(null); // stove | regulator
+
+  const regulator = useAccessoryStore((state) => state.regulator);
+  const stove = useAccessoryStore((state) => state.stove);
 
   const openModal = (type) => {
     setModalType(type);
@@ -19,7 +23,8 @@ export default function ExchangeBottomSection({ context }) {
     setModalType(null);
   };
 
-  const onlyCylinder = activeSection === "received";
+  const isReceived = activeSection === "received";
+  const initialValues = modalType === "stove" ? stove : regulator;
 
   return (
     <div className={styles.exchangeBottomSection}>
@@ -28,8 +33,8 @@ export default function ExchangeBottomSection({ context }) {
           className={styles.regulator}
           role="button"
           tabIndex={0}
-          onClick={() => !onlyCylinder && openModal("regulator")}
-          aria-disabled={onlyCylinder}
+          onClick={() => !isReceived && openModal("regulator")}
+          aria-disabled={isReceived}
         >
           Add regulator
         </div>
@@ -37,8 +42,8 @@ export default function ExchangeBottomSection({ context }) {
           className={styles.stove}
           role="button"
           tabIndex={0}
-          onClick={() => !onlyCylinder && openModal("stove")}
-          aria-disabled={onlyCylinder}
+          onClick={() => !isReceived && openModal("stove")}
+          aria-disabled={isReceived}
         >
           Add stove
         </div>
@@ -49,6 +54,7 @@ export default function ExchangeBottomSection({ context }) {
           open={modalOpen}
           itemType={modalType}
           onClose={closeModal}
+          initialValues={initialValues}
         />
       )}
     </div>
