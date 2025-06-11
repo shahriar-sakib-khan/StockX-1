@@ -8,6 +8,7 @@ const ReceiptTopSection = ({ className = "" }) => {
         Go Back
       </NavLink>
       <NavLink to="#" className={styles.btn}>
+        {/* save the exchange data and then clear the exchange lists */}
         Save
       </NavLink>
     </div>

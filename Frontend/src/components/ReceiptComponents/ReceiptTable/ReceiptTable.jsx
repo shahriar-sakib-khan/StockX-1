@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
-import { useOutletContext } from "react-router-dom";
 import styles from "./ReceiptTable.module.css";
+import { useExchangeStore } from "../../../stores/exchangeStore";
 
 const GROUPS = [
   { type: "cylinder", label: "Cylinders" },
@@ -9,7 +9,8 @@ const GROUPS = [
 ];
 
 export default function ReceiptTable({ type = "" }) {
-  const { deliveredItems = [], receivedItems = [] } = useOutletContext();
+  const deliveredItems = useExchangeStore((state) => state.deliveredItems);
+  const receivedItems = useExchangeStore((state) => state.receivedItems);
   const [paid, setPaid] = useState("");
   const [isGrandTotalEditable, setIsGrandTotalEditable] = useState(false);
   const [customGrandTotal, setCustomGrandTotal] = useState(null);
