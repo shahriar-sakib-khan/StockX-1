@@ -12,7 +12,7 @@ export default function AccessoryModal({
   const dialogRef = useRef(null);
   const countInputRef = useRef(null);
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState("Accessory");
   const [count, setCount] = useState("1");
   const [price, setPrice] = useState("0");
 

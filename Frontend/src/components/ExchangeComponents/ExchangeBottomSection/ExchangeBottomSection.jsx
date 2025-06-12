@@ -10,8 +10,8 @@ export default function ExchangeBottomSection({ context }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null); // stove | regulator
 
-  const regulator = useAccessoryStore((state) => state.regulator);
-  const stove = useAccessoryStore((state) => state.stove);
+  const draftRegulator = useAccessoryStore((state) => state.draftRegulator);
+  const draftStove = useAccessoryStore((state) => state.draftStove);
 
   const openModal = (type) => {
     setModalType(type);
@@ -24,7 +24,7 @@ export default function ExchangeBottomSection({ context }) {
   };
 
   const isReceived = activeSection === "received";
-  const initialValues = modalType === "stove" ? stove : regulator;
+  const initialValues = modalType === "stove" ? draftStove : draftRegulator;
 
   return (
     <div className={styles.exchangeBottomSection}>

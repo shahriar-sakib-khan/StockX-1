@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import { allBrands } from "./baseLists/base_brands_list.js";
 
 // 🟢 general methods
+// 🟣 item access methods
 // 🟡 brand selection methods
 // 🔵 stock manipulation methods
 // 🔴 price manipulation methods
@@ -17,20 +18,20 @@ export const useBrandStore = create(
       // 🟢 Initialize or sync draft with committed on mount
       initializeDraft: () => {
         const { selectedBrands } = get();
-        set({ draftSelectedBrands: [...selectedBrands] });
+        set({ draftSelectedBrands: [ ...selectedBrands ] });
       },
 
-      // 🟢 Commit draft to confirmed selection 
-      submitSelectedBrands: () => {
+      // 🟢 Submit draft to confirm changes 
+      submitBrandChanges: () => {
         const { draftSelectedBrands } = get();
-        set({ selectedBrands: [...draftSelectedBrands] });
+        set({ selectedBrands: [ ...draftSelectedBrands ] });
       },
 
-      // 🟢 Undo draft (revert it back to last confirmed selection)
-      resetSelectedBrands: () => {
-        const { selectedBrands } = get();
-        set({ draftSelectedBrands: [...selectedBrands] });
-      },
+      // 🟢 Submit draft to confirm selection 
+      submitSelectedBrands: () => get().submitBrandChanges(),
+
+      // 🟢 Reset draft (revert it back to last confirmed selection)
+      resetSelectedBrands: () => get().initializeDraft(),
 
       // 🟢 Check if the draft has uncommitted changes
       hasUncommittedChanges: () => {
@@ -38,23 +39,44 @@ export const useBrandStore = create(
         return JSON.stringify(selectedBrands) !== JSON.stringify(draftSelectedBrands);
       },
 
-      // 🟢 Get a brand by ID from allBrands
-      getBrandById: (id) => {
+      // 🟣 Get a brand by ID from selected brands
+      getBrandById: (brandId) => {
         const { selectedBrands } = get();
-        return selectedBrands.find((b) => b.id === id);
+        return selectedBrands.find((b) => b.id === brandId);
       },
 
+      // 🟣 Get a brand by ID from draft selected brands
+      getDraftBrandById: (brandId) => {
+        const { draftSelectedBrands } = get();
+        return draftSelectedBrands.find((b) => b.id === brandId);
+      },
+
+      // 🟣 Get the stock of a specific cylinder by ID from selected brands
+      getCylinderStockById: ({ brandId, cylinderId }) => {
+        const { getBrandById } = get();
+        const brand = getBrandById(brandId);
+        if (!brand) return 0;
+
+        const cylinder = brand.cylinders?.find(c => c.id === cylinderId);
+        return cylinder?.stock || 0;
+      },
 
       // 🟡 Used for toggling one brand in the draft selection
       toggleSingleBrand: (id) => {
         const { draftSelectedBrands, allBrands } = get();
         const isSelected = draftSelectedBrands.some((b) => b.id === id);
-        let updated = isSelected
-          ? draftSelectedBrands.filter((b) => b.id !== id)
-          : [...draftSelectedBrands, allBrands.find((b) => b.id === id)];
-
+        let updated;
+        
+        if (isSelected) {
+          updated = draftSelectedBrands.filter((b) => b.id !== id)
+        }
+        else {
+          const brandToAdd = allBrands.find((b) => b.id === id);
+          if (!brandToAdd) return;
+          updated = [ ...draftSelectedBrands, brandToAdd ];
+        }
+        
         updated = updated.sort((a, b) => (a.id > b.id ? 1 : -1));
-
         set({ draftSelectedBrands: updated });
       },
 
@@ -62,7 +84,7 @@ export const useBrandStore = create(
       toggleAllBrandsSelection: () => {
         const { draftSelectedBrands, allBrands } = get();
         const allSelected = draftSelectedBrands.length === allBrands.length;
-        set({ draftSelectedBrands: allSelected ? [] : [...allBrands] });
+        set({ draftSelectedBrands: allSelected ? [] : [ ...allBrands ] });
       },
 
       // 🔵 change stocks of cylinders by id
@@ -76,10 +98,7 @@ export const useBrandStore = create(
             const updatedCylinders = brand.cylinders.map((cyl) => {
               if (cyl.id !== cylinderId) return cyl;
               const currentStock = typeof cyl.stock === "number" ? cyl.stock : 0;
-              return {
-                ...cyl,
-                stock: Math.max(0, currentStock + delta),
-              };
+              return { ...cyl, stock: Math.max(0, currentStock + delta) };
             });
 
             // Calculate total stock of all cylinders for this brand
@@ -88,11 +107,7 @@ export const useBrandStore = create(
               0
             );
 
-            return {
-              ...brand,
-              cylinders: updatedCylinders,
-              totalCylinderCount,
-            };
+            return { ...brand, cylinders: updatedCylinders, totalCylinderCount };
           });
 
           return { draftSelectedBrands: updatedDraft };
@@ -115,17 +130,18 @@ export const useBrandStore = create(
 
             const updatedCylinders = brand.cylinders.map((cyl) => {
               if (cyl.id !== cylinderId) return cyl;
-              return {
-                ...cyl,
-                stock: Math.max(0, newStock),
-              };
+              return { ...cyl, stock: Math.max(0, newStock) };
             });
 
-            return {
-              ...brand,
-              cylinders: updatedCylinders,
-            };
+            // Calculate total stock of all cylinders for this brand
+            const totalCylinderCount = updatedCylinders.reduce(
+              (sum, cyl) => sum + (typeof cyl.stock === "number" ? cyl.stock : 0),
+              0
+            );
+
+            return { ...brand, cylinders: updatedCylinders, totalCylinderCount };
           });
+
 
           return { draftSelectedBrands: updatedDraft };
         });
@@ -139,16 +155,16 @@ export const useBrandStore = create(
 
             const updatedCylinders = brand.cylinders.map((cyl) => {
               if (cyl.id !== cylinderId) return cyl;
-              return {
-                ...cyl,
-                price: newPrice,
-              };
+              return { ...cyl, price: newPrice };
             });
 
-            return {
-              ...brand,
-              cylinders: updatedCylinders,
-            };
+            // Calculate total stock of all cylinders for this brand
+            const totalCylinderCount = updatedCylinders.reduce(
+              (sum, cyl) => sum + (typeof cyl.stock === "number" ? cyl.stock : 0),
+              0
+            );
+
+            return { ...brand, cylinders: updatedCylinders, totalCylinderCount };
           });
 
           return { draftSelectedBrands: updatedDraft };

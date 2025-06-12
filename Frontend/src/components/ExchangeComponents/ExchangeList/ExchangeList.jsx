@@ -12,11 +12,9 @@ export default function ExchangeList({
 }) {
   const {
     deliveredItems,
-    receivedItems,
     removeDeliveredItem,
+    receivedItems,
     removeReceivedItem,
-    updateDeliveredItem,
-    updateReceivedItem,
   } = useExchangeStore();
 
   const [modalType, setModalType] = useState(null); // "regulator" | "stove" | "cylinder"
@@ -41,16 +39,6 @@ export default function ExchangeList({
   const handleEdit = (item) => {
     setModalType(item.productType);
     setPrevItem(item);
-  };
-
-  const handleEditSave = (prevItem, updatedItem) => {
-    if (type === "delivered") {
-      updateDeliveredItem(prevItem, updatedItem);
-    } else {
-      updateReceivedItem(prevItem, updatedItem);
-    }
-    setModalType(null);
-    setPrevItem(null);
   };
 
   const tableHeader = (
@@ -147,7 +135,6 @@ export default function ExchangeList({
           itemType={modalType}
           initialValues={prevItem}
           mode="edit"
-          onSave={handleEditSave}
         />
       ) : modalType === "cylinder" ? (
         <CylinderModal
@@ -159,7 +146,6 @@ export default function ExchangeList({
             setPrevItem(null);
           }}
           mode="edit"
-          onSave={handleEditSave}
         />
       ) : null}
     </div>
