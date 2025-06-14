@@ -1,12 +1,13 @@
 import styles from "./AccessoryModal.module.css";
 import { useRef, useState, useEffect } from "react";
 import { useExchangeStore } from "../../../stores/exchangeStore";
+import { useAccessoryStore } from "../../../stores/AccessoryStore";
 
 export default function AccessoryModal({
   open,
-  onClose,
   itemType, // stove or regulator
-  initialValues = null,
+  prevItem = null,
+  onClose,
   mode = "add", // add | edit
 }) {
   const dialogRef = useRef(null);
@@ -16,10 +17,20 @@ export default function AccessoryModal({
   const [count, setCount] = useState("1");
   const [price, setPrice] = useState("0");
 
+  // exchange store imports
   const addDeliveredItem = useExchangeStore((state) => state.addDeliveredItem);
   const updateDeliveredItem = useExchangeStore(
     (state) => state.updateDeliveredItem
   );
+
+  // accessory store imports
+  const getStoveStock = useAccessoryStore((state) => state.getStoveStock);
+  const getRegulatorStock = useAccessoryStore(
+    (state) => state.getRegulatorStock
+  );
+
+  const itemStock =
+    itemType === "regulator" ? getRegulatorStock() : getStoveStock();
 
   useEffect(() => {
     if (open) {
@@ -31,12 +42,12 @@ export default function AccessoryModal({
 
   useEffect(() => {
     if (open) {
-      if (mode === "edit" && initialValues) {
-        setName(initialValues.name || "");
-        setCount(initialValues.count?.toString() || "1");
+      if (mode === "edit" && prevItem) {
+        setName(prevItem.name || "");
+        setCount(prevItem.count?.toString() || "1");
         setPrice(
-          initialValues.price !== undefined && initialValues.price !== null
-            ? initialValues.price.toString()
+          prevItem.price !== undefined && prevItem.price !== null
+            ? prevItem.price.toString()
             : "0"
         );
       } else {
@@ -46,7 +57,7 @@ export default function AccessoryModal({
       }
       setTimeout(() => countInputRef.current?.focus(), 0);
     }
-  }, [open, mode, initialValues, itemType]);
+  }, [open, mode, prevItem, itemType]);
 
   const handleBackdropClick = (e) => {
     if (e.target === dialogRef.current) {
@@ -58,15 +69,15 @@ export default function AccessoryModal({
     e.preventDefault();
 
     const item = {
-      ...initialValues,
+      ...prevItem,
       name,
       count: Number(count),
       price: Number(price),
       productType: itemType,
     };
 
-    if (mode === "edit" && initialValues) {
-      updateDeliveredItem(initialValues, item);
+    if (mode === "edit" && prevItem) {
+      updateDeliveredItem(prevItem, item);
     } else {
       addDeliveredItem(item);
     }
@@ -82,10 +93,13 @@ export default function AccessoryModal({
       onClick={handleBackdropClick}
     >
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h2 className={styles.title}>
-          {mode === "edit" ? "Edit" : "Add"}{" "}
-          {itemType === "stove" ? "Stove" : "Regulator"}
-        </h2>
+        <div className={styles.topSection}>
+          <h2 className={styles.title}>
+            {mode === "edit" ? "Edit" : "Add"}{" "}
+            {itemType === "stove" ? "Stove" : "Regulator"}
+          </h2>
+          <span className={styles.stock}>{itemStock}</span>
+        </div>
         <div className={styles.formGroup}>
           <label htmlFor="name">Name</label>
           <input
@@ -101,7 +115,8 @@ export default function AccessoryModal({
           <input
             id="count"
             type="number"
-            min="1"
+            min={itemStock > 0 ? 1 : 0}
+            max={itemStock}
             value={count}
             required
             ref={countInputRef}
@@ -120,9 +135,9 @@ export default function AccessoryModal({
           />
         </div>
         <button type="submit" className={styles.submitBtn}>
-          {mode === "edit"
-            ? `Save ${itemType === "stove" ? "Stove" : "Regulator"}`
-            : `Add ${itemType === "stove" ? "Stove" : "Regulator"}`}
+          {`${mode === "edit" ? "Save" : "Add"} ${
+            itemType === "stove" ? "Stove" : "Regulator"
+          }`}
         </button>
       </form>
     </dialog>

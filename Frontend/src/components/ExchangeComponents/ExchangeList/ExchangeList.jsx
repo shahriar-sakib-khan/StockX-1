@@ -3,24 +3,43 @@ import { useState } from "react";
 import AccessoryModal from "../AccessoryModal/AccessoryModal";
 import CylinderModal from "../CylinderModal/CylinderModal";
 import { useExchangeStore } from "../../../stores/exchangeStore";
+import { useBrandStore } from "../../../stores/brandStore";
+import { useAccessoryStore } from "../../../stores/AccessoryStore";
 
 export default function ExchangeList({
-  type = "delivered" | "received",
+  section = "delivered" | "received",
   active = false,
   onClick,
   className = "",
 }) {
-  const {
-    deliveredItems,
-    removeDeliveredItem,
-    receivedItems,
-    removeReceivedItem,
-  } = useExchangeStore();
-
   const [modalType, setModalType] = useState(null); // "regulator" | "stove" | "cylinder"
   const [prevItem, setPrevItem] = useState(null); // Item being edited
 
-  const itemsList = type === "delivered" ? deliveredItems : receivedItems;
+  // exchange store imports
+  const deliveredItems = useExchangeStore((state) => state.deliveredItems);
+  const removeDeliveredItem = useExchangeStore(
+    (state) => state.removeDeliveredItem
+  );
+  const receivedItems = useExchangeStore((state) => state.receivedItems);
+  const removeReceivedItem = useExchangeStore(
+    (state) => state.removeReceivedItem
+  );
+
+  // brand store imports
+  const clearCylinderStockChangesById = useBrandStore(
+    (state) => state.clearCylinderStockChangesById
+  );
+
+  // accessory store imports
+  const clearRegulatorStockChanges = useAccessoryStore(
+    (state) => state.clearRegulatorStockChanges
+  );
+  const clearStoveStockChanges = useAccessoryStore(
+    (state) => state.clearStoveStockChanges
+  );
+
+  const isDelivered = section === "delivered";
+  const itemsList = isDelivered ? deliveredItems : receivedItems;
 
   const groups = [
     { label: "Regulators", type: "regulator" },
@@ -29,7 +48,18 @@ export default function ExchangeList({
   ];
 
   const handleRemove = (item) => {
-    if (type === "delivered") {
+    if (isDelivered) {
+      if (item.productType === "cylinder") {
+        const cylinderId = [item?.id, item?.type, item?.size].join("-");
+        clearCylinderStockChangesById({
+          brandId: item?.id,
+          cylinderId: cylinderId,
+        });
+      } else if (item.productType === "regulator") {
+        clearRegulatorStockChanges();
+      } else if (item.productType === "stove") {
+        clearStoveStockChanges();
+      }
       removeDeliveredItem(item);
     } else {
       removeReceivedItem(item);
@@ -46,7 +76,7 @@ export default function ExchangeList({
       <tr>
         <th>Name</th>
         <th>Count</th>
-        {type === "delivered" && <th>Price</th>}
+        {isDelivered && <th>Price</th>}
         <th>Actions</th>
       </tr>
     </thead>
@@ -63,10 +93,7 @@ export default function ExchangeList({
       return (
         <tbody key={group.type}>
           <tr>
-            <td
-              colSpan={type === "delivered" ? 4 : 3}
-              className={styles.groupHeading}
-            >
+            <td colSpan={isDelivered ? 4 : 3} className={styles.groupHeading}>
               {group.label}
             </td>
           </tr>
@@ -82,7 +109,7 @@ export default function ExchangeList({
                 )}
               </td>
               <td>{item.count}</td>
-              {type === "delivered" && <td>{item.price}</td>}
+              {isDelivered && <td>{item.price}</td>}
               <td>
                 <button
                   className={styles.editBtn}
@@ -116,7 +143,7 @@ export default function ExchangeList({
       onClick={onClick}
     >
       <div className={styles.heading}>
-        {type === "delivered" ? "Delivered" : "Received"}
+        {isDelivered ? "Delivered" : "Received"}
       </div>
       <div className={styles.list}>
         <table className={styles.exchangeTable}>
@@ -133,14 +160,14 @@ export default function ExchangeList({
             setPrevItem(null);
           }}
           itemType={modalType}
-          initialValues={prevItem}
+          prevItem={prevItem}
           mode="edit"
         />
       ) : modalType === "cylinder" ? (
         <CylinderModal
           open={true}
           card={prevItem}
-          activeSection={type}
+          activeSection={section}
           onClose={() => {
             setModalType(null);
             setPrevItem(null);

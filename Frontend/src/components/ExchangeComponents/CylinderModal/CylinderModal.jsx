@@ -1,10 +1,11 @@
 import styles from "./CylinderModal.module.css";
 import { useRef, useState, useEffect } from "react";
 import { useExchangeStore } from "../../../stores/exchangeStore";
+import { useBrandStore } from "../../../stores/brandStore";
 
 export default function CylinderModal({
   open,
-  card,
+  card = null,
   activeSection, // delivered | received
   onClose,
   mode, // add | edit
@@ -14,6 +15,7 @@ export default function CylinderModal({
   const dialogRef = useRef(null);
   const priceInputRef = useRef(null);
 
+  // exchange store imports
   const addDeliveredItem = useExchangeStore((state) => state.addDeliveredItem);
   const addReceivedItem = useExchangeStore((state) => state.addReceivedItem);
   const updateDeliveredItem = useExchangeStore(
@@ -23,11 +25,25 @@ export default function CylinderModal({
     (state) => state.updateReceivedItem
   );
 
+  // brand store imports
+  const getCylinderStockById = useBrandStore(
+    (state) => state.getCylinderStockById
+  );
+  const setDraftCylinderStock = useBrandStore(
+    (state) => state.setDraftCylinderStock
+  );
+
   const [type, setType] = useState("20mm");
   const [size, setSize] = useState("12kg");
   const [count, setCount] = useState("1");
   const [price, setPrice] = useState(card?.price?.toString() || "1450");
   const [isPriceEditable, setIsPriceEditable] = useState(false);
+
+  const cylinderId = card ? [card.id, type, size].join("-") : null;
+  const itemStock = getCylinderStockById({
+    brandId: card?.id,
+    cylinderId: cylinderId,
+  });
 
   useEffect(() => {
     if (open) {
@@ -80,11 +96,19 @@ export default function CylinderModal({
       else if (activeSection === "received") addReceivedItem(item);
     }
 
+    if (activeSection === "delivered") {
+      setDraftCylinderStock({
+        brandId: card?.id,
+        cylinderId: cylinderId,
+        newStock: itemStock - count,
+      });
+    }
+
     onClose();
   };
 
   const name = card?.name || "Brand Name";
-  const model = [size, type].join("-"); // eg: 12kg-20mm
+  const model = [type, size].join("-"); // eg: 20mm-12kg
 
   return (
     <dialog
@@ -95,9 +119,10 @@ export default function CylinderModal({
     >
       <div className={styles.topSection}>
         <h2 className={styles.brand}>{name}</h2>
-        <button onClick={onClose} className={styles.cancelBtn}>
+        <span className={styles.stock}>{itemStock}</span>
+        {/* <button onClick={onClose} className={styles.cancelBtn}>
           X
-        </button>
+        </button> */}
       </div>
       <div className={styles.subTopSection}>
         <h3 className={styles.modelName}>Model: {model}</h3>
@@ -136,7 +161,8 @@ export default function CylinderModal({
           <input
             type="number"
             id="count"
-            min="1"
+            min={itemStock > 0 ? 1 : 0}
+            max={activeSection === "delivered" ? itemStock : null}
             value={count}
             onChange={(e) => setCount(e.target.value)}
           />
@@ -182,7 +208,7 @@ export default function CylinderModal({
         )}
 
         <button type="submit" className={styles.submitBtn}>
-          Submit
+          {`${mode === "edit" ? "Save" : "Add"} Cylinder`}
         </button>
       </form>
     </dialog>

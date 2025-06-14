@@ -10,7 +10,7 @@ export default function ExchangeMainSection(props) {
     <div className={styles.exchangeMainSection}>
       <div className={styles.exchangeSection}>
         <ExchangeList
-          type="delivered"
+          section="delivered"
           active={activeSection === "delivered"}
           onClick={() => setActive("delivered")}
           className={[
@@ -19,7 +19,7 @@ export default function ExchangeMainSection(props) {
           ].join(" ")}
         />
         <ExchangeList
-          type="received"
+          section="received"
           active={activeSection === "received"}
           onClick={() => setActive("received")}
           className={[

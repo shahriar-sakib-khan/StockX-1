@@ -72,6 +72,20 @@ export const useAccessoryStore = create(
       // 🟢 undo stove changes
       clearStoveChanges: () => get().initializeDraftStove(),
 
+      // 🟢 undo regulator changes
+      clearRegulatorStockChanges: () => {
+        const { getRegulatorStock, setRegulatorStock } = get();
+        const st = getRegulatorStock();
+        setRegulatorStock(st);
+      },
+
+      // 🟢 undo stove changes
+      clearStoveStockChanges: () => {
+        const { getStoveStock, setStoveStock } = get();
+        const st = getStoveStock();
+        setStoveStock(st);
+      },
+
       // 🟢 Check if the drafts have uncommitted changes
       hasUncommittedChanges: () => {
         const { regulator, draftRegulator, stove, draftStove } = get();

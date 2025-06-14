@@ -33,6 +33,23 @@ export const useBrandStore = create(
       // 🟢 Reset draft (revert it back to last confirmed selection)
       resetSelectedBrands: () => get().initializeDraft(),
 
+      // 🟢 clear any changes made to the draft brands
+      clearBrandChanges: () => get().initializeDraft(),
+
+      // 🟢 clear any changes made to the given cylinder stock
+      clearCylinderStockChangesById: ({ brandId, cylinderId }) => {
+        const { getCylinderStockById, setDraftCylinderStock } = get();
+        const s = getCylinderStockById({
+          brandId: brandId,
+          cylinderId: cylinderId,
+        });
+        setDraftCylinderStock({
+          brandId: brandId,
+          cylinderId: cylinderId,
+          newStock: s,
+        });
+      },
+
       // 🟢 Check if the draft has uncommitted changes
       hasUncommittedChanges: () => {
         const { selectedBrands, draftSelectedBrands } = get();
@@ -130,7 +147,7 @@ export const useBrandStore = create(
 
             const updatedCylinders = brand.cylinders.map((cyl) => {
               if (cyl.id !== cylinderId) return cyl;
-              return { ...cyl, stock: Math.max(0, newStock) };
+              return { ...cyl, stock: Math.max(0, Number(newStock)) };
             });
 
             // Calculate total stock of all cylinders for this brand
