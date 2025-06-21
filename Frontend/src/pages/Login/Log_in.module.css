@@ -1,0 +1,260 @@
+.main_container{
+    width: 600px;
+    height: 600px;
+    background: rgba(255 , 255 , 255 , 0.1);
+    padding-top: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.header strong{
+    font-weight: bold;
+    font-size: 40px;
+
+    color: darkslategray;
+}
+
+.line{
+    height: 2px;
+    width: 80%;
+    background-color: lightgrey;
+    border-radius: 20px;
+
+    margin: 5px 0 10px 0;
+}
+
+.form_container{
+    height: 300px;
+    width: 100%;
+    padding: 50px 0 0 75px;
+
+    color: grey;
+}
+
+.input_box{
+    margin: 10px 10px 25px 2px;
+    height: 45px;
+    width: 450px;
+    font-size: 18px;
+    font-weight: 150;
+    position: relative;
+    background-color: rgba(255 , 255 , 255 , 0.1);
+
+    border: 2px solid lightgrey;
+    border-radius: 7px;
+
+    padding-left: 40px;
+}
+.input_box:focus{
+    outline: none;
+}
+.email_icon{
+    position: absolute;
+    top: 241px;
+    left: 90px;
+    z-index: 1200;
+    color: #999;
+
+}
+.pass_icon{
+    position: absolute;
+    top: 347px;
+    left: 90px;
+    z-index: 1200;
+    color: #999;
+}
+.showPass_icon{
+    position: absolute;
+    top: 345px;
+    left: 493px;
+    background-color: rgba(255 ,255 , 255 , 0.1);
+    border: none;
+    z-index: 1200;
+    color: #999;
+    font-size: 20px;
+}
+.footer{
+    height: 40px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    margin-top: -13px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.footer p{
+    font-size: 15px;
+}
+.check_box{
+    height: 17px;
+    width: 17px;
+    position: absolute;
+
+    left: 145px;
+}
+.hor_line{
+    height: 20px;
+    width: 2px;
+    background-color: lightgrey;
+
+    margin: 10px;
+}
+
+.hyper{
+    color: black;
+    text-decoration: none;
+
+    font-size: 15px;
+}
+
+.hyper:hover{
+    color: #4938B0;
+}
+
+.button_container{
+    height: auto;
+    width: 100%;
+    gap: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.navlink{
+    text-decoration: none;
+    width: 100%;
+    margin-left: 180px;
+}
+.button_container button{
+    width: 70%;
+    height: 50px;
+    border: none;
+    border-radius: 7px;
+    background-color: #6049E7;
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.5s ease, transform 0.5s ease;
+    font-weight: bold;
+}
+
+
+.button_container button:hover{
+    background-color: #4938B0;
+    box-shadow: none;
+}
+
+@media (max-width: 960px){
+    .main_container{
+        width: 450px;
+        padding-top: 0;
+    }
+    .header strong{
+        font-size: 35px;
+    }
+    .line{
+        width: 90%;
+    }
+    .form_container{
+        width: 450px;
+        padding: 50px 0 0 30px;
+    }
+    .input_box{
+        width: 380px;
+        height: 45px;
+
+        padding-left: 30px;
+    }
+    .email_icon{
+        top: 231px;
+        left: 40px;
+    }
+    .pass_icon{
+        top: 336px;
+        left: 41px;
+    }
+    .showPass_icon{
+        top: 335px;
+        left: 385px;
+    }
+    .navlink{
+        margin-left: 90px;
+    }
+    .footer{
+        left: 63px;
+        margin-top: -10px;
+        width: 70%;
+    }
+    .footer p{
+        font-size: 12px;
+    }
+    .footer a{
+        font-size: 12px;
+    }
+    .check_box{
+        left: 25px;
+    }
+    .button_container button{
+        width: 80%;
+    }
+}
+/*for mobile layout*/
+
+@media (max-width: 400px){
+    .main_container{
+        width: 350px;
+        padding-top: 0;
+    }
+    .header strong{
+        font-size: 30px;
+    }
+    .line{
+        width: 90%;
+    }
+    .form_container{
+        width: 350px;
+        padding: 50px 0 0 20px;
+    }
+    .input_box{
+        width: 300px;
+        height: 45px;
+        font-size: 15px;
+
+        padding-left: 30px;
+    }
+    .email_icon{
+        top: 228px;
+        left: 32px;
+    }
+    .pass_icon{
+        top: 333px;
+        left: 32px;
+    }
+    .showPass_icon{
+        top: 330px;
+        left: 295px;
+    }
+    .footer{
+        left: 63px;
+        width: 70%;
+        margin-top: -10px;
+    }
+    .footer p{
+        font-size: 12px;
+    }
+    .footer a{
+        font-size: 12px;
+    }
+    .check_box{
+        left: 8px;
+    }
+    .button_container button{
+        width: 80%;
+    }
+}

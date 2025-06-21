@@ -1,96 +1,96 @@
+import React , {useState , useEffect , useLayoutEffect , useContext} from 'react';
 import {useNavigate, NavLink } from "react-router-dom";
-import styles from './Login.module.css'
-import { FcGoogle } from 'react-icons/fc';
-import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
-
 import { AuthContext } from "../../context/AuthContext";
-import { useState, useContext } from "react";
-
+import styles from './Login.module.css';
+import Register from '../Register/Register.jsx';
+import Log_in from './Log_in.jsx';
+import {AnimatePresence , motion} from 'framer-motion';
 
 const Login = () =>{
-    const [showPassword , setShowPassword] = useState(false);
-        const [inputs, setInputs] = useState({ email: "", password: "" });
-        const { login } = useContext(AuthContext);
-        const navigate = useNavigate();
-    
-        const handleChange = (e) => {
-        setInputs({ ...inputs, [e.target.name]: e.target.value });
+    const [isRight , setIsRight] = useState(false);
+    const [showContent , setShowContent] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useLayoutEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 960);
         };
-    
-        const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            const res = await fetch("https://stockx-1-0ef9.onrender.com/api/v1/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(inputs),
-            });
-            const data = await res.json();
-            if (res.ok) {
-                login(data.token);
-                navigate("/dashboard");
-            } else {
-                alert(data.error);
-            }
-        } catch (err) {
-            alert("Login failed");
-        }
-    };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const exitAnim = isMobile
+        ? {opacity: 0, y: -50}
+        : {opacity: 0, x: -50};
+
+    const toggleSlide = () =>{
+        setIsRight(!isRight);
+        setShowContent(false);
+    }
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowContent(true); // mount after delay
+        }, 400); // keep this in sync with exit duration
+        return () => clearTimeout(timer);
+    }, [isRight]);
 
     return(
         <>
-            <div className={styles.main_container}>
-                <div className={styles.form_container}>
-                    <div className={styles.header}>
-                        <h2>Welcome back!</h2>
-                    </div>
-                    <button className={styles.googleBtn}>
-                        <FcGoogle size={20} />
-                        <span></span>
-                    </button>
+            <div className={styles.mother_container}>
+                <div className={styles.main_container}>
+                    <div className={styles.blur_box}>
 
-                    <div className={styles.orline}>
-                        <div className={styles.line}></div>
-                        <p>OR</p>
-                        <div className={styles.line}></div>
-                    </div>
-                    <form className={styles.form}>
-
-                        <div className={styles.inputBox}>
-                            <p>Email</p>
-                            <FaEnvelope className={styles.icon} />
-                            <input 
-                            name="email" 
-                            type = "email"
-                            onChange={handleChange} 
-                            placeholder="example@site.com"
-                            required/>
+                        <div className={`${styles.slideBox} ${isRight ? styles.right : styles.left}`}>
+                            <AnimatePresence  mode ="wait">
+                                <motion.div
+                                    key={isRight ? 'right-text' : 'left-text'}
+                                    initial={{opacity: 0, y: -20}}
+                                    animate={{opacity: 1, y: 0}}
+                                    exit={{opacity: 0, y: 20}}
+                                    transition={{duration: 0.5}}
+                                    className={isRight ? styles.right_side : styles.left_side}
+                                >
+                                    {isRight ? (
+                                        <>
+                                            <h2>Hello, friend!</h2>
+                                            <strong>Already have an account?</strong>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <h2>Welcome Back!</h2>
+                                            <strong>Don't have an account?</strong>
+                                        </>
+                                    )}
+                                    <br/>
+                                    <button className={styles.button} onClick={toggleSlide}>
+                                        {isRight ? 'Login' : 'Register'}
+                                    </button>
+                                </motion.div>
+                            </AnimatePresence>
                         </div>
 
-                        <div className={styles.inputBox}>
-                            <p>Password</p>
-                            <FaLock className={styles.icon} />
-                            <input 
-                            name="password"
-                            type = {showPassword ? "text" : "password"}
-                            onChange={handleChange} 
-                            placeholder="Minimum 8 characters" 
-                            required />
+                        <div className={`${styles.fixBox} ${isRight ? styles.fleft : styles.fright}`}>
+                            <AnimatePresence mode="wait">
+                                {showContent && (
+                                    <motion.div
+                                        key={isRight ? 'register' : 'login'}
+                                        exit={exitAnim}
+                                        transition={{ duration: 0.4 }}
+                                    >
+                                        {isRight ? <Register /> : <Log_in />}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
 
-                        <div className={styles.button_container}>
-                            <NavLink to="/dashboard"><button onClick={handleLogin}> Login</button></NavLink>
-                        </div>
-
-                    </form>
-                    <div className={styles.footer}>
-                        <p>Don't have an account? <NavLink to="/register"> <a href="">Signup</a> </NavLink></p>
                     </div>
                 </div>
-
             </div>
         </>
     );
 }
+
 
 export default Login;

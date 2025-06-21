@@ -1,241 +1,217 @@
-
-
 .main_container{
-    height: 100vh;
-    width: 100vw;
-
-
-    position: relative;
+    height: 600px;
+    width: 600px;
+    background-color: rgba(255 , 255 , 255 , 0.1);
+    padding-top: 10px;
 
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    flex-direction: column;
+}
 
+.header strong{
+    font-weight: bold;
+    font-size: 40px;
+    color: darkslategrey;
+}
 
+.line{
+    height: 2px;
+    width: 80%;
+    background-color: lightgrey;
+    border-radius: 20px;
+
+    margin: 5px 0 10px 0;
 }
 
 .form_container{
-    height: 600px;
-    width: 500px;
-    overflow: hidden;
+    height: 400px;
+    width: 100%;
 
-    background-color: white;
+    padding: 3px 0 0 75px;
+    color: grey;
+}
 
-    border-radius: 15px;
+.input_box{
+    margin: 5px 0 25px 2px;
+    height: 45px;
+    width: 450px;
+    font-size: 18px;
+    font-weight: 150;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    background-color: rgba(255 , 255 , 255 , 0.1);
 
+    border: 2px solid lightgrey;
+    border-radius: 7px;
 
-    box-shadow: 10px 10px 10px 10px  rgba(0,0,0,0.04);
-
+    padding-left: 40px;
 }
-
-.header{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-    height: 70px;
-
-    margin-top: 20px;
-
-
-    font-size: 20px;
-}
-
-.googleBtn {
-    width: 80%;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    gap: 10px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.orline{
-    width: 100%;
-    height: 32px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
-    align-items: center;
-    color: #878787;
-
-    font-size: 12px;
-}
-.orline p{
-    margin-bottom: 10px;
-}
-.line{
-    width: 38%;
-    height: 1px;
-    background-color: #878787;
-}
-
-.form{
-    display: flex;
-    flex-direction: column;
-
-    height: 300px;
-    width: 78%;
-    margin-top: -10px;
-}
-.inputBox{
-    width: 100%;
-    position: relative;
-    margin-bottom: 8px;
-
-}
-
-.inputBox p{
-    margin-bottom: 8px;
-    font-size: 11px;
-    font-weight: bold;
-    margin-left: 4px;
-
-    color: #454545;
-}
-.inputBox .icon{
-    position: absolute;
-    left: 10px;
-    top: 40px;
-    color: #878787
-}
-
-.inputBox input{
-    width: 92%;
-    border: 1px solid #878787;
-    border-radius: 10px;
-    height: 40px;
-
-    padding-left: 35px;
-}
-
-.inputBox input:focus{
+.input_box:focus{
     outline: none;
 }
+
+.user_icon{
+    position: absolute;
+    z-index: 1;
+    color: #999;
+
+    top: 165px;
+    left: 90px;
+
+}
+.mail_icon{
+    position: absolute;
+    z-index: 1;
+    color: #999;
+
+    top: 267px;
+    left: 90px;
+}
+.pass_icon{
+    position: absolute;
+    z-index: 1;
+    color: #999;
+
+    top: 367px;
+    left: 90px;
+}
+.shop_icon{
+    position: absolute;
+    z-index: 1;
+    color: #999;
+
+    top: 468px;
+    left: 90px;
+}
+
 .button_container{
-    height: 70px;
+    height: auto;
     width: 100%;
+    margin-top: 10px;
 
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    flex-direction: column;
 }
 
 .button_container button{
-    width: 102%;
+    width: 75%;
     height: 45px;
-
     border: none;
-    border-radius: 10px;
-    color: white;
+    border-radius: 7px;
     background-color: #6049E7;
-
-    margin-left: 8px;
-
+    color: white;
+    font-size: 16px;
     transition: background-color 0.5s ease, transform 0.5s ease;
-
     font-weight: bold;
-    font-size: 18px;
 
+    margin-left: 7px;
 }
+
+
 .button_container button:hover{
-    cursor: pointer;
     background-color: #4938B0;
+    box-shadow: none;
 }
+@media (max-width: 960px){
+    .main_container{
+        width: 450px;
+        padding-top: 0;
+    }
 
-.footer{
-    width: 100%;
-    height: 30px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-    background-color: #E3E3E3;
-    border-top: 1px solid #454545;
-    font-size: 13px;
+    .header strong{
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .line{
+        width: 90%;
+    }
 
-    position: absolute;
-    bottom: 0;
+    .form_container{
+        width: 450px;
+
+        padding: 3px 0 0 30px;
+    }
+
+    .input_box{
+        height: 45px;
+        width: 380px;
+
+        padding-left: 35px;
+
+    }
+    .user_icon{
+        top: 153px;
+        left: 43px;
+    }
+    .mail_icon{
+        top: 253px;
+        left: 43px;
+    }
+    .pass_icon{
+        top: 353px;
+        left: 43px;
+    }
+    .shop_icon{
+        top: 453px;
+        left: 43px;
+    }
+    .button_container button{
+        margin-left: -5px;
+        width: 80%;
+
+    }
 }
+/*for phone layout*/
 
-.footer a{
-    text-decoration: none;
-    color: #6049E7;
-    font-weight: bold;
-}
-.help_box{
-    height: 50px;
-    width: 50px;
-    background-color: #ADADAD;
-    transition: background-color 0.5s ease, transform 0.5s ease;;
+@media (max-width: 400px){
+    .main_container{
+        width: 350px;
+        padding-top: 0;
+    }
 
-    position: absolute;
-    bottom: 0;
-    right: -10px;
-
-    border-radius: 8px;
-
-
-    box-shadow: 10px 10px 10px 10px  rgba(0,0,0,0.04);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.help_box:hover{
-    cursor: pointer;
-
-    background-color: #808080;
-}
-
-.help_icon{
-    color: white;
-
-    font-size: 20px;
-
-    position: absolute;
-    bottom: 20px;
-}
-
-.help_box p{
-    font-size: 12px;
-    position: absolute;
-    color: white;
-    bottom: -8px;
-}
-
-@media (max-width: 765px){
-    .help_box{
-        display: none;
+    .header strong{
+        font-size: 25px;
+        font-weight: bold;
+    }
+    .line{
+        width: 90%;
     }
 
     .form_container{
         width: 350px;
+
+        padding: 3px 0 0 20px;
     }
 
-    .button_container button {
-        width: 105%;
-        margin-left: 20px;
+    .input_box{
+        height: 45px;
+        width: 300px;
+
+        padding-left: 30px;
+        font-size: 15px;
+    }
+    .user_icon{
+        top: 148px;
+        left: 33px;
+    }
+    .mail_icon{
+        top: 250px;
+        left: 33px;
+    }
+    .pass_icon{
+        top: 350px;
+        left: 33px;
+    }
+    .shop_icon{
+        top: 450px;
+        left: 33px;
+    }
+    .button_container button{
+        margin-left: -5px;
+        width: 80%;
+
     }
 }
