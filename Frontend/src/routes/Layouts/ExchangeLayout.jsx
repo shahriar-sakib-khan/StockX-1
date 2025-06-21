@@ -1,24 +1,19 @@
-import useLocalStorageState from "../../hooks/useLocalStorageState";
 import { Outlet } from "react-router-dom";
+import { useBrandStore } from "../../stores/brandStore";
+import { useEffect } from "react";
+import { useAccessoryStore } from "../../stores/AccessoryStore";
 
 export default function ExchangeLayout() {
-  const [deliveredItems, setDeliveredItems] = useLocalStorageState(
-    "deliveredItems",
-    []
-  );
-  const [receivedItems, setReceivedItems] = useLocalStorageState(
-    "receivedItems",
-    []
+  const initializeDraft = useBrandStore((state) => state.initializeDraft);
+  const initializeDraftAccessories = useAccessoryStore(
+    (state) => state.initializeDraftAccessories
   );
 
-  return (
-    <Outlet
-      context={{
-        deliveredItems,
-        setDeliveredItems,
-        receivedItems,
-        setReceivedItems,
-      }}
-    />
-  );
+  // On mount, initialize draft selection with current confirmed selection
+  useEffect(() => {
+    initializeDraft();
+    initializeDraftAccessories();
+  }, [initializeDraft, initializeDraftAccessories]);
+
+  return <Outlet />;
 }

@@ -1,4 +1,8 @@
 
+.hidden {
+  display: none;
+}
+
 .exchangeTopSection {
   display: flex;
   flex-direction: column;

@@ -13,9 +13,7 @@
     border-color: var(--accent-clr-300);
   }
 
-  overflow-x: hidden;
-  overflow-y: auto;
-
+  overflow: hidden;
   max-height: 22rem;
 
   .heading {
@@ -36,7 +34,7 @@
     color: var(--primary-text-clr);
     font-size: 1rem;
 
-    padding-inline: 0.25em;
+    padding: 0.25em;
     border-bottom-left-radius: var(--border-radius-500);
     border-bottom-right-radius: var(--border-radius-500);
 

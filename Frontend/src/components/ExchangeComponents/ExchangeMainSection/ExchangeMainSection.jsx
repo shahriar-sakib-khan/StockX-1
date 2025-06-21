@@ -4,26 +4,24 @@ import styles from "./ExchangeMainSection.module.css";
 export default function ExchangeMainSection(props) {
   const { activeSection, setActiveSection } = props.context;
 
-  const onClick = (active) => {
-    setActiveSection(active);
-  };
+  const setActive = (active) => setActiveSection(active);
 
   return (
     <div className={styles.exchangeMainSection}>
       <div className={styles.exchangeSection}>
         <ExchangeList
-          type="delivered"
+          section="delivered"
           active={activeSection === "delivered"}
-          onClick={() => onClick("delivered")}
+          onClick={() => setActive("delivered")}
           className={[
             styles.delivered,
             activeSection === "delivered" ? "" : styles.hidden,
           ].join(" ")}
         />
         <ExchangeList
-          type="received"
+          section="received"
           active={activeSection === "received"}
-          onClick={() => onClick("received")}
+          onClick={() => setActive("received")}
           className={[
             styles.received,
             activeSection === "received" ? "" : styles.hidden,
@@ -33,7 +31,7 @@ export default function ExchangeMainSection(props) {
       <div className={styles.btnSection}>
         <button
           onClick={() =>
-            onClick(activeSection === "delivered" ? "received" : "delivered")
+            setActive(activeSection === "delivered" ? "received" : "delivered")
           }
           className={[styles[activeSection], styles.hidden].join(" ")}
         >

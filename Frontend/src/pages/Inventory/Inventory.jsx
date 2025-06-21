@@ -9,9 +9,7 @@ function Inventory() {
     (state) => state.draftSelectedBrands
   );
   const initializeDraft = useBrandStore((state) => state.initializeDraft);
-  const submitSelectedBrands = useBrandStore(
-    (state) => state.submitSelectedBrands
-  );
+  const submitBrandChanges = useBrandStore((state) => state.submitBrandChanges);
   const hasUncommittedChanges = useBrandStore(
     (state) => state.hasUncommittedChanges
   );
@@ -22,7 +20,7 @@ function Inventory() {
   }, [initializeDraft]);
 
   const handleConfirm = () => {
-    submitSelectedBrands();
+    submitBrandChanges();
   };
 
   return (

@@ -9,6 +9,7 @@
   margin-inline: 1em;
   overflow: hidden;
 
+  padding-block-end: 0.25em;
   flex-grow: 1;
 }
 

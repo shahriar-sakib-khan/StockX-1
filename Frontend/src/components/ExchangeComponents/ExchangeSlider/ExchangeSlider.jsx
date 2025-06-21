@@ -1,37 +1,33 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ExchangeSliderCard from "../ExchangeSliderCard/ExchangeSliderCard";
 import styles from "./ExchangeSlider.module.css";
-import ExchangeModal from "../ExchangeModal/ExchangeModal";
+import CylinderModal from "../CylinderModal/CylinderModal";
 import { useBrandStore } from "../../../stores/brandStore";
 
-export default function ExchangeSlider({ activeSection = "" }) {
-  const draftBrands = useBrandStore((state) => state.draftSelectedBrands);
-  const initializeDraft = useBrandStore((state) => state.initializeDraft);
+export default function ExchangeSlider({ activeSection }) {
+  const draftSelectedBrands = useBrandStore(
+    (state) => state.draftSelectedBrands
+  );
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null); // card object
 
-  const cardsData = draftBrands.map((brand) => ({
-    brandId: brand.id,
-    brandName: brand.name,
+  const cardsData = draftSelectedBrands.map((brand) => ({
+    id: brand.id,
+    name: brand.name,
     stock: brand.totalCylinderCount,
     price: brand.price,
-    imgSrc: brand.image,
+    image: brand.image,
     key: `${brand.id}`,
   }));
-
-  // On mount, initialize draft selection with current confirmed selection
-  useEffect(() => {
-    initializeDraft();
-  }, [initializeDraft]);
 
   const cards = cardsData.map((card) => (
     <ExchangeSliderCard
       key={card.key}
+      name={card.name}
       stock={card.stock}
-      name={card.brandName}
       price={card.price}
-      imgSrc={card.imgSrc}
+      image={card.image}
       activeSection={activeSection}
       onAdd={() => {
         setSelectedCard(card);
@@ -43,12 +39,11 @@ export default function ExchangeSlider({ activeSection = "" }) {
   return (
     <div className={styles.exchangeSlider}>
       {cards.length > 0 ? cards : <p>No brands selected</p>}
-      <ExchangeModal
+      <CylinderModal
         open={modalOpen}
-        onClose={() => setModalOpen(false)}
         card={selectedCard}
-        setCylinders={() => {}} // placeholder or remove if not needed here
         activeSection={activeSection}
+        onClose={() => setModalOpen(false)}
       />
     </div>
   );

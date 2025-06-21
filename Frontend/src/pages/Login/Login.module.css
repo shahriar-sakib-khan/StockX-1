@@ -193,7 +193,7 @@
     .main_container{
         height: 750px;
         width: 350px;
-
+        scale: 1;
         background-image: url('smallScreen_img.png');
     }
 

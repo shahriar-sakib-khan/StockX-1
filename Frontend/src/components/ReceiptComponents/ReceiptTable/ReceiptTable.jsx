@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
-import { useOutletContext } from "react-router-dom";
 import styles from "./ReceiptTable.module.css";
+import { useExchangeStore } from "../../../stores/exchangeStore";
 
 const GROUPS = [
   { type: "cylinder", label: "Cylinders" },
@@ -9,7 +9,8 @@ const GROUPS = [
 ];
 
 export default function ReceiptTable({ type = "" }) {
-  const { deliveredItems = [], receivedItems = [] } = useOutletContext();
+  const deliveredItems = useExchangeStore((state) => state.deliveredItems);
+  const receivedItems = useExchangeStore((state) => state.receivedItems);
   const [paid, setPaid] = useState("");
   const [isGrandTotalEditable, setIsGrandTotalEditable] = useState(false);
   const [customGrandTotal, setCustomGrandTotal] = useState(null);
@@ -126,11 +127,6 @@ export default function ReceiptTable({ type = "" }) {
                     onClick={() => {
                       setIsGrandTotalEditable(true);
                       setTimeout(() => grandTotalInputRef.current?.focus(), 0);
-                    }}
-                    style={{
-                      marginLeft: 6,
-                      verticalAlign: "middle",
-                      cursor: "pointer",
                     }}
                   >
                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />

@@ -1,7 +1,8 @@
+
 .modal {
   color: var(--primary-text-clr);
   padding: 1em;
-  max-width: 40ch;
+  max-width: 50ch;
   margin: auto;
 
   border: none;
@@ -16,17 +17,26 @@
     background-color: rgb(0 0 0 / 0.4);
   }
 
+  /* inside the modal */
   .topSection {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1em;
 
-    .title {
-      font-size: 1.15rem;
+    .brand {
+      font-size: 1.25rem;
       font-weight: 500;
     }
 
-    .cancelBtn {
+    .stock {
+      color: white;
+      background-color: hsl(207, 40%, 50%);
+      padding-inline: 0.5em;
+      border-radius: var(--border-radius);
+    }
+
+    /* .cancelBtn {
       font-size: 1.125rem;
       color: red;
       font-weight: 600;
@@ -34,6 +44,18 @@
       height: 2rem;
       border: none;
       border-radius: 50%;
+    } */
+  }
+
+  .subTopSection {
+    display: flex;
+    align-items: center;
+    margin-block-end: 1.5em;
+
+    padding-inline-start: 0.5em;
+    
+    .modelName {
+      font-size: 1rem;
     }
   }
 
@@ -41,21 +63,49 @@
     display: flex;
     flex-direction: column;
     gap: 0.5em;
-
+    
     .formGroup {
       display: flex;
       align-items: center;
       gap: 0.5em;
+
       position: relative;
 
-      input[type="text"],
-      input[type="number"] {
+      select {
+        min-inline-size: 9ch;
+        
+        &, &::picker(select) {
+          appearance: base-select;
+          background-color: hsl(206, 50%, 90%);
+          padding: 0.125em 0.5em;
+          border-radius: var(--border-radius);
+        }
+        
+        &::picker(select) {
+          margin-block-start: 0.25em;  
+        }
+      }
+
+      option {
+        padding: 0.125em 0.25em;
+        border-radius: var(--border-radius);
+
+        &:focus {
+          outline: none;
+          background-color: hsl(206, 49%, 80%);
+        }
+      }
+
+      input[type=number] {
         color: var(--primary-text-clr);
         background-color: hsl(0, 0%, 95%);
+        
         flex-grow: 1;
         padding-inline: 0.25em;
+        
         border: var(--border-400);
         border-radius: var(--border-radius);
+
 
         &:focus {
           outline-color: hsl(0, 0%, 75%);
@@ -74,7 +124,7 @@
         appearance: textfield;
         -moz-appearance: textfield;
       }
-
+      
       .priceInput:read-only {
         border-color: transparent;
         cursor: default;
@@ -84,9 +134,15 @@
       .priceInputTaka {
         color: #888;
         font-size: 1rem;
+        
         position: absolute;
         right: 2.5em;
         pointer-events: none;
+      }
+
+      & > svg {
+        width: 1.25rem;
+        cursor: pointer;
       }
     }
 
@@ -94,7 +150,7 @@
       color: white;
       font-weight: 600;
       background-color: var(--accent-clr-400);
-
+      
       border: none;
       border-radius: var(--border-radius);
       padding: 0.25em;
@@ -106,5 +162,18 @@
         background-color: var(--accent-clr-300);
       }
     }
+    
+    /* input[type=radio] {
+      appearance: none;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #999;
+    }
+  
+    input[type=radio]:checked {
+      border: 6px solid var(--accent-clr-400);
+    } */
+
   }
 }

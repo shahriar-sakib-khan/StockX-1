@@ -1,13 +1,17 @@
 import { useState } from "react";
 import ExchangeSlider from "../ExchangeSlider/ExchangeSlider";
-import AddAccessoryModal from "../AddAccessoryModal/AddAccessoryModal";
+import AccessoryModal from "../AccessoryModal/AccessoryModal";
 import styles from "./ExchangeBottomSection.module.css";
+import { useAccessoryStore } from "../../../stores/AccessoryStore";
 
-export default function ExchangeBottomSection(props) {
-  const { activeSection } = props.context;
+export default function ExchangeBottomSection({ context }) {
+  const { activeSection } = context;
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalType, setModalType] = useState(null); // "stove" or "regulator"
+  const [modalType, setModalType] = useState(null); // stove | regulator
+
+  const draftRegulator = useAccessoryStore((state) => state.draftRegulator);
+  const draftStove = useAccessoryStore((state) => state.draftStove);
 
   const openModal = (type) => {
     setModalType(type);
@@ -19,7 +23,8 @@ export default function ExchangeBottomSection(props) {
     setModalType(null);
   };
 
-  const isDisabled = activeSection === "received";
+  const isReceived = activeSection === "received";
+  const initialValues = modalType === "stove" ? draftStove : draftRegulator;
 
   return (
     <div className={styles.exchangeBottomSection}>
@@ -28,8 +33,8 @@ export default function ExchangeBottomSection(props) {
           className={styles.regulator}
           role="button"
           tabIndex={0}
-          onClick={() => !isDisabled && openModal("regulator")}
-          aria-disabled={isDisabled}
+          onClick={() => !isReceived && openModal("regulator")}
+          aria-disabled={isReceived}
         >
           Add regulator
         </div>
@@ -37,18 +42,19 @@ export default function ExchangeBottomSection(props) {
           className={styles.stove}
           role="button"
           tabIndex={0}
-          onClick={() => !isDisabled && openModal("stove")}
-          aria-disabled={isDisabled}
+          onClick={() => !isReceived && openModal("stove")}
+          aria-disabled={isReceived}
         >
           Add stove
         </div>
       </div>
       <ExchangeSlider activeSection={activeSection} />
       {modalOpen && (
-        <AddAccessoryModal
+        <AccessoryModal
           open={modalOpen}
-          onClose={closeModal}
           itemType={modalType}
+          onClose={closeModal}
+          initialValues={initialValues}
         />
       )}
     </div>

@@ -13,8 +13,8 @@ export { default as ExchangeList } from "./ExchangeComponents/ExchangeList/Excha
 export { default as ExchangeListItem } from "./ExchangeComponents/ExchangeListItem/ExchangeListItem";
 export { default as ExchangeSlider } from "./ExchangeComponents/ExchangeSlider/ExchangeSlider";
 export { default as ExchangeSliderCard } from "./ExchangeComponents/ExchangeSliderCard/ExchangeSliderCard";
-export { default as ExchangeModal } from "./ExchangeComponents/ExchangeModal/ExchangeModal";
-export { default as AddAccessoryModal } from "./ExchangeComponents/AddAccessoryModal/AddAccessoryModal";
+export { default as CylinderModal } from "./ExchangeComponents/CylinderModal/CylinderModal";
+export { default as AccessoryModal } from "./ExchangeComponents/AccessoryModal/AccessoryModal";
 
 //Receipt related
 export { default as ReceiptTable } from "./ReceiptComponents/ReceiptTable/ReceiptTable";
