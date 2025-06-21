@@ -19,6 +19,8 @@
     background-position: center;
     background-repeat: no-repeat;
     z-index: 0;
+
+    scale: 0.9;
 }
 .logo{
     height: 50px;
