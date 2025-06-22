@@ -8,6 +8,8 @@ import logoImage from './Stock_x_logo_2.png';
 import Footer from './Footer.jsx'
 import { getLogoAnimation, initialLogoPosition } from './logoAnimation';
 import Brands from './Brands.jsx'
+import ToShopButton from './ToShopButtons.jsx';
+import WhyChooseUs from './WhyChooseUs.jsx'
 
 const Landing = () => {
     const [animationComplete, setAnimationComplete] = useState(false);
@@ -43,6 +45,9 @@ const Landing = () => {
                 {animationComplete && <Navbar />}
                 {animationComplete && <Content show={animationComplete} />}
                 {animationComplete && <Brands show={animationComplete} />}
+                {animationComplete && <WhyChooseUs show={animationComplete} />}
+                {animationComplete && <ToShopButton show={animationComplete} />}
+                {animationComplete && <Footer show={animationComplete} />}
             </div>
             </div>
         </>

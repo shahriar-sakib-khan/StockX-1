@@ -20,7 +20,7 @@ const Content = ({ show }) => {
                             animate={{ opacity: 1, y: -50 }}
                             transition={{ duration: 1 }}
                         >
-                            Stock X <br/>
+                            <div className={styles.stockx}>StockX</div>
                             A Safe & Trusted Gas Appliances Marketplace
                         </motion.h1>
 
